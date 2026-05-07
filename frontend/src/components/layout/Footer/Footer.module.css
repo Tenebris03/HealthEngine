@@ -1,0 +1,56 @@
+.footer {
+  margin-top: auto;
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  border-top: 1px solid var(--border);
+}
+
+.inner {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.copy {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navLink {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.navLink:hover {
+  color: var(--text-h);
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 16px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    gap: 14px;
+  }
+}
+
