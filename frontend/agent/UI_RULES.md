@@ -1,430 +1,95 @@
 # UI_RULES.md
-## Design System & UI Standards
+## Design System: High-Fidelity & Cinematic Standards
 
-This project must maintain a clean, modern, scalable, and production-grade UI.
-
+This project maintains an immersive, high-impact, and high-fidelity UI. 
 The design philosophy is:
-- elegant over flashy
-- refined over trendy
-- minimal without feeling empty
-- modern without looking artificial
-- performant without sacrificing polish
+- cinematic over static
+- immersive over contained
+- kinetic over passive
+- bold without being cluttered
+- cutting-edge without being gimmicky
 
-The UI should feel intentional, cohesive, and professional.
+The UI should feel like a living, breathing digital environment.
 
 ---
 
 # Core Design Principles
 
-## 1. Simplicity First
-Prefer:
-- clean layouts
-- strong spacing
-- visual hierarchy
-- subtle polish
-- restrained styling
+## 1. Immersive Canvas
+The interface is not a document; it is a stage.
+- **Full-Viewport Focus:** Prioritize `100vw` and `100vh` layouts. 
+- **The "Full Stage" Rule:** Backgrounds, interactive shaders, or high-definition media should fill the visual field.
+- **Layered Depth:** Use Z-axis layering (glassmorphism, backdrop blurs, and shadows) to create a physical sense of space.
 
-Avoid:
-- visual clutter
-- unnecessary decorations
-- excessive gradients
-- loud colors
-- oversized shadows
-- gimmicky animations
+## 2. Kinetic Experience
+Motion is the primary medium of communication.
+- **Orchestrated Entry:** Every element must have a choreographed entry (staggered fades, 3D transforms, or spring-based shifts).
+- **Magnetic Interaction:** Interactive elements should feel "attracted" to the cursor or respond with tactile physics.
+- **View Transitions:** Page and state changes should feel like a camera move, not a hard refresh.
 
-Every visual element must serve a purpose.
+## 3. High-Contrast Focus
+- **Visual Anchors:** Key actions (e.g., "Get Started") must be impossible to miss, using vibrant accents or dynamic gradients.
+- **Dominant Hierarchy:** Use massive "Display" typography to command attention and guide the narrative.
 
 ---
 
-## 2. Consistency Above All
-All pages and components must feel like part of the same system.
+# Layout & Responsiveness
 
-Maintain consistency in:
-- spacing
-- typography
-- border radius
-- shadows
-- colors
-- hover behavior
-- transitions
-- component sizing
-- layout patterns
+## 1. Edge-to-Edge Fluidity
+Avoid "safe" max-widths that leave empty margins on large screens.
+- **Ultrawide Optimization:** On large monitors, utilize the full horizontal span with multi-column grid systems or expansive media.
+- **Viewport Units:** Use `vh`, `vw`, `vmin`, and `vmax` to ensure the layout feels custom-fit to every screen size.
 
-Never invent one-off component styles unless absolutely necessary.
+## 2. Bento-Box Geometry
+For functional sections, use grouped "cells" with:
+- Consistent large border radii (e.g., 24px - 32px).
+- Subtle inner glows and outer "soft" elevation.
+- Interactive hover states that expand or illuminate the cell.
 
 ---
 
-## 3. Scalable Layout Philosophy
-The UI must scale beautifully across:
-- small laptops
-- ultrawide monitors
-- tablets
-- mobile devices
+# Visual Style & Motion
 
-The application should NOT stretch endlessly on large monitors.
+## Color & Light
+- **Vibrant Accents:** Use a core palette of deep neutrals paired with high-energy accent colors (electric blues, vivid purples, or neon greens).
+- **Lighting Effects:** Use radial gradients as "spotlights" to naturally draw the eye toward interaction points.
 
-Prefer:
-- centered layouts
-- max-width containers
-- balanced whitespace
-- responsive scaling
+## Typography
+- **Display Weights:** Use heavy, expressive fonts for headings.
+- **Fluid Type:** Font sizes should scale dynamically based on viewport width (using `clamp()`).
+- **Letter Spacing:** Tighter tracking for large headings to create a "premium" feel.
 
-Use content widths intentionally.
-
-Recommended patterns:
-- `max-width`
-- container systems
-- CSS grid
-- flexible layouts
-
-Avoid:
-- edge-to-edge layouts everywhere
-- giant unreadable text lines
-- awkward empty space distribution
-
----
-
-# Visual Style
-
-## Color Philosophy
-Use a restrained and professional color palette.
-
-Prefer:
-- neutral tones
-- subtle contrast
-- limited accent colors
-- muted surfaces
-
-Avoid:
-- oversaturated colors
-- rainbow palettes
-- excessive gradients
-- harsh contrast combinations
-
-Accent colors should feel intentional and rare.
-
----
-
-## Transparency & Glass Effects
-Subtle transparency is allowed ONLY when:
-- it improves visual layering
-- performance remains good
-- readability stays excellent
-
-Use glassmorphism sparingly.
-
-Avoid:
-- heavy blur effects everywhere
-- unreadable transparent surfaces
-- excessive layered translucency
-
-Performance and clarity are more important than visual effects.
-
----
-
-# Typography Rules
-
-## Typography Philosophy
-Typography should feel:
-- clean
-- readable
-- modern
-- calm
-- structured
-
-Prefer:
-- strong hierarchy
-- consistent scaling
-- generous line-height
-- balanced spacing
-
-Avoid:
-- tiny text
-- excessive font weights
-- inconsistent heading sizes
-- cramped spacing
-
----
-
-## Font Usage
-Use the project's primary font consistently.
-
-Avoid introducing multiple fonts unless explicitly required.
-
-Typography should rely on:
-- spacing
-- weight
-- size
-- contrast
-
-NOT decorative styling.
-
----
-
-# Spacing System
-
-Use a consistent spacing scale throughout the application.
-
-Prefer predictable spacing increments.
-
-Maintain:
-- generous padding
-- comfortable gaps
-- breathing room between sections
-
-Avoid:
-- cramped layouts
-- inconsistent spacing
-- arbitrary margins
-- magic-number positioning
-
-Whitespace is part of the design.
+## Animation Specs
+- **Easing:** Never use `linear`. Use custom cubic-beziers or spring physics (e.g., `backOut`, `expoOut`).
+- **Duration:** Keep micro-interactions fast (150-300ms) and entrance animations deliberate (500-800ms).
+- **GPU Acceleration:** Only animate `transform` and `opacity` to maintain 60+ FPS.
 
 ---
 
 # Component Design
 
-## Buttons
-Buttons should:
-- feel tactile
-- have clear states
-- remain readable
-- avoid excessive styling
-
-Prefer:
-- subtle hover effects
-- smooth transitions
-- restrained shadows
-- accessible contrast
-
-Avoid:
-- glowing buttons
-- exaggerated gradients
-- oversized animations
-- inconsistent padding
-
----
+## Buttons (The "Hero" Component)
+- **Tactile Response:** Buttons should scale down slightly on click and glow on hover.
+- **Glass Effects:** Use `backdrop-filter: blur()` for secondary buttons to maintain the layered aesthetic.
+- **Clear CTA:** The primary "Get Started" button should be the brightest, most animated element on the screen.
 
 ## Cards & Surfaces
-Cards should:
-- separate content cleanly
-- use subtle elevation
-- maintain consistent padding
-- avoid excessive depth
-
-Prefer:
-- soft borders
-- subtle backgrounds
-- minimal shadows
-
-Avoid:
-- deeply nested card structures
-- stacked shadows
-- noisy visual hierarchy
+- **Interactive Depth:** Cards should "lift" or "tilt" (3D parallax) based on mouse position.
+- **Border Gradients:** Use subtle gradient strokes to define edges on dark backgrounds.
 
 ---
 
-## Forms
-Forms must prioritize:
-- clarity
-- accessibility
-- usability
+# Performance & Accessibility
 
-Inputs should:
-- have clear focus states
-- maintain consistent sizing
-- provide sufficient padding
-- remain readable on all devices
-
-Avoid:
-- tiny click targets
-- inconsistent field heights
-- unclear validation states
-
----
-
-# Responsiveness
-
-## Mobile-First Mindset
-The UI must work naturally on mobile devices.
-
-Layouts should adapt smoothly without hacks.
-
-Prefer:
-- flexible containers
-- wrapping layouts
-- responsive typography
-- scalable spacing
-
-Avoid:
-- horizontal scrolling
-- hardcoded widths
-- fixed-height layouts
-- viewport hacks
-
----
-
-## Large Screen Handling
-On large displays:
-- maintain readable content width
-- preserve visual balance
-- avoid stretched interfaces
-
-Use:
-- max-width containers
-- section constraints
-- multi-column layouts when appropriate
-
-The app should feel designed for large screens, not merely expanded.
-
----
-
-# Motion & Animation
-
-## Animation Philosophy
-Animations should:
-- support usability
-- improve perceived quality
-- feel subtle and responsive
-
-Prefer:
-- short transitions
-- smooth easing
-- lightweight animations
-
-Avoid:
-- excessive motion
-- distracting effects
-- long animation chains
-- animations that delay interaction
-
----
-
-## Performance First
-Animation must never hurt performance.
-
-Avoid:
-- expensive blur animations
-- large repaints
-- unnecessary transforms
-- layout-thrashing animations
-
-Prefer GPU-friendly transitions.
-
----
-
-# Performance Standards
-
-UI quality includes performance.
-
-Prioritize:
-- fast rendering
-- low layout shift
-- efficient CSS
-- minimal bundle size
-- responsive interactions
-
-Avoid:
-- unnecessary libraries
-- bloated UI frameworks
-- deeply nested DOM trees
-- excessive re-renders caused by styling patterns
-
----
-
-# Accessibility Rules
-
-Accessibility is mandatory.
-
-All UI must:
-- support keyboard navigation
-- maintain proper contrast
-- include visible focus states
-- use semantic HTML
-- support screen readers
-
-Never remove accessibility features for aesthetics.
-
----
-
-# Styling Architecture
-
-## Existing CSS Must Be Respected
-Do NOT:
-- randomly delete existing styles
-- replace the styling system unnecessarily
-- introduce conflicting approaches
-
-Prefer:
-- extending existing styles
-- reusing utilities
-- maintaining structure consistency
-
----
-
-## Avoid Style Chaos
-Do not mix:
-- Tailwind
-- CSS Modules
-- styled-components
-- inline styles
-
-unless the project already intentionally uses them together.
-
-Maintain a single coherent styling strategy.
-
----
-
-# Design Anti-Patterns To Avoid
-
-Never introduce:
-- giant hero sections with no purpose
-- oversized padding everywhere
-- excessive blur
-- glassmorphism overload
-- neumorphism
-- floating random gradients
-- inconsistent border radius
-- inconsistent shadows
-- random animation styles
-- poor contrast
-- inaccessible text
-- cluttered dashboards
-- crowded navigation
-- giant modals
-- hidden important actions
-- misleading interactions
-
-Avoid “AI-generated UI” patterns.
-
----
-
-# UX Standards
-
-The UI should feel:
-- fast
-- calm
-- intuitive
-- trustworthy
-- deliberate
-
-Users should immediately understand:
-- hierarchy
-- navigation
-- interaction states
-- important actions
-
-Good UX is invisible.
+- **Motion Reduction:** Respect `prefers-reduced-motion` by simplifying animations for those users.
+- **Accessibility:** High visual impact must not sacrifice keyboard navigation or screen reader compatibility.
+- **LCP Optimization:** Ensure large immersive assets are optimized (WebP, AVIF) to maintain instant load feel.
 
 ---
 
 # Final Rule
-
 Every design decision must answer:
-- Does this improve usability?
-- Does this improve clarity?
-- Does this improve consistency?
-- Does this improve perceived quality?
-- Is this worth the complexity/performance cost?
-
-If not, do not add it.
+1. Does this feel alive?
+2. Does this command attention?
+3. Is it optimized for the full screen?
+4. Is the performance fluid (60FPS)?

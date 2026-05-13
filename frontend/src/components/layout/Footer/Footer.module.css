@@ -1,56 +1,110 @@
+/* Footer - Layered Depth */
 .footer {
-  margin-top: auto;
-  background: color-mix(in oklab, var(--bg) 92%, transparent);
-  border-top: 1px solid var(--border);
-}
-
-.inner {
-  padding: 20px;
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
-.left {
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 70%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Footer Content */
+.footerSection {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  text-align: left;
+  gap: 1rem;
 }
 
-.copy {
-  margin: 0;
-  color: var(--text);
-  font-size: 14px;
+.footerTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f0f0f0;
 }
 
-.nav {
+.footerLink {
+  color: #c0c0c0;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footerLink:hover {
+  color: #00d4ff;
+  transform: translateX(5px);
+}
+
+.footerLink:active {
+  transform: translateX(2px);
+}
+
+/* Copyright */
+.copyright {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Social Icons - Magnetic Interaction */
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 18px;
-}
-
-.navLink {
-  color: var(--text);
+  justify-content: center;
+  color: #f0f0f0;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navLink:hover {
-  color: var(--text-h);
+.socialIcon:hover {
+  transform: scale(1.1) rotate(5deg);
+  background: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
 }
 
+.socialIcon:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .inner {
-    padding: 16px 14px;
+  .footer {
     flex-direction: column;
-    align-items: flex-start;
+    text-align: center;
+    padding: 1rem;
   }
 
-  .nav {
-    gap: 14px;
+  .footerSection {
+    align-items: center;
+  }
+
+  .socialIcons {
+    justify-content: center;
   }
 }
-

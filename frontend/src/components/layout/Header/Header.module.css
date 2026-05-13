@@ -1,65 +1,99 @@
+/* Header - Kinetic & Immersive */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
-  background: color-mix(in oklab, var(--bg) 92%, transparent);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
-}
-
-.inner {
+  left: 0;
+  width: 100vw;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px 20px;
-}
-
-.brand {
-  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--text-h);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transition: background 0.3s ease;
 }
 
+.header:hover {
+  background: rgba(10, 10, 10, 0.9);
+}
+
+/* Logo - High-Contrast Focus */
 .logo {
-  display: block;
-  border-radius: 8px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #00d4ff, #9d4edd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glowPulse 3s infinite;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.brandText {
-  font-weight: 600;
-  letter-spacing: -0.4px;
+.logo:hover {
+  transform: scale(1.05);
 }
 
+/* Navigation - Magnetic Interaction */
 .nav {
   display: flex;
+  gap: 2rem;
   align-items: center;
-  gap: 18px;
 }
 
-.navLink {
-  color: var(--text);
+.navItem {
+  color: #f0f0f0;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1rem;
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background 0.3s ease;
 }
 
-.navLink:hover {
-  color: var(--text-h);
+.navItem::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff, #9d4edd);
+  transition: width 0.3s ease, left 0.3s ease;
 }
 
+.navItem:hover {
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navItem:hover::before {
+  width: 100%;
+  left: 0;
+}
+
+.navItem:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .inner {
-    padding: 14px 14px;
+  .header {
+    padding: 1rem;
   }
 
   .nav {
-    gap: 12px;
+    gap: 1rem;
   }
 
-  .navLink {
-    font-size: 14px;
+  .navItem {
+    font-size: 1rem;
+    padding: 0.5rem;
   }
 }
-
