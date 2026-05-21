@@ -1,0 +1,242 @@
+.card {
+  background: rgba(15, 15, 25, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  margin: 0;
+}
+
+.editButton {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  padding: 0.5rem;
+  color: #00d4ff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editButton:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.calorieTarget {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 16px;
+}
+
+.calorieLabel {
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.calorieValue {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #00d4ff;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.macroGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.macroItem {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.macroItem.protein:hover {
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+.macroItem.carbs:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+}
+
+.macroItem.fat:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+}
+
+.macroIcon {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.macroItem.protein .macroIcon {
+  color: #06b6d4;
+}
+
+.macroItem.carbs .macroIcon {
+  color: #8b5cf6;
+}
+
+.macroItem.fat .macroIcon {
+  color: #f97316;
+}
+
+.macroLabel {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.macroValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  margin-bottom: 0.25rem;
+}
+
+.macroPercent {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.macroItem.protein .macroPercent {
+  color: #06b6d4;
+}
+
+.macroItem.carbs .macroPercent {
+  color: #8b5cf6;
+}
+
+.macroItem.fat .macroPercent {
+  color: #f97316;
+}
+
+.macroCalories {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.distributionBar {
+  width: 100%;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.distributionSegment {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.proteinSegment {
+  background: linear-gradient(90deg, #06b6d4, #0ea5e9);
+}
+
+.carbsSegment {
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.fatSegment {
+  background: linear-gradient(90deg, #f97316, #fb923c);
+}
+
+.distributionLegend {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.legendColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.legendColor.protein {
+  background: #06b6d4;
+}
+
+.legendColor.carbs {
+  background: #8b5cf6;
+}
+
+.legendColor.fat {
+  background: #f97316;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .macroGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .macroValue {
+    font-size: 1.5rem;
+  }
+
+  .calorieValue {
+    font-size: 2rem;
+  }
+
+  .distributionLegend {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
