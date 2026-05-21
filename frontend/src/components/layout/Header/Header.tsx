@@ -1,25 +1,38 @@
+import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 
 const headerLinks = [
-  { label: 'Home', href: '#' },
-  { label: 'Goals', href: '#goals' },
-  { label: 'Leaderboard', href: '#leaderboard' },
-  { label: 'Progress', href: '#progress' },
-  { label: 'About', href: '#about' },
+  { label: 'Home', path: '/' },
+  { label: 'Goals', path: '/goals' },
+  { label: 'Leaderboard', path: '/leaderboard' },
+  { label: 'Progress', path: '/progress' },
+  { label: 'About', path: '/about' },
 ]
 
 export function Header() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleNavigate = (path: string) => {
+    navigate(path)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
+      <div className={styles.logo} onClick={() => handleNavigate('/')}>
         HealthEngine
       </div>
 
       <nav className={styles.nav}>
         {headerLinks.map((link) => (
-          <a key={link.label} className={styles.navItem} href={link.href}>
+          <button
+            key={link.label}
+            className={`${styles.navItem} ${location.pathname === link.path ? styles.navItemActive : ''}`}
+            onClick={() => handleNavigate(link.path)}
+          >
             {link.label}
-          </a>
+          </button>
         ))}
       </nav>
     </header>
