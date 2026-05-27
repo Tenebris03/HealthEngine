@@ -1,6 +1,5 @@
 # HealthEngine
 
-![HealthEngine Roadmap](frontend/img.png)
 
 HealthEngine is a comprehensive health and nutrition tracking platform that helps users set nutrition goals, track progress, and compete with others through a gamified leaderboard system.
 
