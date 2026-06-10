@@ -6,11 +6,13 @@ import { CreateFoodEntryDto } from './dto/create-food-entry.dto';
 export class FoodLogService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateFoodEntryDto) {
-    return this.prisma.foodEntry.create({ data: dto });
+  create(dto: CreateFoodEntryDto) {
+    return this.prisma.db.foodEntry.create({ data: dto });
   }
 
-  async findAll() {
-    return this.prisma.foodEntry.findMany({ orderBy: { createdAt: 'desc' } });
+  findAll() {
+    return this.prisma.db.foodEntry.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
   }
 }

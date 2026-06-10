@@ -7,10 +7,12 @@ export class WeightLogService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateWeightLogDto) {
-    return this.prisma.weightLog.create({ data: dto });
+    return this.prisma.db.weightLog.create({ data: dto });
   }
 
   async findAll() {
-    return this.prisma.weightLog.findMany({ orderBy: { timestamp: 'desc' } });
+    return this.prisma.db.weightLog.findMany({
+      orderBy: { timestamp: 'desc' },
+    });
   }
 }
