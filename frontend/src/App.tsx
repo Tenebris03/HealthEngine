@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { Layout } from './components/layout/Layout';
-import { HomePage } from './pages/HomePage/HomePage';
-import { ProgressPage } from './pages/ProgressPage/ProgressPage';
-import { GoalsPage } from './pages/GoalsPage/GoalsPage';
+import { Layout } from '@/components/layout/Layout';
+import { HomePage } from '@/pages/HomePage/HomePage';
+import { ProgressPage } from '@/pages/ProgressPage/ProgressPage';
+import { GoalsPage } from '@/pages/GoalsPage/GoalsPage';
 
 function App() {
   return (

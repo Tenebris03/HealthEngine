@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import headerStyles from '../layout/Header/Header.module.css';
+import headerStyles from '@/components/layout/Header/Header.module.css';
 
 const languages = [
   { code: 'en', label: 'EN' },
