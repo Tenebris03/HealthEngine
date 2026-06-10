@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import styles from './Hero.module.css';
 
 export function Hero() {
   const { t } = useTranslation();
   const { t: tHero } = useTranslation('hero');
+  const navigate = useNavigate();
 
   return (
     <motion.section
@@ -30,6 +32,17 @@ export function Hero() {
         >
           {tHero('tagline')}
         </motion.p>
+        <motion.button
+          className={styles.cta}
+          onClick={() => navigate('/dashboard')}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.96 }}
+        >
+          {t('cta.getStarted')}
+        </motion.button>
       </div>
     </motion.section>
   );

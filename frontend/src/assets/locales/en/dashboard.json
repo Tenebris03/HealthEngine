@@ -1,0 +1,12 @@
+{
+  "pageTitle": "Dashboard",
+  "calories": "Calories",
+  "protein": "Protein",
+  "carbs": "Carbs",
+  "fat": "Fat",
+  "of": "of",
+  "remaining": "remaining",
+  "consumed": "consumed",
+  "dailyTarget": "Daily Target",
+  "macroSplit": "Macro Split"
+}

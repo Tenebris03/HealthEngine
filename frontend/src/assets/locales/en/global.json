@@ -2,10 +2,15 @@
   "brand": "HealthEngine",
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "goals": "Goals",
     "leaderboard": "Leaderboard",
     "progress": "Progress",
     "about": "About"
+  },
+  "cta": {
+    "getStarted": "Get Started",
+    "goToDashboard": "Go to Dashboard"
   },
   "footer": {
     "product": "Product",
