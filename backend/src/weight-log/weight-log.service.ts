@@ -6,11 +6,11 @@ import { CreateWeightLogDto } from './dto/create-weight-log.dto';
 export class WeightLogService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateWeightLogDto) {
+  create(dto: CreateWeightLogDto) {
     return this.prisma.db.weightLog.create({ data: dto });
   }
 
-  async findAll() {
+  findAll() {
     return this.prisma.db.weightLog.findMany({
       orderBy: { timestamp: 'desc' },
     });
