@@ -12,9 +12,25 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "turbo run format",
-    "format-fix": "turbo run format-fix"
+    "format-fix": "turbo run format-fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx,js,jsx,mjs}": [
+      "eslint --fix --config frontend/eslint.config.js",
+      "prettier --write"
+    ],
+    "backend/src/**/*.{ts,js,mjs}": [
+      "eslint --fix --config backend/eslint.config.mjs",
+      "prettier --write"
+    ],
+    "*.{css,json,md}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
     "turbo": "^2.5.2"
   }
 }
