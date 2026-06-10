@@ -28,7 +28,7 @@ export function Header() {
       className={styles.header}
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: 'easeOut' as const }}
     >
       <motion.div
         className={styles.logo}

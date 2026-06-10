@@ -1,35 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateFoodEntryDto } from './dto/create-food-entry.dto';
-
-export interface FoodEntry {
-  id: string;
-  name: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  portion: string;
-  mealType: string;
-  timestamp: Date;
-}
 
 @Injectable()
 export class FoodLogService {
-  private entries: FoodEntry[] = [];
+  constructor(private readonly prisma: PrismaService) {}
 
-  findAll(): FoodEntry[] {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return this.entries.filter((e) => e.timestamp >= today);
+  create(dto: CreateFoodEntryDto) {
+    return this.prisma.db.foodEntry.create({ data: dto });
   }
 
-  create(dto: CreateFoodEntryDto): FoodEntry {
-    const entry: FoodEntry = {
-      id: Date.now().toString(),
-      ...dto,
-      timestamp: new Date(),
-    };
-    this.entries.push(entry);
-    return entry;
+  findAll() {
+    return this.prisma.db.foodEntry.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
   }
 }
