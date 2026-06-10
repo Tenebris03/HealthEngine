@@ -6,6 +6,7 @@ import styles from './Header.module.css';
 
 const headerLinks = [
   { key: 'nav.home' as const, path: '/' as const },
+  { key: 'nav.dashboard' as const, path: '/dashboard' as const },
   { key: 'nav.goals' as const, path: '/goals' as const },
   { key: 'nav.leaderboard' as const, path: '/leaderboard' as const },
   { key: 'nav.progress' as const, path: '/progress' as const },

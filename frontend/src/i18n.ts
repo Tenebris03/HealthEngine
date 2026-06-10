@@ -12,6 +12,8 @@ import goalsEn from '@/features/goals/locales/en/goals.json';
 import goalsDe from '@/features/goals/locales/de/goals.json';
 import progressEn from '@/features/progress/locales/en/progress.json';
 import progressDe from '@/features/progress/locales/de/progress.json';
+import dashboardEn from '@/assets/locales/en/dashboard.json';
+import dashboardDe from '@/assets/locales/de/dashboard.json';
 
 i18n
   .use(LanguageDetector)
@@ -32,6 +34,7 @@ i18n
         'key-features': keyFeaturesEn,
         goals: goalsEn,
         progress: progressEn,
+        dashboard: dashboardEn,
       },
       de: {
         global: globalDe,
@@ -39,6 +42,7 @@ i18n
         'key-features': keyFeaturesDe,
         goals: goalsDe,
         progress: progressDe,
+        dashboard: dashboardDe,
       },
     },
   });
