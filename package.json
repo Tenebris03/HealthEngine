@@ -34,5 +34,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
     "turbo": "^2.5.2"
+  },
+  "dependencies": {
+    "@nestjs/swagger": "^11.4.4"
   }
 }
