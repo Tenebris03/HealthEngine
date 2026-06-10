@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model FoodEntry {
+  id          Int      @id @default(autoincrement())
+  description String
+  calories    Float
+  protein     Float
+  carbs       Float
+  fat         Float
+  mealType    String
+  portion     Float    @default(1)
+  createdAt   DateTime @default(now())
+}
+
+model WeightLog {
+  id        Int      @id @default(autoincrement())
+  weightKg  Float
+  timestamp DateTime @default(now())
+}

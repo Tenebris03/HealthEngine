@@ -1,22 +1,18 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { WeightLogService } from './weight-log.service';
-import { CreateWeightEntryDto } from './dto/create-weight-entry.dto';
+import { CreateWeightLogDto } from './dto/create-weight-log.dto';
 
-@ApiTags('Weight Log')
 @Controller('api/weight-log')
 export class WeightLogController {
   constructor(private readonly weightLogService: WeightLogService) {}
 
-  @Get()
-  @ApiOperation({ summary: 'Get all weight entries' })
-  findAll() {
-    return this.weightLogService.findAll();
+  @Post()
+  create(@Body() dto: CreateWeightLogDto) {
+    return this.weightLogService.create(dto);
   }
 
-  @Post()
-  @ApiOperation({ summary: 'Add a weight entry' })
-  create(@Body() dto: CreateWeightEntryDto) {
-    return this.weightLogService.create(dto);
+  @Get()
+  findAll() {
+    return this.weightLogService.findAll();
   }
 }
