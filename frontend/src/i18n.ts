@@ -20,7 +20,8 @@ i18n
     supportedLngs: ['en', 'de'],
     fallbackLng: 'en',
     nonExplicitSupportedLngs: true,
-    debug: false,
+    defaultNS: 'global',
+    debug: true,
     interpolation: {
       escapeValue: false,
     },
