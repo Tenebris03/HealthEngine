@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ProgressRing } from '../../features/progress/components/ProgressRing/ProgressRing';
 import { FoodEntryCard } from '../../features/progress/components/FoodEntryCard/FoodEntryCard';
 import { AddEditFoodModal } from '../../features/progress/components/AddEditFoodModal/AddEditFoodModal';
@@ -9,6 +10,13 @@ import type {
 } from '../../features/progress/types/progress.types';
 
 const MEAL_ORDER: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
+
+const mealTypeTranslationKeys = {
+  Breakfast: 'global:mealTypes.breakfast',
+  Lunch: 'global:mealTypes.lunch',
+  Dinner: 'global:mealTypes.dinner',
+  Snacks: 'global:mealTypes.snacks',
+} as const;
 
 const DEFAULT_TARGETS = {
   calories: 2000,
@@ -54,7 +62,7 @@ const SAMPLE_ENTRIES: FoodEntry[] = [
 ];
 
 export function ProgressPage() {
-  console.log('ProgressPage rendering');
+  const { t } = useTranslation(['progress', 'global']);
   const [entries, setEntries] = useState<FoodEntry[]>(SAMPLE_ENTRIES);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<FoodEntry | null>(null);
@@ -149,9 +157,12 @@ export function ProgressPage() {
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
-    if (date.toDateString() === today.toDateString()) return 'Today';
-    if (date.toDateString() === yesterday.toDateString()) return 'Yesterday';
-    if (date.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
+    if (date.toDateString() === today.toDateString())
+      return t('global:date.today');
+    if (date.toDateString() === yesterday.toDateString())
+      return t('global:date.yesterday');
+    if (date.toDateString() === tomorrow.toDateString())
+      return t('global:date.tomorrow');
 
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
@@ -160,71 +171,61 @@ export function ProgressPage() {
     });
   };
 
+  const ringConfigs = [
+    {
+      key: 'calories' as const,
+      color: '#f97316',
+      size: 280,
+      strokeWidth: 24,
+      current: totals.calories,
+      target: DEFAULT_TARGETS.calories,
+    },
+    {
+      key: 'protein' as const,
+      color: '#06b6d4',
+      size: 200,
+      strokeWidth: 20,
+      current: totals.protein,
+      target: DEFAULT_TARGETS.protein,
+    },
+    {
+      key: 'carbs' as const,
+      color: '#8b5cf6',
+      size: 140,
+      strokeWidth: 16,
+      current: totals.carbs,
+      target: DEFAULT_TARGETS.carbs,
+    },
+  ];
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.pageTitle}>Daily Progress</h1>
+        <h1 className={styles.pageTitle}>{t('pageTitle')}</h1>
 
-        {/* Progress Rings Section */}
         <section className={styles.ringsSection}>
           <div className={styles.ringsContainer}>
-            {/* Outer Ring - Calories (Largest) */}
-            <ProgressRing
-              progress={totals.calories}
-              target={DEFAULT_TARGETS.calories}
-              consumed={totals.calories}
-              label="Calories"
-              color="#f97316"
-              size={280}
-              strokeWidth={24}
-              onHoverStart={() =>
-                setHoveredRing({
-                  label: 'Calories',
-                  consumed: totals.calories,
-                  target: DEFAULT_TARGETS.calories,
-                  color: '#f97316',
-                })
-              }
-              onHoverEnd={() => setHoveredRing(null)}
-            />
-            {/* Middle Ring - Protein */}
-            <ProgressRing
-              progress={totals.protein}
-              target={DEFAULT_TARGETS.protein}
-              consumed={totals.protein}
-              label="Protein"
-              color="#06b6d4"
-              size={200}
-              strokeWidth={20}
-              onHoverStart={() =>
-                setHoveredRing({
-                  label: 'Protein',
-                  consumed: totals.protein,
-                  target: DEFAULT_TARGETS.protein,
-                  color: '#06b6d4',
-                })
-              }
-              onHoverEnd={() => setHoveredRing(null)}
-            />
-            {/* Inner Ring - Carbs (Smallest) */}
-            <ProgressRing
-              progress={totals.carbs}
-              target={DEFAULT_TARGETS.carbs}
-              consumed={totals.carbs}
-              label="Carbs"
-              color="#8b5cf6"
-              size={140}
-              strokeWidth={16}
-              onHoverStart={() =>
-                setHoveredRing({
-                  label: 'Carbs',
-                  consumed: totals.carbs,
-                  target: DEFAULT_TARGETS.carbs,
-                  color: '#8b5cf6',
-                })
-              }
-              onHoverEnd={() => setHoveredRing(null)}
-            />
+            {ringConfigs.map((ring) => (
+              <ProgressRing
+                key={ring.key}
+                progress={ring.current}
+                target={ring.target}
+                consumed={ring.current}
+                label={t(`rings.${ring.key}`)}
+                color={ring.color}
+                size={ring.size}
+                strokeWidth={ring.strokeWidth}
+                onHoverStart={() =>
+                  setHoveredRing({
+                    label: t(`rings.${ring.key}`),
+                    consumed: ring.current,
+                    target: ring.target,
+                    color: ring.color,
+                  })
+                }
+                onHoverEnd={() => setHoveredRing(null)}
+              />
+            ))}
           </div>
 
           {hoveredRing && (
@@ -237,22 +238,21 @@ export function ProgressPage() {
             >
               <div className={styles.tooltipLabel}>{hoveredRing.label}</div>
               <div className={styles.tooltipValue}>
-                {hoveredRing.consumed.toLocaleString()} /{' '}
+                {hoveredRing.consumed.toLocaleString()} {t('rings.of')}{' '}
                 {hoveredRing.target.toLocaleString()}
               </div>
             </div>
           )}
         </section>
 
-        {/* Food Log Section */}
         <section className={styles.logSection}>
           <div className={styles.logHeader}>
-            <h2 className={styles.logTitle}>Food Log</h2>
+            <h2 className={styles.logTitle}>{t('foodLog.title')}</h2>
             <div className={styles.dateSwitcher}>
               <button
                 className={styles.dateButton}
                 onClick={() => handleDateChange('prev')}
-                aria-label="Previous day"
+                aria-label={t('global:common.previousDay')}
               >
                 <svg
                   width="20"
@@ -271,7 +271,7 @@ export function ProgressPage() {
               <button
                 className={styles.dateButton}
                 onClick={() => handleDateChange('next')}
-                aria-label="Next day"
+                aria-label={t('global:common.nextDay')}
               >
                 <svg
                   width="20"
@@ -290,7 +290,7 @@ export function ProgressPage() {
           <button
             className={styles.addButton}
             onClick={openAddModal}
-            aria-label="Add food entry"
+            aria-label={t('global:common.addFoodEntry')}
           >
             <svg
               width="24"
@@ -303,7 +303,7 @@ export function ProgressPage() {
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            <span>Add Food</span>
+            <span>{t('foodLog.addFood')}</span>
           </button>
 
           <div className={styles.mealGroups}>
@@ -314,9 +314,10 @@ export function ProgressPage() {
               return (
                 <div key={mealType} className={styles.mealGroup}>
                   <h3 className={styles.mealTitle}>
-                    {mealType}
+                    {t(mealTypeTranslationKeys[mealType])}
                     <span className={styles.mealCalories}>
-                      {mealEntries.reduce((sum, e) => sum + e.calories, 0)} kcal
+                      {mealEntries.reduce((sum, e) => sum + e.calories, 0)}{' '}
+                      {t('global:units.kcal')}
                     </span>
                   </h3>
                   <div className={styles.entriesList}>
@@ -350,9 +351,7 @@ export function ProgressPage() {
                 <line x1="10" y1="1" x2="10" y2="4"></line>
                 <line x1="14" y1="1" x2="14" y2="4"></line>
               </svg>
-              <p className={styles.emptyText}>
-                No food entries yet. Start tracking your meals!
-              </p>
+              <p className={styles.emptyText}>{t('foodLog.emptyState')}</p>
             </div>
           )}
         </section>

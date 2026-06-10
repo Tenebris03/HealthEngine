@@ -1,0 +1,30 @@
+{
+  "pageTitle": "Daily Progress",
+  "foodLog": {
+    "title": "Food Log",
+    "addFood": "Add Food",
+    "emptyState": "No food entries yet. Start tracking your meals!"
+  },
+  "rings": {
+    "calories": "Calories",
+    "protein": "Protein",
+    "carbs": "Carbs",
+    "of": "/"
+  },
+  "addEditModal": {
+    "addTitle": "Add Food Entry",
+    "editTitle": "Edit Food Entry",
+    "foodName": "Food Name *",
+    "portion": "Portion",
+    "calories": "Calories (kcal) *",
+    "protein": "Protein (g)",
+    "carbs": "Carbs (g)",
+    "fat": "Fat (g)",
+    "mealType": "Meal Type",
+    "foodNamePlaceholder": "e.g., Oatmeal",
+    "portionPlaceholder": "e.g., 80g or 1 cup",
+    "numberPlaceholder": "0",
+    "addEntry": "Add Entry",
+    "updateEntry": "Update Entry"
+  }
+}

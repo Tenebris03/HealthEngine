@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   WeightTargetCard,
   MacroTargetCard,
@@ -24,6 +25,7 @@ const MOCK_GOALS: GoalConfig = {
 };
 
 export function GoalsPage() {
+  const { t } = useTranslation('goals');
   const [goals, setGoals] = useState<GoalConfig>(MOCK_GOALS);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -44,10 +46,8 @@ export function GoalsPage() {
       <div className={styles.container}>
         <div className={styles.header}>
           <div>
-            <h1 className={styles.pageTitle}>Your Goals</h1>
-            <p className={styles.pageSubtitle}>
-              Manage your weight targets and macronutrient configurations
-            </p>
+            <h1 className={styles.pageTitle}>{t('pageTitle')}</h1>
+            <p className={styles.pageSubtitle}>{t('pageSubtitle')}</p>
           </div>
           <button className={styles.editButton} onClick={handleEditGoals}>
             <svg
@@ -61,7 +61,7 @@ export function GoalsPage() {
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
-            <span>Edit Goals</span>
+            <span>{t('editModal.title')}</span>
           </button>
         </div>
 

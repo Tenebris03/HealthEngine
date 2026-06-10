@@ -1,0 +1,30 @@
+{
+  "pageTitle": "Täglicher Fortschritt",
+  "foodLog": {
+    "title": "Ernährungstagebuch",
+    "addFood": "Lebensmittel hinzufügen",
+    "emptyState": "Noch keine Einträge. Beginne, deine Mahlzeiten zu erfassen!"
+  },
+  "rings": {
+    "calories": "Kalorien",
+    "protein": "Protein",
+    "carbs": "Kohlenhydrate",
+    "of": "/"
+  },
+  "addEditModal": {
+    "addTitle": "Lebensmittel hinzufügen",
+    "editTitle": "Eintrag bearbeiten",
+    "foodName": "Lebensmittelname *",
+    "portion": "Portion",
+    "calories": "Kalorien (kcal) *",
+    "protein": "Protein (g)",
+    "carbs": "Kohlenhydrate (g)",
+    "fat": "Fett (g)",
+    "mealType": "Mahlzeitentyp",
+    "foodNamePlaceholder": "z.B. Haferflocken",
+    "portionPlaceholder": "z.B. 80g oder 1 Tasse",
+    "numberPlaceholder": "0",
+    "addEntry": "Hinzufügen",
+    "updateEntry": "Aktualisieren"
+  }
+}

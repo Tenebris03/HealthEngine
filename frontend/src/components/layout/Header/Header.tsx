@@ -1,15 +1,18 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '../../language-switcher/LanguageSwitcher';
 import styles from './Header.module.css';
 
 const headerLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'Goals', path: '/goals' },
-  { label: 'Leaderboard', path: '/leaderboard' },
-  { label: 'Progress', path: '/progress' },
-  { label: 'About', path: '/about' },
-];
+  { key: 'nav.home' as const, path: '/' as const },
+  { key: 'nav.goals' as const, path: '/goals' as const },
+  { key: 'nav.leaderboard' as const, path: '/leaderboard' as const },
+  { key: 'nav.progress' as const, path: '/progress' as const },
+  { key: 'nav.about' as const, path: '/about' as const },
+] as const;
 
 export function Header() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -21,19 +24,20 @@ export function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logo} onClick={() => handleNavigate('/')}>
-        HealthEngine
+        {t('brand')}
       </div>
 
       <nav className={styles.nav}>
         {headerLinks.map((link) => (
           <button
-            key={link.label}
+            key={link.key}
             className={`${styles.navItem} ${location.pathname === link.path ? styles.navItemActive : ''}`}
             onClick={() => handleNavigate(link.path)}
           >
-            {link.label}
+            {t(link.key)}
           </button>
         ))}
+        <LanguageSwitcher />
       </nav>
     </header>
   );

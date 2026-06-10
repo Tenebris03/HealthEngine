@@ -1,0 +1,34 @@
+{
+  "pageTitle": "Deine Ziele",
+  "pageSubtitle": "Verwalte deine Gewichtsziele und Makronährstoffkonfigurationen",
+  "weightTarget": {
+    "title": "Gewichtsziel-Zeitplan",
+    "startWeight": "Startgewicht",
+    "currentWeight": "Aktuelles Gewicht",
+    "targetWeight": "Zielgewicht",
+    "overallProgress": "Gesamtfortschritt",
+    "kgLost": "{{weight}} kg verloren",
+    "kgRemaining": "{{weight}} kg übrig",
+    "daysRemaining": "{{days}} Tage übrig"
+  },
+  "macroTarget": {
+    "title": "Makronährstoffverteilung",
+    "dailyCalorieTarget": "Tägliches Kalorienziel",
+    "protein": "Protein",
+    "carbs": "Kohlenhydrate",
+    "fat": "Fett"
+  },
+  "editModal": {
+    "title": "Ziele bearbeiten",
+    "weightTargetTimeline": "Gewichtsziel-Zeitplan",
+    "macronutrientTargets": "Makronährstoffziele",
+    "startWeight": "Startgewicht (kg)",
+    "currentWeight": "Aktuelles Gewicht (kg)",
+    "targetWeight": "Zielgewicht (kg)",
+    "targetDate": "Zieldatum",
+    "dailyCalories": "Tägliche Kalorien (kcal)",
+    "protein": "Protein (g)",
+    "carbs": "Kohlenhydrate (g)",
+    "fat": "Fett (g)"
+  }
+}

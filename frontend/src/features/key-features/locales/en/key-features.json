@@ -1,0 +1,15 @@
+{
+  "title": "Key Features",
+  "setNutritionGoals": {
+    "title": "Set Nutrition Goals",
+    "description": "Define personalized nutrition targets based on your health objectives, dietary preferences, and lifestyle. Track macros, calories, and micronutrients with precision."
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "description": "Compete with friends and the community in achieving nutrition milestones. Climb the ranks, earn badges, and stay motivated through friendly competition and shared achievements."
+  },
+  "trackProgress": {
+    "title": "Track Progress",
+    "description": "Visualize your health journey with detailed analytics, progress charts, and insightful reports. Monitor trends, identify patterns, and adjust your goals for optimal results."
+  }
+}

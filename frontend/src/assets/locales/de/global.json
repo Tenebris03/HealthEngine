@@ -1,0 +1,61 @@
+{
+  "brand": "HealthEngine",
+  "nav": {
+    "home": "Startseite",
+    "goals": "Ziele",
+    "leaderboard": "Rangliste",
+    "progress": "Fortschritt",
+    "about": "Über uns"
+  },
+  "footer": {
+    "product": "Produkt",
+    "company": "Unternehmen",
+    "support": "Support",
+    "followUs": "Folgen Sie uns",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "api": "API",
+    "blog": "Blog",
+    "careers": "Karriere",
+    "helpCenter": "Hilfe-Center",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "about": "Über uns",
+    "copyright": "© {{year}} HealthEngine. Alle Rechte vorbehalten."
+  },
+  "common": {
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "close": "Schließen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "saveGoals": "Ziele speichern",
+    "add": "Hinzufügen",
+    "update": "Aktualisieren",
+    "previousDay": "Vorheriger Tag",
+    "nextDay": "Nächster Tag",
+    "addFoodEntry": "Lebensmittel hinzufügen",
+    "editEntry": "{{name}} bearbeiten",
+    "deleteEntry": "{{name}} löschen",
+    "closeModal": "Modal schließen",
+    "editMacroTargets": "Makroziele bearbeiten",
+    "editWeightTarget": "Gewichtsziel bearbeiten"
+  },
+  "mealTypes": {
+    "breakfast": "Frühstück",
+    "lunch": "Mittagessen",
+    "dinner": "Abendessen",
+    "snacks": "Snacks"
+  },
+  "units": {
+    "kcal": "kcal",
+    "g": "g",
+    "kg": "kg",
+    "percent": "%"
+  },
+  "date": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "tomorrow": "Morgen"
+  }
+}
