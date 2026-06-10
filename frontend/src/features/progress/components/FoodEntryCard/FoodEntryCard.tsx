@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './FoodEntryCard.module.css';
-import type { FoodEntry } from '../../types/progress.types';
+import type { FoodEntry } from '@/features/progress/types/progress.types';
 
 interface FoodEntryCardProps {
   entry: FoodEntry;

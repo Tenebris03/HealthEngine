@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './AddEditFoodModal.module.css';
-import type { FoodEntry, MealType } from '../../types/progress.types';
+import type {
+  FoodEntry,
+  MealType,
+} from '@/features/progress/types/progress.types';
 
 interface AddEditFoodModalProps {
   isOpen: boolean;

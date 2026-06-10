@@ -1,5 +1,5 @@
-import { Hero } from '../../features/hero/components/Hero.tsx';
-import { KeyFeatures } from '../../features/key-features/components/KeyFeatures.tsx';
+import { Hero } from '@/features/hero/components/Hero';
+import { KeyFeatures } from '@/features/key-features/components/KeyFeatures';
 
 export function HomePage() {
   return (

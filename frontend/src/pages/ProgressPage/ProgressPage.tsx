@@ -1,13 +1,13 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ProgressRing } from '../../features/progress/components/ProgressRing/ProgressRing';
-import { FoodEntryCard } from '../../features/progress/components/FoodEntryCard/FoodEntryCard';
-import { AddEditFoodModal } from '../../features/progress/components/AddEditFoodModal/AddEditFoodModal';
+import { ProgressRing } from '@/features/progress/components/ProgressRing/ProgressRing';
+import { FoodEntryCard } from '@/features/progress/components/FoodEntryCard/FoodEntryCard';
+import { AddEditFoodModal } from '@/features/progress/components/AddEditFoodModal/AddEditFoodModal';
 import styles from './ProgressPage.module.css';
 import type {
   FoodEntry,
   MealType,
-} from '../../features/progress/types/progress.types';
+} from '@/features/progress/types/progress.types';
 
 const MEAL_ORDER: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
 

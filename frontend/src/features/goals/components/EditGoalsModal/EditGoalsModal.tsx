@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './EditGoalsModal.module.css';
-import type { GoalConfig } from '../../types/goals.types';
+import type { GoalConfig } from '@/features/goals/types/goals.types';
 
 interface EditGoalsModalProps {
   isOpen: boolean;

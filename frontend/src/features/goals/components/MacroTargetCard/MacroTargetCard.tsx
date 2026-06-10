@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './MacroTargetCard.module.css';
-import type { MacroTarget } from '../../types/goals.types';
+import type { MacroTarget } from '@/features/goals/types/goals.types';
 
 interface MacroTargetCardProps {
   macroTarget: MacroTarget;

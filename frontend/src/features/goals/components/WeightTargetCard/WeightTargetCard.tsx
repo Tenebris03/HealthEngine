@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './WeightTargetCard.module.css';
-import type { WeightTarget } from '../../types/goals.types';
+import type { WeightTarget } from '@/features/goals/types/goals.types';
 
 interface WeightTargetCardProps {
   weightTarget: WeightTarget;

@@ -4,9 +4,9 @@ import {
   WeightTargetCard,
   MacroTargetCard,
   EditGoalsModal,
-} from '../../features/goals';
+} from '@/features/goals';
 import styles from './GoalsPage.module.css';
-import type { GoalConfig } from '../../features/goals/types/goals.types';
+import type { GoalConfig } from '@/features/goals/types/goals.types';
 
 const MOCK_GOALS: GoalConfig = {
   weight: {

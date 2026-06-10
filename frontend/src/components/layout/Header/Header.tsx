@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '../../language-switcher/LanguageSwitcher';
+import { LanguageSwitcher } from '@/components/language-switcher/LanguageSwitcher';
 import styles from './Header.module.css';
 
 const headerLinks = [
