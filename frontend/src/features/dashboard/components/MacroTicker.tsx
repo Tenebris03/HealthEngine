@@ -31,7 +31,7 @@ export function MacroTicker({
           className={styles.fill}
           initial={{ width: 0 }}
           animate={{ width: `${percent * 100}%` }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.8, ease: 'easeOut' as const }}
           style={{ backgroundColor: color }}
         />
       </div>
