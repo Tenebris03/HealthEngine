@@ -11,6 +11,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "knip": "knip",
     "format": "turbo run format",
     "format-fix": "turbo run format-fix",
     "prepare": "husky"
@@ -32,6 +33,7 @@
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
     "husky": "^9.1.7",
+    "knip": "^6.16.1",
     "lint-staged": "^17.0.7",
     "turbo": "^2.5.2"
   }
