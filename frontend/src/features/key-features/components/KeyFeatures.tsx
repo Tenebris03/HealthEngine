@@ -1,20 +1,35 @@
-import styles from './KeyFeatures.module.css'
+import styles from './KeyFeatures.module.css';
 
 const features = [
   {
     icon: (
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
         <circle cx="12" cy="12" r="10"></circle>
         <circle cx="12" cy="12" r="6"></circle>
         <circle cx="12" cy="12" r="2"></circle>
       </svg>
     ),
     title: 'Set Nutrition Goals',
-    description: 'Define personalized nutrition targets based on your health objectives, dietary preferences, and lifestyle. Track macros, calories, and micronutrients with precision.'
+    description:
+      'Define personalized nutrition targets based on your health objectives, dietary preferences, and lifestyle. Track macros, calories, and micronutrients with precision.',
   },
   {
     icon: (
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
         <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
         <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
         <path d="M4 22h16"></path>
@@ -24,20 +39,29 @@ const features = [
       </svg>
     ),
     title: 'Leaderboard',
-    description: 'Compete with friends and the community in achieving nutrition milestones. Climb the ranks, earn badges, and stay motivated through friendly competition and shared achievements.'
+    description:
+      'Compete with friends and the community in achieving nutrition milestones. Climb the ranks, earn badges, and stay motivated through friendly competition and shared achievements.',
   },
   {
     icon: (
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
         <line x1="18" y1="20" x2="18" y2="10"></line>
         <line x1="12" y1="20" x2="12" y2="4"></line>
         <line x1="6" y1="20" x2="6" y2="14"></line>
       </svg>
     ),
     title: 'Track Progress',
-    description: 'Visualize your health journey with detailed analytics, progress charts, and insightful reports. Monitor trends, identify patterns, and adjust your goals for optimal results.'
-  }
-]
+    description:
+      'Visualize your health journey with detailed analytics, progress charts, and insightful reports. Monitor trends, identify patterns, and adjust your goals for optimal results.',
+  },
+];
 
 export function KeyFeatures() {
   return (
@@ -58,5 +82,5 @@ export function KeyFeatures() {
         </div>
       </div>
     </section>
-  )
+  );
 }

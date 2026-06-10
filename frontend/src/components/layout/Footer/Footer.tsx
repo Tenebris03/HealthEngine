@@ -1,4 +1,4 @@
-import styles from './Footer.module.css'
+import styles from './Footer.module.css';
 
 const footerSections = [
   {
@@ -25,7 +25,7 @@ const footerSections = [
       { label: 'Privacy', href: '#privacy' },
     ],
   },
-]
+];
 
 export function Footer() {
   return (
@@ -47,10 +47,18 @@ export function Footer() {
           <a className={styles.socialIcon} href="#twitter" aria-label="Twitter">
             🐦
           </a>
-          <a className={styles.socialIcon} href="#linkedin" aria-label="LinkedIn">
+          <a
+            className={styles.socialIcon}
+            href="#linkedin"
+            aria-label="LinkedIn"
+          >
             💼
           </a>
-          <a className={styles.socialIcon} href="#instagram" aria-label="Instagram">
+          <a
+            className={styles.socialIcon}
+            href="#instagram"
+            aria-label="Instagram"
+          >
             📷
           </a>
         </div>
@@ -60,6 +68,5 @@ export function Footer() {
         © {new Date().getFullYear()} HealthEngine. All rights reserved.
       </p>
     </footer>
-  )
+  );
 }
-

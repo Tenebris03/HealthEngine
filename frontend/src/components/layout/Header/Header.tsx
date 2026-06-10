@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from 'react-router-dom'
-import styles from './Header.module.css'
+import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './Header.module.css';
 
 const headerLinks = [
   { label: 'Home', path: '/' },
@@ -7,16 +7,16 @@ const headerLinks = [
   { label: 'Leaderboard', path: '/leaderboard' },
   { label: 'Progress', path: '/progress' },
   { label: 'About', path: '/about' },
-]
+];
 
 export function Header() {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleNavigate = (path: string) => {
-    navigate(path)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <header className={styles.header}>
@@ -36,6 +36,5 @@ export function Header() {
         ))}
       </nav>
     </header>
-  )
+  );
 }
-

@@ -1,7 +1,11 @@
-import { useState } from 'react'
-import { WeightTargetCard, MacroTargetCard, EditGoalsModal } from '../../features/goals'
-import styles from './GoalsPage.module.css'
-import type { GoalConfig } from '../../features/goals/types/goals.types'
+import { useState } from 'react';
+import {
+  WeightTargetCard,
+  MacroTargetCard,
+  EditGoalsModal,
+} from '../../features/goals';
+import styles from './GoalsPage.module.css';
+import type { GoalConfig } from '../../features/goals/types/goals.types';
 
 const MOCK_GOALS: GoalConfig = {
   weight: {
@@ -17,23 +21,23 @@ const MOCK_GOALS: GoalConfig = {
     fat: 65,
     calories: 2000,
   },
-}
+};
 
 export function GoalsPage() {
-  const [goals, setGoals] = useState<GoalConfig>(MOCK_GOALS)
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [goals, setGoals] = useState<GoalConfig>(MOCK_GOALS);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleEditGoals = () => {
-    setIsEditModalOpen(true)
-  }
+    setIsEditModalOpen(true);
+  };
 
   const handleCloseModal = () => {
-    setIsEditModalOpen(false)
-  }
+    setIsEditModalOpen(false);
+  };
 
   const handleSaveGoals = (updatedGoals: GoalConfig) => {
-    setGoals(updatedGoals)
-  }
+    setGoals(updatedGoals);
+  };
 
   return (
     <div className={styles.page}>
@@ -46,7 +50,14 @@ export function GoalsPage() {
             </p>
           </div>
           <button className={styles.editButton} onClick={handleEditGoals}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
@@ -56,10 +67,16 @@ export function GoalsPage() {
 
         <div className={styles.grid}>
           <div className={styles.column}>
-            <WeightTargetCard weightTarget={goals.weight} onEdit={handleEditGoals} />
+            <WeightTargetCard
+              weightTarget={goals.weight}
+              onEdit={handleEditGoals}
+            />
           </div>
           <div className={styles.column}>
-            <MacroTargetCard macroTarget={goals.macros} onEdit={handleEditGoals} />
+            <MacroTargetCard
+              macroTarget={goals.macros}
+              onEdit={handleEditGoals}
+            />
           </div>
         </div>
       </div>
@@ -71,5 +88,5 @@ export function GoalsPage() {
         initialGoals={goals}
       />
     </div>
-  )
+  );
 }
