@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './AddEditFoodModal.module.css';
 import type { FoodEntry, MealType } from '../../types/progress.types';
 
@@ -11,12 +12,20 @@ interface AddEditFoodModalProps {
 
 const MEAL_TYPES: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
 
+const mealTypeTranslationKeys = {
+  Breakfast: 'global:mealTypes.breakfast',
+  Lunch: 'global:mealTypes.lunch',
+  Dinner: 'global:mealTypes.dinner',
+  Snacks: 'global:mealTypes.snacks',
+} as const;
+
 export function AddEditFoodModal({
   isOpen,
   onClose,
   onSubmit,
   editEntry,
 }: AddEditFoodModalProps) {
+  const { t } = useTranslation(['progress', 'global']);
   const [name, setName] = useState(editEntry?.name || '');
   const [calories, setCalories] = useState(
     editEntry?.calories.toString() || '',
@@ -60,12 +69,14 @@ export function AddEditFoodModal({
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2 id="modal-title" className={styles.modalTitle}>
-            {editEntry ? 'Edit Food Entry' : 'Add Food Entry'}
+            {editEntry
+              ? t('addEditModal.editTitle')
+              : t('addEditModal.addTitle')}
           </h2>
           <button
             className={styles.closeButton}
             onClick={onClose}
-            aria-label="Close modal"
+            aria-label={t('global:common.closeModal')}
           >
             <svg
               width="24"
@@ -84,7 +95,7 @@ export function AddEditFoodModal({
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor="food-name" className={styles.label}>
-              Food Name *
+              {t('addEditModal.foodName')}
             </label>
             <input
               id="food-name"
@@ -92,14 +103,14 @@ export function AddEditFoodModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
-              placeholder="e.g., Oatmeal"
+              placeholder={t('addEditModal.foodNamePlaceholder')}
               required
             />
           </div>
 
           <div className={styles.formGroup}>
             <label htmlFor="portion" className={styles.label}>
-              Portion
+              {t('addEditModal.portion')}
             </label>
             <input
               id="portion"
@@ -107,14 +118,14 @@ export function AddEditFoodModal({
               value={portion}
               onChange={(e) => setPortion(e.target.value)}
               className={styles.input}
-              placeholder="e.g., 80g or 1 cup"
+              placeholder={t('addEditModal.portionPlaceholder')}
             />
           </div>
 
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="calories" className={styles.label}>
-                Calories (kcal) *
+                {t('addEditModal.calories')}
               </label>
               <input
                 id="calories"
@@ -122,7 +133,7 @@ export function AddEditFoodModal({
                 value={calories}
                 onChange={(e) => setCalories(e.target.value)}
                 className={styles.input}
-                placeholder="0"
+                placeholder={t('addEditModal.numberPlaceholder')}
                 min="0"
                 required
               />
@@ -130,7 +141,7 @@ export function AddEditFoodModal({
 
             <div className={styles.formGroup}>
               <label htmlFor="protein" className={styles.label}>
-                Protein (g)
+                {t('addEditModal.protein')}
               </label>
               <input
                 id="protein"
@@ -138,7 +149,7 @@ export function AddEditFoodModal({
                 value={protein}
                 onChange={(e) => setProtein(e.target.value)}
                 className={styles.input}
-                placeholder="0"
+                placeholder={t('addEditModal.numberPlaceholder')}
                 min="0"
               />
             </div>
@@ -147,7 +158,7 @@ export function AddEditFoodModal({
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="carbs" className={styles.label}>
-                Carbs (g)
+                {t('addEditModal.carbs')}
               </label>
               <input
                 id="carbs"
@@ -155,14 +166,14 @@ export function AddEditFoodModal({
                 value={carbs}
                 onChange={(e) => setCarbs(e.target.value)}
                 className={styles.input}
-                placeholder="0"
+                placeholder={t('addEditModal.numberPlaceholder')}
                 min="0"
               />
             </div>
 
             <div className={styles.formGroup}>
               <label htmlFor="fat" className={styles.label}>
-                Fat (g)
+                {t('addEditModal.fat')}
               </label>
               <input
                 id="fat"
@@ -170,7 +181,7 @@ export function AddEditFoodModal({
                 value={fat}
                 onChange={(e) => setFat(e.target.value)}
                 className={styles.input}
-                placeholder="0"
+                placeholder={t('addEditModal.numberPlaceholder')}
                 min="0"
               />
             </div>
@@ -178,7 +189,7 @@ export function AddEditFoodModal({
 
           <div className={styles.formGroup}>
             <label htmlFor="meal-type" className={styles.label}>
-              Meal Type
+              {t('addEditModal.mealType')}
             </label>
             <select
               id="meal-type"
@@ -188,7 +199,7 @@ export function AddEditFoodModal({
             >
               {MEAL_TYPES.map((type) => (
                 <option key={type} value={type}>
-                  {type}
+                  {t(mealTypeTranslationKeys[type])}
                 </option>
               ))}
             </select>
@@ -200,10 +211,12 @@ export function AddEditFoodModal({
               className={styles.cancelButton}
               onClick={onClose}
             >
-              Cancel
+              {t('global:common.cancel')}
             </button>
             <button type="submit" className={styles.submitButton}>
-              {editEntry ? 'Update' : 'Add'} Entry
+              {editEntry
+                ? t('addEditModal.updateEntry')
+                : t('addEditModal.addEntry')}
             </button>
           </div>
         </form>

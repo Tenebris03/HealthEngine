@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styles from './WeightTargetCard.module.css';
 import type { WeightTarget } from '../../types/goals.types';
 
@@ -10,6 +11,7 @@ export function WeightTargetCard({
   weightTarget,
   onEdit,
 }: WeightTargetCardProps) {
+  const { t } = useTranslation(['goals', 'global']);
   const { startDate, startWeight, currentWeight, targetWeight, targetDate } =
     weightTarget;
 
@@ -34,12 +36,12 @@ export function WeightTargetCard({
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
-        <h3 className={styles.cardTitle}>Weight Target Timeline</h3>
+        <h3 className={styles.cardTitle}>{t('weightTarget.title')}</h3>
         {onEdit && (
           <button
             className={styles.editButton}
             onClick={onEdit}
-            aria-label="Edit weight target"
+            aria-label={t('global:common.editWeightTarget')}
           >
             <svg
               width="20"
@@ -58,31 +60,41 @@ export function WeightTargetCard({
 
       <div className={styles.weightGrid}>
         <div className={styles.weightItem}>
-          <div className={styles.weightLabel}>Start Weight</div>
-          <div className={styles.weightValue}>{startWeight} kg</div>
+          <div className={styles.weightLabel}>
+            {t('weightTarget.startWeight')}
+          </div>
+          <div className={styles.weightValue}>
+            {startWeight} {t('global:units.kg')}
+          </div>
           <div className={styles.weightDate}>{formatDate(startDate)}</div>
         </div>
 
         <div className={styles.weightItem}>
-          <div className={styles.weightLabel}>Current Weight</div>
+          <div className={styles.weightLabel}>
+            {t('weightTarget.currentWeight')}
+          </div>
           <div className={`${styles.weightValue} ${styles.currentWeight}`}>
-            {currentWeight} kg
+            {currentWeight} {t('global:units.kg')}
           </div>
           <div className={styles.weightChange}>
             {weightLost > 0 ? (
-              <span className={styles.loss}>-{weightLost.toFixed(1)} kg</span>
+              <span className={styles.loss}>
+                -{weightLost.toFixed(1)} {t('global:units.kg')}
+              </span>
             ) : (
               <span className={styles.gain}>
-                +{Math.abs(weightLost).toFixed(1)} kg
+                +{Math.abs(weightLost).toFixed(1)} {t('global:units.kg')}
               </span>
             )}
           </div>
         </div>
 
         <div className={styles.weightItem}>
-          <div className={styles.weightLabel}>Target Weight</div>
+          <div className={styles.weightLabel}>
+            {t('weightTarget.targetWeight')}
+          </div>
           <div className={`${styles.weightValue} ${styles.targetWeight}`}>
-            {targetWeight} kg
+            {targetWeight} {t('global:units.kg')}
           </div>
           <div className={styles.weightDate}>{formatDate(targetDate)}</div>
         </div>
@@ -90,9 +102,12 @@ export function WeightTargetCard({
 
       <div className={styles.progressSection}>
         <div className={styles.progressHeader}>
-          <span className={styles.progressLabel}>Overall Progress</span>
+          <span className={styles.progressLabel}>
+            {t('weightTarget.overallProgress')}
+          </span>
           <span className={styles.progressPercent}>
-            {progressPercent.toFixed(1)}%
+            {progressPercent.toFixed(1)}
+            {t('global:units.percent')}
           </span>
         </div>
         <div className={styles.progressBar}>
@@ -102,9 +117,17 @@ export function WeightTargetCard({
           ></div>
         </div>
         <div className={styles.progressDetails}>
-          <span>{weightLost.toFixed(1)} kg lost</span>
-          <span>{weightToLose.toFixed(1)} kg remaining</span>
-          {daysRemaining > 0 && <span>{daysRemaining} days remaining</span>}
+          <span>
+            {t('weightTarget.kgLost', { weight: weightLost.toFixed(1) })}
+          </span>
+          <span>
+            {t('weightTarget.kgRemaining', { weight: weightToLose.toFixed(1) })}
+          </span>
+          {daysRemaining > 0 && (
+            <span>
+              {t('weightTarget.daysRemaining', { days: daysRemaining })}
+            </span>
+          )}
         </div>
       </div>
     </div>

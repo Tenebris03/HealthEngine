@@ -1,0 +1,61 @@
+{
+  "brand": "HealthEngine",
+  "nav": {
+    "home": "Home",
+    "goals": "Goals",
+    "leaderboard": "Leaderboard",
+    "progress": "Progress",
+    "about": "About"
+  },
+  "footer": {
+    "product": "Product",
+    "company": "Company",
+    "support": "Support",
+    "followUs": "Follow Us",
+    "features": "Features",
+    "pricing": "Pricing",
+    "api": "API",
+    "blog": "Blog",
+    "careers": "Careers",
+    "helpCenter": "Help Center",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "about": "About",
+    "copyright": "© {{year}} HealthEngine. All rights reserved."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "saveGoals": "Save Goals",
+    "add": "Add",
+    "update": "Update",
+    "previousDay": "Previous day",
+    "nextDay": "Next day",
+    "addFoodEntry": "Add food entry",
+    "editEntry": "Edit {{name}}",
+    "deleteEntry": "Delete {{name}}",
+    "closeModal": "Close modal",
+    "editMacroTargets": "Edit macro targets",
+    "editWeightTarget": "Edit weight target"
+  },
+  "mealTypes": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snacks": "Snacks"
+  },
+  "units": {
+    "kcal": "kcal",
+    "g": "g",
+    "kg": "kg",
+    "percent": "%"
+  },
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow"
+  }
+}

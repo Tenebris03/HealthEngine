@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './EditGoalsModal.module.css';
 import type { GoalConfig } from '../../types/goals.types';
 
@@ -15,6 +16,7 @@ export function EditGoalsModal({
   onSubmit,
   initialGoals,
 }: EditGoalsModalProps) {
+  const { t } = useTranslation(['goals', 'global']);
   const [formData, setFormData] = useState<GoalConfig>(initialGoals);
 
   if (!isOpen) return null;
@@ -34,11 +36,11 @@ export function EditGoalsModal({
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <h2 className={styles.modalTitle}>Edit Goals</h2>
+          <h2 className={styles.modalTitle}>{t('editModal.title')}</h2>
           <button
             className={styles.closeButton}
             onClick={handleClose}
-            aria-label="Close modal"
+            aria-label={t('global:common.closeModal')}
           >
             <svg
               width="24"
@@ -55,13 +57,16 @@ export function EditGoalsModal({
         </div>
 
         <form onSubmit={handleSubmit} className={styles.modalForm}>
-          {/* Weight Goals Section */}
           <div className={styles.formSection}>
-            <h3 className={styles.sectionTitle}>Weight Target Timeline</h3>
+            <h3 className={styles.sectionTitle}>
+              {t('editModal.weightTargetTimeline')}
+            </h3>
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Start Weight (kg)</label>
+                <label className={styles.formLabel}>
+                  {t('editModal.startWeight')}
+                </label>
                 <input
                   type="number"
                   step="0.1"
@@ -81,7 +86,9 @@ export function EditGoalsModal({
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Current Weight (kg)</label>
+                <label className={styles.formLabel}>
+                  {t('editModal.currentWeight')}
+                </label>
                 <input
                   type="number"
                   step="0.1"
@@ -103,7 +110,9 @@ export function EditGoalsModal({
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Target Weight (kg)</label>
+                <label className={styles.formLabel}>
+                  {t('editModal.targetWeight')}
+                </label>
                 <input
                   type="number"
                   step="0.1"
@@ -123,7 +132,9 @@ export function EditGoalsModal({
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Target Date</label>
+                <label className={styles.formLabel}>
+                  {t('editModal.targetDate')}
+                </label>
                 <input
                   type="date"
                   value={formData.weight.targetDate.toISOString().split('T')[0]}
@@ -143,14 +154,15 @@ export function EditGoalsModal({
             </div>
           </div>
 
-          {/* Macro Goals Section */}
           <div className={styles.formSection}>
-            <h3 className={styles.sectionTitle}>Macronutrient Targets</h3>
+            <h3 className={styles.sectionTitle}>
+              {t('editModal.macronutrientTargets')}
+            </h3>
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>
-                  Daily Calories (kcal)
+                  {t('editModal.dailyCalories')}
                 </label>
                 <input
                   type="number"
@@ -172,7 +184,9 @@ export function EditGoalsModal({
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Protein (g)</label>
+                <label className={styles.formLabel}>
+                  {t('editModal.protein')}
+                </label>
                 <input
                   type="number"
                   value={formData.macros.protein}
@@ -191,7 +205,9 @@ export function EditGoalsModal({
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Carbs (g)</label>
+                <label className={styles.formLabel}>
+                  {t('editModal.carbs')}
+                </label>
                 <input
                   type="number"
                   value={formData.macros.carbs}
@@ -210,7 +226,7 @@ export function EditGoalsModal({
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Fat (g)</label>
+                <label className={styles.formLabel}>{t('editModal.fat')}</label>
                 <input
                   type="number"
                   value={formData.macros.fat}
@@ -236,10 +252,10 @@ export function EditGoalsModal({
               className={styles.cancelButton}
               onClick={handleClose}
             >
-              Cancel
+              {t('global:common.cancel')}
             </button>
             <button type="submit" className={styles.submitButton}>
-              Save Goals
+              {t('global:common.saveGoals')}
             </button>
           </div>
         </form>

@@ -1,0 +1,15 @@
+{
+  "title": "Schlüsselfunktionen",
+  "setNutritionGoals": {
+    "title": "Ernährungsziele setzen",
+    "description": "Definieren Sie personalisierte Ernährungsziele basierend auf Ihren Gesundheitszielen, Ernährungspräferenzen und Ihrem Lebensstil. Verfolgen Sie Makros, Kalorien und Mikronährstoffe präzise."
+  },
+  "leaderboard": {
+    "title": "Rangliste",
+    "description": "Wetteifern Sie mit Freunden und der Community beim Erreichen von Ernährungsmeilensteinen. Erklimmen Sie die Ränge, sammeln Sie Abzeichen und bleiben Sie durch freundschaftlichen Wettbewerb motiviert."
+  },
+  "trackProgress": {
+    "title": "Fortschritt verfolgen",
+    "description": "Visualisieren Sie Ihre Gesundheitsreise mit detaillierten Analysen, Fortschrittsdiagrammen und aufschlussreichen Berichten. Überwachen Sie Trends, erkennen Sie Muster und passen Sie Ihre Ziele für optimale Ergebnisse an."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "pageTitle": "Your Goals",
+  "pageSubtitle": "Manage your weight targets and macronutrient configurations",
+  "weightTarget": {
+    "title": "Weight Target Timeline",
+    "startWeight": "Start Weight",
+    "currentWeight": "Current Weight",
+    "targetWeight": "Target Weight",
+    "overallProgress": "Overall Progress",
+    "kgLost": "{{weight}} kg lost",
+    "kgRemaining": "{{weight}} kg remaining",
+    "daysRemaining": "{{days}} days remaining"
+  },
+  "macroTarget": {
+    "title": "Target Macronutrient Split",
+    "dailyCalorieTarget": "Daily Calorie Target",
+    "protein": "Protein",
+    "carbs": "Carbs",
+    "fat": "Fat"
+  },
+  "editModal": {
+    "title": "Edit Goals",
+    "weightTargetTimeline": "Weight Target Timeline",
+    "macronutrientTargets": "Macronutrient Targets",
+    "startWeight": "Start Weight (kg)",
+    "currentWeight": "Current Weight (kg)",
+    "targetWeight": "Target Weight (kg)",
+    "targetDate": "Target Date",
+    "dailyCalories": "Daily Calories (kcal)",
+    "protein": "Protein (g)",
+    "carbs": "Carbs (g)",
+    "fat": "Fat (g)"
+  }
+}

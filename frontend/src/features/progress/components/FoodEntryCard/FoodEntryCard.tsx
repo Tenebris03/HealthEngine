@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styles from './FoodEntryCard.module.css';
 import type { FoodEntry } from '../../types/progress.types';
 
@@ -8,12 +9,14 @@ interface FoodEntryCardProps {
 }
 
 export function FoodEntryCard({ entry, onEdit, onDelete }: FoodEntryCardProps) {
+  const { t } = useTranslation('global');
+
   return (
     <div className={styles.card}>
       <button
         className={styles.cardContent}
         onClick={() => onEdit(entry)}
-        aria-label={`Edit ${entry.name}`}
+        aria-label={t('common.editEntry', { name: entry.name })}
       >
         <div className={styles.cardInfo}>
           <h3 className={styles.cardName}>{entry.name}</h3>
@@ -22,10 +25,13 @@ export function FoodEntryCard({ entry, onEdit, onDelete }: FoodEntryCardProps) {
         <div className={styles.cardMacros}>
           <span className={styles.macroItem}>
             <span className={styles.macroValue}>{entry.calories}</span>
-            <span className={styles.macroLabel}>kcal</span>
+            <span className={styles.macroLabel}>{t('units.kcal')}</span>
           </span>
           <span className={styles.macroItem}>
-            <span className={styles.macroValue}>{entry.protein}g</span>
+            <span className={styles.macroValue}>
+              {entry.protein}
+              {t('units.g')}
+            </span>
             <span className={styles.macroLabel}>protein</span>
           </span>
         </div>
@@ -33,7 +39,7 @@ export function FoodEntryCard({ entry, onEdit, onDelete }: FoodEntryCardProps) {
       <button
         className={styles.deleteButton}
         onClick={() => onDelete(entry.id)}
-        aria-label={`Delete ${entry.name}`}
+        aria-label={t('common.deleteEntry', { name: entry.name })}
       >
         <svg
           width="20"

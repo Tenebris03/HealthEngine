@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styles from './MacroTargetCard.module.css';
 import type { MacroTarget } from '../../types/goals.types';
 
@@ -7,6 +8,7 @@ interface MacroTargetCardProps {
 }
 
 export function MacroTargetCard({ macroTarget, onEdit }: MacroTargetCardProps) {
+  const { t } = useTranslation(['goals', 'global']);
   const { protein, carbs, fat, calories } = macroTarget;
 
   const totalMacros = protein + carbs + fat;
@@ -14,19 +16,15 @@ export function MacroTargetCard({ macroTarget, onEdit }: MacroTargetCardProps) {
   const carbsPercent = (carbs / totalMacros) * 100;
   const fatPercent = (fat / totalMacros) * 100;
 
-  const handleEdit = () => {
-    if (onEdit) onEdit();
-  };
-
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
-        <h3 className={styles.cardTitle}>Target Macronutrient Split</h3>
+        <h3 className={styles.cardTitle}>{t('macroTarget.title')}</h3>
         {onEdit && (
           <button
             className={styles.editButton}
-            onClick={handleEdit}
-            aria-label="Edit macro targets"
+            onClick={onEdit}
+            aria-label={t('global:common.editMacroTargets')}
           >
             <svg
               width="20"
@@ -44,12 +42,15 @@ export function MacroTargetCard({ macroTarget, onEdit }: MacroTargetCardProps) {
       </div>
 
       <div className={styles.calorieTarget}>
-        <div className={styles.calorieLabel}>Daily Calorie Target</div>
-        <div className={styles.calorieValue}>{calories} kcal</div>
+        <div className={styles.calorieLabel}>
+          {t('macroTarget.dailyCalorieTarget')}
+        </div>
+        <div className={styles.calorieValue}>
+          {calories} {t('global:units.kcal')}
+        </div>
       </div>
 
       <div className={styles.macroGrid}>
-        {/* Protein */}
         <div className={`${styles.macroItem} ${styles.protein}`}>
           <div className={styles.macroIcon}>
             <svg
@@ -65,17 +66,20 @@ export function MacroTargetCard({ macroTarget, onEdit }: MacroTargetCardProps) {
               <path d="M2 12l10 5 10-5"></path>
             </svg>
           </div>
-          <div className={styles.macroLabel}>Protein</div>
-          <div className={styles.macroValue}>{protein}g</div>
+          <div className={styles.macroLabel}>{t('macroTarget.protein')}</div>
+          <div className={styles.macroValue}>
+            {protein}
+            {t('global:units.g')}
+          </div>
           <div className={styles.macroPercent}>
-            {proteinPercent.toFixed(0)}%
+            {proteinPercent.toFixed(0)}
+            {t('global:units.percent')}
           </div>
           <div className={styles.macroCalories}>
-            {(protein * 4).toLocaleString()} kcal
+            {(protein * 4).toLocaleString()} {t('global:units.kcal')}
           </div>
         </div>
 
-        {/* Carbs */}
         <div className={`${styles.macroItem} ${styles.carbs}`}>
           <div className={styles.macroIcon}>
             <svg
@@ -90,15 +94,20 @@ export function MacroTargetCard({ macroTarget, onEdit }: MacroTargetCardProps) {
               <path d="M12 6v6l4 2"></path>
             </svg>
           </div>
-          <div className={styles.macroLabel}>Carbs</div>
-          <div className={styles.macroValue}>{carbs}g</div>
-          <div className={styles.macroPercent}>{carbsPercent.toFixed(0)}%</div>
+          <div className={styles.macroLabel}>{t('macroTarget.carbs')}</div>
+          <div className={styles.macroValue}>
+            {carbs}
+            {t('global:units.g')}
+          </div>
+          <div className={styles.macroPercent}>
+            {carbsPercent.toFixed(0)}
+            {t('global:units.percent')}
+          </div>
           <div className={styles.macroCalories}>
-            {(carbs * 4).toLocaleString()} kcal
+            {(carbs * 4).toLocaleString()} {t('global:units.kcal')}
           </div>
         </div>
 
-        {/* Fat */}
         <div className={`${styles.macroItem} ${styles.fat}`}>
           <div className={styles.macroIcon}>
             <svg
@@ -112,46 +121,60 @@ export function MacroTargetCard({ macroTarget, onEdit }: MacroTargetCardProps) {
               <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
             </svg>
           </div>
-          <div className={styles.macroLabel}>Fat</div>
-          <div className={styles.macroValue}>{fat}g</div>
-          <div className={styles.macroPercent}>{fatPercent.toFixed(0)}%</div>
+          <div className={styles.macroLabel}>{t('macroTarget.fat')}</div>
+          <div className={styles.macroValue}>
+            {fat}
+            {t('global:units.g')}
+          </div>
+          <div className={styles.macroPercent}>
+            {fatPercent.toFixed(0)}
+            {t('global:units.percent')}
+          </div>
           <div className={styles.macroCalories}>
-            {(fat * 9).toLocaleString()} kcal
+            {(fat * 9).toLocaleString()} {t('global:units.kcal')}
           </div>
         </div>
       </div>
 
-      {/* Macro Distribution Bar */}
       <div className={styles.distributionBar}>
         <div
           className={`${styles.distributionSegment} ${styles.proteinSegment}`}
           style={{ width: `${proteinPercent}%` }}
-          title={`Protein: ${proteinPercent.toFixed(1)}%`}
+          title={`${t('macroTarget.protein')}: ${proteinPercent.toFixed(1)}${t('global:units.percent')}`}
         ></div>
         <div
           className={`${styles.distributionSegment} ${styles.carbsSegment}`}
           style={{ width: `${carbsPercent}%` }}
-          title={`Carbs: ${carbsPercent.toFixed(1)}%`}
+          title={`${t('macroTarget.carbs')}: ${carbsPercent.toFixed(1)}${t('global:units.percent')}`}
         ></div>
         <div
           className={`${styles.distributionSegment} ${styles.fatSegment}`}
           style={{ width: `${fatPercent}%` }}
-          title={`Fat: ${fatPercent.toFixed(1)}%`}
+          title={`${t('macroTarget.fat')}: ${fatPercent.toFixed(1)}${t('global:units.percent')}`}
         ></div>
       </div>
 
       <div className={styles.distributionLegend}>
         <div className={styles.legendItem}>
           <div className={`${styles.legendColor} ${styles.protein}`}></div>
-          <span>Protein ({proteinPercent.toFixed(0)}%)</span>
+          <span>
+            {t('macroTarget.protein')} ({proteinPercent.toFixed(0)}
+            {t('global:units.percent')})
+          </span>
         </div>
         <div className={styles.legendItem}>
           <div className={`${styles.legendColor} ${styles.carbs}`}></div>
-          <span>Carbs ({carbsPercent.toFixed(0)}%)</span>
+          <span>
+            {t('macroTarget.carbs')} ({carbsPercent.toFixed(0)}
+            {t('global:units.percent')})
+          </span>
         </div>
         <div className={styles.legendItem}>
           <div className={`${styles.legendColor} ${styles.fat}`}></div>
-          <span>Fat ({fatPercent.toFixed(0)}%)</span>
+          <span>
+            {t('macroTarget.fat')} ({fatPercent.toFixed(0)}
+            {t('global:units.percent')})
+          </span>
         </div>
       </div>
     </div>
