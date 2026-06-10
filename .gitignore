@@ -1,3 +1,6 @@
+# Workspace-level lockfiles (root package-lock.json is the source of truth)
 frontend/package-lock.json
+backend/package-lock.json
+
 /node_modules
 
