@@ -8,5 +8,8 @@
   "remaining": "remaining",
   "consumed": "consumed",
   "dailyTarget": "Daily Target",
-  "macroSplit": "Macro Split"
+  "macroSplit": "Macro Split",
+  "weightTracking": "Weight Tracking",
+  "weightPlaceholder": "Enter weight in kg",
+  "currentWeight": "Current Weight"
 }
