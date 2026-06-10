@@ -1,29 +1,38 @@
-import { useState } from 'react'
-import styles from './AddEditFoodModal.module.css'
-import type { FoodEntry, MealType } from '../../types/progress.types'
+import { useState } from 'react';
+import styles from './AddEditFoodModal.module.css';
+import type { FoodEntry, MealType } from '../../types/progress.types';
 
 interface AddEditFoodModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onSubmit: (entry: Omit<FoodEntry, 'id' | 'timestamp'>) => void
-  editEntry?: FoodEntry | null
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (entry: Omit<FoodEntry, 'id' | 'timestamp'>) => void;
+  editEntry?: FoodEntry | null;
 }
 
-const MEAL_TYPES: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
+const MEAL_TYPES: MealType[] = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
 
-export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEditFoodModalProps) {
-  const [name, setName] = useState(editEntry?.name || '')
-  const [calories, setCalories] = useState(editEntry?.calories.toString() || '')
-  const [protein, setProtein] = useState(editEntry?.protein.toString() || '')
-  const [carbs, setCarbs] = useState(editEntry?.carbs.toString() || '')
-  const [fat, setFat] = useState(editEntry?.fat.toString() || '')
-  const [portion, setPortion] = useState(editEntry?.portion || '')
-  const [mealType, setMealType] = useState<MealType>(editEntry?.mealType || 'Breakfast')
+export function AddEditFoodModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  editEntry,
+}: AddEditFoodModalProps) {
+  const [name, setName] = useState(editEntry?.name || '');
+  const [calories, setCalories] = useState(
+    editEntry?.calories.toString() || '',
+  );
+  const [protein, setProtein] = useState(editEntry?.protein.toString() || '');
+  const [carbs, setCarbs] = useState(editEntry?.carbs.toString() || '');
+  const [fat, setFat] = useState(editEntry?.fat.toString() || '');
+  const [portion, setPortion] = useState(editEntry?.portion || '');
+  const [mealType, setMealType] = useState<MealType>(
+    editEntry?.mealType || 'Breakfast',
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!name || !calories) return
+    e.preventDefault();
+
+    if (!name || !calories) return;
 
     onSubmit({
       name,
@@ -33,22 +42,39 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
       fat: parseFloat(fat) || 0,
       portion,
       mealType,
-    })
+    });
 
-    onClose()
-  }
+    onClose();
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
-    <div className={styles.modalOverlay} onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div
+      className={styles.modalOverlay}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2 id="modal-title" className={styles.modalTitle}>
             {editEntry ? 'Edit Food Entry' : 'Add Food Entry'}
           </h2>
-          <button className={styles.closeButton} onClick={onClose} aria-label="Close modal">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <button
+            className={styles.closeButton}
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -57,7 +83,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGroup}>
-            <label htmlFor="food-name" className={styles.label}>Food Name *</label>
+            <label htmlFor="food-name" className={styles.label}>
+              Food Name *
+            </label>
             <input
               id="food-name"
               type="text"
@@ -70,7 +98,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="portion" className={styles.label}>Portion</label>
+            <label htmlFor="portion" className={styles.label}>
+              Portion
+            </label>
             <input
               id="portion"
               type="text"
@@ -83,7 +113,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
 
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="calories" className={styles.label}>Calories (kcal) *</label>
+              <label htmlFor="calories" className={styles.label}>
+                Calories (kcal) *
+              </label>
               <input
                 id="calories"
                 type="number"
@@ -97,7 +129,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="protein" className={styles.label}>Protein (g)</label>
+              <label htmlFor="protein" className={styles.label}>
+                Protein (g)
+              </label>
               <input
                 id="protein"
                 type="number"
@@ -112,7 +146,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
 
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="carbs" className={styles.label}>Carbs (g)</label>
+              <label htmlFor="carbs" className={styles.label}>
+                Carbs (g)
+              </label>
               <input
                 id="carbs"
                 type="number"
@@ -125,7 +161,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="fat" className={styles.label}>Fat (g)</label>
+              <label htmlFor="fat" className={styles.label}>
+                Fat (g)
+              </label>
               <input
                 id="fat"
                 type="number"
@@ -139,7 +177,9 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="meal-type" className={styles.label}>Meal Type</label>
+            <label htmlFor="meal-type" className={styles.label}>
+              Meal Type
+            </label>
             <select
               id="meal-type"
               value={mealType}
@@ -155,7 +195,11 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
           </div>
 
           <div className={styles.formActions}>
-            <button type="button" className={styles.cancelButton} onClick={onClose}>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className={styles.submitButton}>
@@ -165,5 +209,5 @@ export function AddEditFoodModal({ isOpen, onClose, onSubmit, editEntry }: AddEd
         </form>
       </div>
     </div>
-  )
+  );
 }

@@ -1,7 +1,9 @@
 # NAMING_CONVENTIONS.md
+
 ## Naming Standards for Files, Code & Architecture
 
 This document defines consistent naming rules for the project to ensure:
+
 - readability
 - predictability
 - scalability
@@ -15,6 +17,7 @@ Naming consistency is mandatory across the entire codebase.
 # Core Philosophy
 
 Names should be:
+
 - explicit
 - meaningful
 - predictable
@@ -33,6 +36,7 @@ A developer should understand purpose from the name alone.
 All code and identifiers must be in **English**.
 
 Avoid mixing languages in:
+
 - file names
 - variables
 - components
@@ -45,6 +49,7 @@ Avoid mixing languages in:
 Prefer clarity over short names.
 
 Good:
+
 ```text
 isUserAuthenticated
 selectedDashboardTab
@@ -52,6 +57,7 @@ fetchUserProfile
 ```
 
 Bad:
+
 ```text
 isAuth
 selTab
@@ -87,6 +93,7 @@ useUserPreferences.ts
 ```
 
 Rules:
+
 - must always start with `use`
 - must represent reusable logic
 
@@ -155,6 +162,7 @@ user-settings/
 ```
 
 Rules:
+
 - lowercase only
 - hyphen-separated
 - no spaces
@@ -181,9 +189,9 @@ Prefer descriptive service roles.
 Use **camelCase**:
 
 ```ts
-const userName = "John"
-const isLoading = true
-const selectedItem = null
+const userName = 'John';
+const isLoading = true;
+const selectedItem = null;
 ```
 
 ---
@@ -193,6 +201,7 @@ const selectedItem = null
 Boolean variables must clearly indicate state:
 
 Preferred prefixes:
+
 - is
 - has
 - can
@@ -201,19 +210,20 @@ Preferred prefixes:
 Examples:
 
 ```ts
-isLoading
-isAuthenticated
-hasAccess
-canEdit
-shouldRefresh
+isLoading;
+isAuthenticated;
+hasAccess;
+canEdit;
+shouldRefresh;
 ```
 
 Avoid:
+
 ```ts
-loading
-auth
-access
-edit
+loading;
+auth;
+access;
+edit;
 ```
 
 ---
@@ -223,12 +233,13 @@ edit
 Use plural names:
 
 ```ts
-const users = []
-const messages = []
-const selectedItems = []
+const users = [];
+const messages = [];
+const selectedItems = [];
 ```
 
 Avoid:
+
 ```ts
 userList (unless needed for clarity distinction)
 ```
@@ -240,19 +251,21 @@ userList (unless needed for clarity distinction)
 Functions must be **verb-based**:
 
 Good:
+
 ```ts
-getUser()
-fetchData()
-createAccount()
-updateProfile()
-deleteItem()
+getUser();
+fetchData();
+createAccount();
+updateProfile();
+deleteItem();
 ```
 
 Bad:
+
 ```ts
-user()
-data()
-profile()
+user();
+data();
+profile();
 ```
 
 ---
@@ -262,18 +275,20 @@ profile()
 Event handlers must use `handle` or `on` prefix:
 
 Good:
+
 ```ts
-handleSubmit
-handleClick
-onChange
-onUserSelect
+handleSubmit;
+handleClick;
+onChange;
+onUserSelect;
 ```
 
 Avoid:
+
 ```ts
-submit
-clickHandler
-changeFunc
+submit;
+clickHandler;
+changeFunc;
 ```
 
 ---
@@ -285,6 +300,7 @@ changeFunc
 Components represent UI entities.
 
 Good:
+
 ```text
 UserCard
 LoginForm
@@ -293,6 +309,7 @@ SettingsPanel
 ```
 
 Bad:
+
 ```text
 HandleLogin
 DoSomething
@@ -319,10 +336,12 @@ AuthLayout
 Hooks represent reusable logic.
 
 Must:
+
 - start with `use`
 - describe behavior clearly
 
 Good:
+
 ```text
 useAuth
 usePagination
@@ -331,6 +350,7 @@ useDebounce
 ```
 
 Bad:
+
 ```text
 authHook
 searchUtil
@@ -350,10 +370,12 @@ Component.module.css
 ```
 
 Class naming inside CSS Modules:
+
 - use camelCase or readable class names
 - avoid global leakage assumptions
 
 Example:
+
 ```css
 container
 title
@@ -364,6 +386,7 @@ errorMessage
 ---
 
 ## Avoid:
+
 - global CSS naming conflicts
 - overly generic class names like `.box`, `.item`
 
@@ -374,9 +397,9 @@ errorMessage
 Constants use **UPPER_SNAKE_CASE**:
 
 ```ts
-API_BASE_URL
-MAX_RETRY_COUNT
-DEFAULT_PAGE_SIZE
+API_BASE_URL;
+MAX_RETRY_COUNT;
+DEFAULT_PAGE_SIZE;
 ```
 
 ---
@@ -389,7 +412,7 @@ Enums use **PascalCase**:
 enum UserRole {
   Admin,
   User,
-  Guest
+  Guest,
 }
 ```
 
@@ -401,16 +424,16 @@ Types use **PascalCase**:
 
 ```ts
 type User = {
-  id: string
-  name: string
-}
+  id: string;
+  name: string;
+};
 ```
 
 Interfaces also use PascalCase:
 
 ```ts
 interface AuthState {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
 }
 ```
 
@@ -423,10 +446,10 @@ interface AuthState {
 Use `on` prefix:
 
 ```ts
-onClick
-onSubmit
-onClose
-onChange
+onClick;
+onSubmit;
+onClose;
+onChange;
 ```
 
 ---
@@ -436,9 +459,9 @@ onChange
 Use `handle` prefix:
 
 ```ts
-handleClick
-handleSubmit
-handleClose
+handleClick;
+handleSubmit;
+handleClose;
 ```
 
 ---
@@ -448,20 +471,22 @@ handleClose
 Avoid vague or ambiguous names:
 
 Bad:
+
 ```ts
-active
-open
-enabled
-state
-flag
+active;
+open;
+enabled;
+state;
+flag;
 ```
 
 Good:
+
 ```ts
-isModalOpen
-isUserActive
-hasNotifications
-isFeatureEnabled
+isModalOpen;
+isUserActive;
+hasNotifications;
+isFeatureEnabled;
 ```
 
 ---
@@ -496,15 +521,17 @@ Always lowercase.
 # API Naming Rules
 
 API functions must:
+
 - start with action verb
 - describe endpoint purpose
 
 Good:
+
 ```ts
-fetchUserProfile
-updateUserSettings
-deleteAccount
-createSession
+fetchUserProfile;
+updateUserSettings;
+deleteAccount;
+createSession;
 ```
 
 ---
@@ -528,6 +555,7 @@ Avoid flat or random keys.
 Tests should describe behavior:
 
 Good:
+
 ```text
 should render login form
 should display error on invalid input
@@ -535,6 +563,7 @@ should submit form successfully
 ```
 
 Bad:
+
 ```text
 test1
 login test
@@ -563,6 +592,7 @@ Avoid deep relative imports:
 # AI-Specific Naming Rules
 
 When generating code:
+
 - prefer explicit naming over short names
 - follow existing naming conventions strictly
 - do NOT introduce new naming styles
@@ -574,6 +604,7 @@ When generating code:
 # Anti-Patterns To Avoid
 
 Never use:
+
 - vague names (`data`, `item`, `stuff`)
 - inconsistent casing
 - mixed naming styles
@@ -586,6 +617,7 @@ Never use:
 # Final Rule
 
 Good naming should:
+
 - communicate intent instantly
 - reduce cognitive load
 - improve readability

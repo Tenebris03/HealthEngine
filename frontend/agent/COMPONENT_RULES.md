@@ -1,9 +1,11 @@
 # COMPONENT_RULES.md
+
 ## React Component Architecture & Composition Standards
 
 This document defines the component philosophy and implementation standards for the application.
 
 The goal is to ensure:
+
 - maintainable components
 - scalable UI architecture
 - predictable composition
@@ -18,6 +20,7 @@ All components must follow these standards consistently.
 # Core Philosophy
 
 Components should be:
+
 - small
 - focused
 - composable
@@ -36,6 +39,7 @@ If a component becomes difficult to understand quickly, it should likely be spli
 Each component should solve one primary problem.
 
 Good examples:
+
 - Button
 - Modal
 - UserCard
@@ -43,6 +47,7 @@ Good examples:
 - SettingsPanel
 
 Bad examples:
+
 - giant dashboard containers
 - components handling unrelated concerns
 - UI + API + state + validation in one file
@@ -54,6 +59,7 @@ Avoid “god components”.
 # Smart vs Presentational Components
 
 Prefer separating:
+
 - business logic
 - presentation/UI
 
@@ -62,16 +68,19 @@ Prefer separating:
 ## Presentational Components
 
 Responsible for:
+
 - rendering UI
 - receiving props
 - emitting events
 
 Should:
+
 - remain reusable
 - remain predictable
 - avoid business logic
 
 Example responsibilities:
+
 - layout
 - styling
 - interaction rendering
@@ -81,12 +90,14 @@ Example responsibilities:
 ## Smart Components
 
 Responsible for:
+
 - data fetching
 - state orchestration
 - business logic
 - feature coordination
 
 Smart components should:
+
 - compose smaller UI components
 - avoid excessive JSX complexity
 
@@ -95,14 +106,17 @@ Smart components should:
 # Component Size Rules
 
 Prefer:
+
 - small to medium-sized components
 
 Avoid:
+
 - components exceeding several hundred lines
 - deeply nested JSX trees
 - multiple unrelated responsibilities
 
 If a component contains:
+
 - multiple sections
 - repeated patterns
 - excessive conditional rendering
@@ -125,6 +139,7 @@ Good:
 ```
 
 Avoid:
+
 - giant prop-driven mega components
 - components with dozens of boolean props
 - overly abstract UI systems
@@ -134,12 +149,14 @@ Avoid:
 # Props Rules
 
 Props should be:
+
 - explicit
 - predictable
 - typed
 - minimal
 
 Avoid:
+
 - ambiguous names
 - prop overload
 - unnecessary optional props
@@ -154,16 +171,17 @@ Boolean props should read naturally.
 Good:
 
 ```tsx
-isLoading
-isOpen
-disabled
+isLoading;
+isOpen;
+disabled;
 ```
 
 Avoid:
+
 ```tsx
-loadingState
-openMode
-buttonDisabledState
+loadingState;
+openMode;
+buttonDisabledState;
 ```
 
 ---
@@ -175,17 +193,18 @@ Callbacks should clearly communicate intent.
 Good:
 
 ```tsx
-onClick
-onSubmit
-onClose
-onSelect
+onClick;
+onSubmit;
+onClose;
+onSelect;
 ```
 
 Avoid:
+
 ```tsx
-handleStuff
-doAction
-triggerFunction
+handleStuff;
+doAction;
+triggerFunction;
 ```
 
 ---
@@ -198,13 +217,14 @@ Preferred:
 
 ```tsx
 interface ButtonProps {
-  children: React.ReactNode
-  disabled?: boolean
-  onClick?: () => void
+  children: React.ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 ```
 
 Avoid:
+
 - implicit any
 - untyped props
 - oversized interfaces
@@ -216,6 +236,7 @@ Avoid:
 Use children when composition improves readability.
 
 Good:
+
 ```tsx
 <Modal>
   <ModalContent />
@@ -231,6 +252,7 @@ Avoid using children for unclear or unpredictable APIs.
 Components should own only the state they truly need.
 
 Prefer:
+
 1. local state
 2. lifted shared state
 3. context
@@ -251,6 +273,7 @@ const filteredItems = items.filter(...)
 ```
 
 Avoid:
+
 - syncing duplicated state
 - unnecessary useEffect chains
 
@@ -259,11 +282,13 @@ Avoid:
 # Hooks Usage Rules
 
 Hooks must:
+
 - follow React hook rules
 - remain predictable
 - avoid hidden side effects
 
 Avoid:
+
 - conditional hooks
 - hook nesting chaos
 - unnecessary effects
@@ -275,11 +300,13 @@ Avoid:
 useEffect should NOT be the default solution.
 
 Avoid effects for:
+
 - derived values
 - simple calculations
 - unnecessary synchronization
 
 Effects should mainly handle:
+
 - subscriptions
 - external systems
 - async side effects
@@ -289,17 +316,20 @@ Effects should mainly handle:
 # Custom Hooks
 
 Extract custom hooks when:
+
 - logic is reused
 - components become too large
 - business logic becomes complex
 
 Good examples:
+
 - useAuth
 - useDebounce
 - usePagination
 - useSearch
 
 Custom hooks should:
+
 - encapsulate logic cleanly
 - avoid UI rendering
 - remain reusable
@@ -314,11 +344,12 @@ Good:
 
 ```tsx
 if (!user) {
-  return <EmptyState />
+  return <EmptyState />;
 }
 ```
 
 Avoid:
+
 - deeply nested ternaries
 - unreadable JSX conditions
 - massive inline logic
@@ -330,11 +361,13 @@ Avoid:
 JSX should remain readable.
 
 Prefer:
+
 - clean indentation
 - extracted subcomponents
 - semantic structure
 
 Avoid:
+
 - giant render functions
 - excessive inline logic
 - unreadable nesting
@@ -344,6 +377,7 @@ Avoid:
 # Styling Rules
 
 Components should use:
+
 - CSS Modules by default
 - scoped styling
 - reusable utility patterns
@@ -358,6 +392,7 @@ Button/
 ```
 
 Avoid:
+
 - inline styles unless dynamic
 - global style leakage
 - duplicated styling logic
@@ -367,6 +402,7 @@ Avoid:
 # Accessibility Rules
 
 All components must support:
+
 - keyboard interaction
 - visible focus states
 - semantic HTML
@@ -380,6 +416,7 @@ Accessibility is mandatory.
 # Button Rules
 
 Buttons must:
+
 - use actual button elements
 - support disabled states
 - have visible interaction feedback
@@ -392,12 +429,14 @@ Never use clickable divs for buttons.
 # Form Component Rules
 
 Inputs must:
+
 - have labels
 - expose validation states
 - support keyboard navigation
 - maintain accessibility
 
 Avoid:
+
 - unlabeled inputs
 - inconsistent form sizing
 - inaccessible custom controls
@@ -407,6 +446,7 @@ Avoid:
 # Loading & Error States
 
 Components handling async data must support:
+
 - loading states
 - error states
 - empty states
@@ -418,6 +458,7 @@ Never assume successful data.
 # Reusability Rules
 
 Before creating a component ask:
+
 - Is this reusable?
 - Is this feature-specific?
 - Should this live in shared UI or inside a feature?
@@ -429,11 +470,13 @@ Do NOT prematurely globalize feature-specific components.
 # Memoization Rules
 
 Do NOT overuse:
+
 - React.memo
 - useMemo
 - useCallback
 
 Memoization should only exist when:
+
 - measurable rerender issues exist
 - computations are expensive
 - stable references are necessary
@@ -445,12 +488,14 @@ Avoid premature optimization.
 # Performance Rules
 
 Avoid:
+
 - unnecessary rerenders
 - excessive prop drilling
 - large render trees
 - expensive computations during render
 
 Prefer:
+
 - lazy loading
 - component splitting
 - efficient rendering patterns
@@ -500,6 +545,7 @@ useTheme.ts
 Avoid vague names.
 
 Bad:
+
 ```text
 Thing.tsx
 Manager.tsx
@@ -525,11 +571,13 @@ Avoid excessive default exports across shared systems unless project conventions
 # Testing Philosophy
 
 Test:
+
 - user behavior
 - critical interactions
 - important logic
 
 Avoid:
+
 - testing implementation details
 - brittle snapshot-heavy tests
 - testing library internals
@@ -539,6 +587,7 @@ Avoid:
 # Anti-Patterns To Avoid
 
 Never introduce:
+
 - giant components
 - deeply nested JSX
 - prop drilling chaos
@@ -555,6 +604,7 @@ Never introduce:
 # AI-Specific Rules
 
 When generating components:
+
 - preserve existing architecture
 - reuse existing patterns
 - keep components focused
@@ -571,6 +621,7 @@ All generated components must be production-grade.
 # Final Rule
 
 A good component should feel:
+
 - predictable
 - composable
 - readable

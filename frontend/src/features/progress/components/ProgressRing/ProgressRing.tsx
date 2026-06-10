@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import styles from './ProgressRing.module.css'
+import { useState } from 'react';
+import styles from './ProgressRing.module.css';
 
 interface ProgressRingProps {
-  progress: number
-  target: number
-  consumed: number
-  label: string
-  color: string
-  size?: number
-  strokeWidth?: number
-  onHoverStart?: () => void
-  onHoverEnd?: () => void
+  progress: number;
+  target: number;
+  consumed: number;
+  label: string;
+  color: string;
+  size?: number;
+  strokeWidth?: number;
+  onHoverStart?: () => void;
+  onHoverEnd?: () => void;
 }
 
 export function ProgressRing({
@@ -22,31 +22,33 @@ export function ProgressRing({
   onHoverStart,
   onHoverEnd,
 }: ProgressRingProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  const radius = (size - strokeWidth) / 2
-  const circumference = 2 * Math.PI * radius
-  const progressPercent = Math.min(progress / target, 1)
-  const strokeDashoffset = circumference - progressPercent * circumference
+  const [isHovered, setIsHovered] = useState(false);
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const progressPercent = Math.min(progress / target, 1);
+  const strokeDashoffset = circumference - progressPercent * circumference;
 
   return (
     <div
       className={styles.ringContainer}
       onMouseEnter={() => {
-        setIsHovered(true)
-        onHoverStart?.()
+        setIsHovered(true);
+        onHoverStart?.();
       }}
       onMouseLeave={() => {
-        setIsHovered(false)
-        onHoverEnd?.()
+        setIsHovered(false);
+        onHoverEnd?.();
       }}
     >
-      <svg
-        width={size}
-        height={size}
-        className={styles.ringSvg}
-      >
+      <svg width={size} height={size} className={styles.ringSvg}>
         <defs>
-          <filter id={`glow-${color.replace('#', '')}`} x="-50%" y="-50%" width="200%" height="200%">
+          <filter
+            id={`glow-${color.replace('#', '')}`}
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+          >
             <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
@@ -69,13 +71,15 @@ export function ProgressRing({
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          style={{ 
+          style={{
             stroke: color,
-            transition: 'filter 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+            transition: 'filter 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
-          filter={isHovered ? `url(#glow-${color.replace('#', '')})` : undefined}
+          filter={
+            isHovered ? `url(#glow-${color.replace('#', '')})` : undefined
+          }
         />
       </svg>
     </div>
-  )
+  );
 }

@@ -1,9 +1,11 @@
 # PROJECT_STRUCTURE.md
+
 ## Frontend Architecture & Project Structure Rules
 
 This project uses a scalable feature-driven architecture for a modern React + Vite application.
 
 The goal of this structure is to ensure:
+
 - maintainability
 - scalability
 - clean separation of concerns
@@ -186,12 +188,14 @@ frontend/
 # assets/
 
 Contains:
+
 - fonts
 - images
 - icons
 - static media
 
 Do NOT place:
+
 - business logic
 - React components
 - generated files
@@ -203,6 +207,7 @@ Do NOT place:
 Contains globally reusable UI components.
 
 These components must remain:
+
 - generic
 - reusable
 - presentation-focused
@@ -214,6 +219,7 @@ These components must remain:
 Primitive reusable UI components.
 
 Examples:
+
 - Button
 - Input
 - Card
@@ -221,6 +227,7 @@ Examples:
 - Spinner
 
 Rules:
+
 - no business logic
 - no feature-specific imports
 - highly reusable
@@ -233,6 +240,7 @@ Rules:
 Application layout components.
 
 Examples:
+
 - Navbar
 - Sidebar
 - Footer
@@ -246,6 +254,7 @@ Examples:
 Reusable form building blocks.
 
 Examples:
+
 - FormField
 - Select
 - Checkbox
@@ -258,6 +267,7 @@ Examples:
 Feedback and interaction UI.
 
 Examples:
+
 - Toasts
 - Alerts
 - EmptyState
@@ -273,6 +283,7 @@ Contains isolated business domains/features.
 This is the primary scaling mechanism of the application.
 
 Each feature owns:
+
 - components
 - hooks
 - services
@@ -298,16 +309,19 @@ features/
 Features should be as isolated as possible.
 
 Features may:
+
 - import from shared modules
 - use global services
 - use shared UI
 
 Features should NOT:
+
 - tightly couple to other features
 - directly access internal files from other features
 - create circular dependencies
 
 Cross-feature communication should happen through:
+
 - shared services
 - providers
 - public exports
@@ -319,11 +333,13 @@ Cross-feature communication should happen through:
 Contains globally reusable hooks.
 
 Examples:
+
 - useDebounce
 - useMediaQuery
 - useLocalStorage
 
 Rules:
+
 - hooks must remain generic
 - feature-specific hooks belong inside features/
 
@@ -334,6 +350,7 @@ Rules:
 Contains application-level providers.
 
 Examples:
+
 - ThemeProvider
 - QueryProvider
 - AuthProvider
@@ -357,6 +374,7 @@ Keep main.tsx minimal.
 Contains routing configuration and route utilities.
 
 Examples:
+
 - route definitions
 - protected routes
 - route guards
@@ -371,12 +389,14 @@ Avoid placing large routing logic directly inside App.tsx.
 Contains shared external communication logic.
 
 Examples:
+
 - API clients
 - SDK wrappers
 - analytics
 - external integrations
 
 Rules:
+
 - services should not contain UI logic
 - services should remain framework-agnostic when possible
 
@@ -387,6 +407,7 @@ Rules:
 Contains shared infrastructure utilities.
 
 Examples:
+
 - API setup
 - logger
 - config
@@ -394,6 +415,7 @@ Examples:
 - shared infrastructure code
 
 lib/ differs from utils/ because:
+
 - lib/ contains foundational infrastructure
 - utils/ contains small pure helper functions
 
@@ -404,6 +426,7 @@ lib/ differs from utils/ because:
 Contains shared constants.
 
 Examples:
+
 - route paths
 - query keys
 - app configuration
@@ -418,6 +441,7 @@ Avoid magic strings throughout the codebase.
 Contains validation schemas.
 
 Examples:
+
 - Zod schemas
 - form validation
 - API validation
@@ -444,6 +468,7 @@ theme/
 ```
 
 Rules:
+
 - use centralized tokens
 - avoid arbitrary styling values
 - maintain visual consistency
@@ -455,6 +480,7 @@ Rules:
 Contains shared TypeScript types.
 
 Examples:
+
 - API response types
 - shared interfaces
 - utility types
@@ -468,12 +494,14 @@ Feature-specific types belong inside the feature itself.
 Contains small pure utility functions.
 
 Examples:
+
 - formatDate
 - debounce
 - clamp
 - className helpers
 
 Rules:
+
 - utilities must remain pure
 - no React logic
 - no side effects
@@ -488,10 +516,12 @@ Avoid turning utils/ into a dumping ground.
 Contains React context definitions.
 
 Examples:
+
 - UserContext
 - ThemeContext
 
 Rules:
+
 - avoid excessive global state
 - prefer local state first
 - contexts should remain focused
@@ -501,6 +531,7 @@ Rules:
 # test/
 
 Contains:
+
 - shared test utilities
 - mocks
 - setup files
@@ -538,6 +569,7 @@ Component.module.css
 ```
 
 Avoid:
+
 - global CSS leakage
 - inline styles unless necessary
 - multiple competing styling systems
@@ -549,11 +581,13 @@ Existing global CSS files must be respected and extended carefully.
 # Import Rules
 
 Prefer:
+
 - shallow imports
 - feature boundaries
 - explicit imports
 
 Avoid:
+
 - deeply nested relative imports
 - circular dependencies
 - cross-feature internal imports
@@ -563,7 +597,7 @@ Use aliases when configured.
 Example:
 
 ```ts
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button';
 ```
 
 ---
@@ -571,12 +605,14 @@ import { Button } from '@/components/ui/Button'
 # Component Rules
 
 Components should:
+
 - have a single responsibility
 - remain reasonably small
 - avoid excessive nesting
 - separate UI from business logic
 
 If a component becomes difficult to reason about:
+
 - split it
 
 ---
@@ -584,6 +620,7 @@ If a component becomes difficult to reason about:
 # State Management Rules
 
 Prefer:
+
 1. local component state
 2. lifted state
 3. context
@@ -607,6 +644,7 @@ Component/
 ```
 
 Focus tests on:
+
 - user behavior
 - important logic
 - edge cases
@@ -618,6 +656,7 @@ Avoid fragile implementation-detail tests.
 # Scalability Rules
 
 As the application grows:
+
 - prefer feature isolation
 - avoid giant shared folders
 - avoid massive components
@@ -630,6 +669,7 @@ Short-term convenience must not damage long-term maintainability.
 # AI-Specific Rules
 
 When generating code:
+
 - respect folder ownership
 - place files in the correct domain
 - avoid introducing duplicate architecture patterns
@@ -643,6 +683,7 @@ Never create new structural patterns unless justified.
 # Final Rule
 
 The architecture should feel:
+
 - predictable
 - scalable
 - intentional

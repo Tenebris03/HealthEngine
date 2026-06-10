@@ -1,19 +1,17 @@
-import type { ReactNode } from 'react'
-import { Header } from './Header/Header'
-import { Footer } from './Footer/Footer'
+import type { ReactNode } from 'react';
+import { Header } from './Header/Header';
+import { Footer } from './Footer/Footer';
 
 interface LayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
   return (
     <div className="app">
       <Header />
-      <main className="main-content">
-        {children}
-      </main>
+      <main className="main-content">{children}</main>
       <Footer />
     </div>
-  )
+  );
 }
