@@ -17,6 +17,15 @@ export function FoodEntryCard({ entry, onEdit, onDelete }: FoodEntryCardProps) {
       className={styles.card}
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
+      exit={{
+        opacity: 0,
+        x: -30,
+        height: 0,
+        marginBottom: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        overflow: 'hidden',
+      }}
       transition={{ duration: 0.3 }}
       whileHover={{ scale: 1.01 }}
       layout

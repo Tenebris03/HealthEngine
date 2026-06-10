@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { AnimatedProgressRing } from '@/features/dashboard/components/AnimatedProgressRing';
 import { MacroTicker } from '@/features/dashboard/components/MacroTicker';
+import { FoodLedger } from '@/features/dashboard/components/FoodLedger';
 import { useFitnessState } from '@/hooks/useFitnessState';
 import styles from './DashboardPage.module.css';
 
@@ -71,6 +72,14 @@ export function DashboardPage() {
             />
           </div>
         </motion.section>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <FoodLedger />
+        </motion.div>
       </div>
     </div>
   );
