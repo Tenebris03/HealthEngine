@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import styles from './KeyFeatures.module.css';
 
 function NutritionGoalsIcon() {
@@ -73,23 +74,48 @@ const features = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.15, ease: 'easeOut' },
+  }),
+};
+
 export function KeyFeatures() {
   const { t } = useTranslation('key-features');
 
   return (
     <section className={styles.features}>
       <div className="container">
-        <h2 className={styles.sectionTitle}>{t('title')}</h2>
+        <motion.h2
+          className={styles.sectionTitle}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5 }}
+        >
+          {t('title')}
+        </motion.h2>
         <div className={styles.grid}>
-          {features.map((feature) => (
-            <div key={feature.titleKey} className={styles.card}>
-              <div className={styles.cardBorder}></div>
-              <div className={styles.cardContent}>
-                <div className={styles.icon}>{feature.icon}</div>
-                <h3 className={styles.cardTitle}>{t(feature.titleKey)}</h3>
-                <p className={styles.cardDescription}>{t(feature.descKey)}</p>
-              </div>
-            </div>
+          {features.map((feature, i) => (
+            <motion.div
+              key={feature.titleKey}
+              className={styles.card}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-50px' }}
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+            >
+              <div className={styles.icon}>{feature.icon}</div>
+              <h3 className={styles.cardTitle}>{t(feature.titleKey)}</h3>
+              <p className={styles.cardDescription}>{t(feature.descKey)}</p>
+            </motion.div>
           ))}
         </div>
       </div>

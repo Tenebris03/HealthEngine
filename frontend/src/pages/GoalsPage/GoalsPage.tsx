@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import {
   WeightTargetCard,
   MacroTargetCard,
@@ -44,12 +45,22 @@ export function GoalsPage() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <div className={styles.header}>
+        <motion.div
+          className={styles.header}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
           <div>
             <h1 className={styles.pageTitle}>{t('pageTitle')}</h1>
             <p className={styles.pageSubtitle}>{t('pageSubtitle')}</p>
           </div>
-          <button className={styles.editButton} onClick={handleEditGoals}>
+          <motion.button
+            className={styles.editButton}
+            onClick={handleEditGoals}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+          >
             <svg
               width="20"
               height="20"
@@ -62,23 +73,38 @@ export function GoalsPage() {
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
             <span>{t('editModal.title')}</span>
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        <div className={styles.grid}>
-          <div className={styles.column}>
+        <motion.div
+          className={styles.grid}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, staggerChildren: 0.15 }}
+        >
+          <motion.div
+            className={styles.column}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+          >
             <WeightTargetCard
               weightTarget={goals.weight}
               onEdit={handleEditGoals}
             />
-          </div>
-          <div className={styles.column}>
+          </motion.div>
+          <motion.div
+            className={styles.column}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.35 }}
+          >
             <MacroTargetCard
               macroTarget={goals.macros}
               onEdit={handleEditGoals}
             />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       <EditGoalsModal

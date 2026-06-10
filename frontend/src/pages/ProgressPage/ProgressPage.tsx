@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import { ProgressRing } from '@/features/progress/components/ProgressRing/ProgressRing';
 import { FoodEntryCard } from '@/features/progress/components/FoodEntryCard/FoodEntryCard';
 import { AddEditFoodModal } from '@/features/progress/components/AddEditFoodModal/AddEditFoodModal';
@@ -60,6 +61,19 @@ const SAMPLE_ENTRIES: FoodEntry[] = [
     timestamp: new Date(),
   },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
 
 export function ProgressPage() {
   const { t } = useTranslation(['progress', 'global']);
@@ -182,7 +196,7 @@ export function ProgressPage() {
     },
     {
       key: 'protein' as const,
-      color: '#06b6d4',
+      color: '#3B82F6',
       size: 200,
       strokeWidth: 20,
       current: totals.protein,
@@ -190,7 +204,7 @@ export function ProgressPage() {
     },
     {
       key: 'carbs' as const,
-      color: '#8b5cf6',
+      color: '#8B5CF6',
       size: 140,
       strokeWidth: 16,
       current: totals.carbs,
@@ -201,9 +215,21 @@ export function ProgressPage() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.pageTitle}>{t('pageTitle')}</h1>
+        <motion.h1
+          className={styles.pageTitle}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          {t('pageTitle')}
+        </motion.h1>
 
-        <section className={styles.ringsSection}>
+        <motion.section
+          className={styles.ringsSection}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <div className={styles.ringsContainer}>
             {ringConfigs.map((ring) => (
               <ProgressRing
@@ -232,8 +258,8 @@ export function ProgressPage() {
             <div
               className={styles.fixedTooltip}
               style={{
-                backgroundColor: `${hoveredRing.color}40`,
-                border: `1px solid ${hoveredRing.color}`,
+                backgroundColor: `${hoveredRing.color}15`,
+                border: `1px solid ${hoveredRing.color}40`,
               }}
             >
               <div className={styles.tooltipLabel}>{hoveredRing.label}</div>
@@ -243,16 +269,18 @@ export function ProgressPage() {
               </div>
             </div>
           )}
-        </section>
+        </motion.section>
 
         <section className={styles.logSection}>
           <div className={styles.logHeader}>
             <h2 className={styles.logTitle}>{t('foodLog.title')}</h2>
             <div className={styles.dateSwitcher}>
-              <button
+              <motion.button
                 className={styles.dateButton}
                 onClick={() => handleDateChange('prev')}
                 aria-label={t('global:common.previousDay')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <svg
                   width="20"
@@ -264,14 +292,16 @@ export function ProgressPage() {
                 >
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
-              </button>
+              </motion.button>
               <span className={styles.dateLabel}>
                 {formatDate(selectedDate)}
               </span>
-              <button
+              <motion.button
                 className={styles.dateButton}
                 onClick={() => handleDateChange('next')}
                 aria-label={t('global:common.nextDay')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <svg
                   width="20"
@@ -283,14 +313,16 @@ export function ProgressPage() {
                 >
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
-              </button>
+              </motion.button>
             </div>
           </div>
 
-          <button
+          <motion.button
             className={styles.addButton}
             onClick={openAddModal}
             aria-label={t('global:common.addFoodEntry')}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.97 }}
           >
             <svg
               width="24"
@@ -304,15 +336,24 @@ export function ProgressPage() {
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
             <span>{t('foodLog.addFood')}</span>
-          </button>
+          </motion.button>
 
-          <div className={styles.mealGroups}>
+          <motion.div
+            className={styles.mealGroups}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {MEAL_ORDER.map((mealType) => {
               const mealEntries = entriesByMeal[mealType];
               if (mealEntries.length === 0) return null;
 
               return (
-                <div key={mealType} className={styles.mealGroup}>
+                <motion.div
+                  key={mealType}
+                  className={styles.mealGroup}
+                  variants={itemVariants}
+                >
                   <h3 className={styles.mealTitle}>
                     {t(mealTypeTranslationKeys[mealType])}
                     <span className={styles.mealCalories}>
@@ -330,10 +371,10 @@ export function ProgressPage() {
                       />
                     ))}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
 
           {entries.length === 0 && (
             <div className={styles.emptyState}>
