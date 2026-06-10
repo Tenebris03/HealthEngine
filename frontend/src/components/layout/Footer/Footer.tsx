@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import styles from './Footer.module.css';
 
 export function Footer() {
@@ -6,70 +7,121 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className={styles.footer}>
+    <motion.footer
+      className={styles.footer}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+    >
       <div className={styles.footerSection}>
         <h3 className={styles.footerTitle}>{t('footer.product')}</h3>
-        <a className={styles.footerLink} href="#features">
+        <motion.a
+          className={styles.footerLink}
+          href="#features"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.features')}
-        </a>
-        <a className={styles.footerLink} href="#pricing">
+        </motion.a>
+        <motion.a
+          className={styles.footerLink}
+          href="#pricing"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.pricing')}
-        </a>
-        <a className={styles.footerLink} href="#api">
+        </motion.a>
+        <motion.a
+          className={styles.footerLink}
+          href="#api"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.api')}
-        </a>
+        </motion.a>
       </div>
 
       <div className={styles.footerSection}>
         <h3 className={styles.footerTitle}>{t('footer.company')}</h3>
-        <a className={styles.footerLink} href="#about">
+        <motion.a
+          className={styles.footerLink}
+          href="#about"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.about')}
-        </a>
-        <a className={styles.footerLink} href="#blog">
+        </motion.a>
+        <motion.a
+          className={styles.footerLink}
+          href="#blog"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.blog')}
-        </a>
-        <a className={styles.footerLink} href="#careers">
+        </motion.a>
+        <motion.a
+          className={styles.footerLink}
+          href="#careers"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.careers')}
-        </a>
+        </motion.a>
       </div>
 
       <div className={styles.footerSection}>
         <h3 className={styles.footerTitle}>{t('footer.support')}</h3>
-        <a className={styles.footerLink} href="#help">
+        <motion.a
+          className={styles.footerLink}
+          href="#help"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.helpCenter')}
-        </a>
-        <a className={styles.footerLink} href="#contact">
+        </motion.a>
+        <motion.a
+          className={styles.footerLink}
+          href="#contact"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.contact')}
-        </a>
-        <a className={styles.footerLink} href="#privacy">
+        </motion.a>
+        <motion.a
+          className={styles.footerLink}
+          href="#privacy"
+          whileHover={{ x: 3 }}
+        >
           {t('footer.privacy')}
-        </a>
+        </motion.a>
       </div>
 
       <div className={styles.footerSection}>
         <h3 className={styles.footerTitle}>{t('footer.followUs')}</h3>
         <div className={styles.socialIcons}>
-          <a className={styles.socialIcon} href="#twitter" aria-label="Twitter">
+          <motion.a
+            className={styles.socialIcon}
+            href="#twitter"
+            aria-label="Twitter"
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
+          >
             🐦
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             className={styles.socialIcon}
             href="#linkedin"
             aria-label="LinkedIn"
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
           >
             💼
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             className={styles.socialIcon}
             href="#instagram"
             aria-label="Instagram"
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
           >
             📷
-          </a>
+          </motion.a>
         </div>
       </div>
 
       <p className={styles.copyright}>{t('footer.copyright', { year })}</p>
-    </footer>
+    </motion.footer>
   );
 }
