@@ -5,3 +5,8 @@ backend/package-lock.json
 /node_modules
 
 .turbo
+
+# Environment files
+.env
+.env.local
+.env.*.local
