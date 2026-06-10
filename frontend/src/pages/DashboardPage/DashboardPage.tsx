@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { AnimatedProgressRing } from '@/features/dashboard/components/AnimatedProgressRing';
 import { MacroTicker } from '@/features/dashboard/components/MacroTicker';
 import { FoodLedger } from '@/features/dashboard/components/FoodLedger';
+import { WeightTracker } from '@/features/dashboard/components/WeightTracker';
 import { useFitnessState } from '@/hooks/useFitnessState';
 import styles from './DashboardPage.module.css';
 
@@ -80,6 +81,8 @@ export function DashboardPage() {
         >
           <FoodLedger />
         </motion.div>
+
+        <WeightTracker />
       </div>
     </div>
   );

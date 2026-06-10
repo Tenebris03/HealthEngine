@@ -8,5 +8,8 @@
   "remaining": "übrig",
   "consumed": "verbraucht",
   "dailyTarget": "Tagesziel",
-  "macroSplit": "Makro-Aufteilung"
+  "macroSplit": "Makro-Aufteilung",
+  "weightTracking": "Gewichtsverlauf",
+  "weightPlaceholder": "Gewicht in kg eingeben",
+  "currentWeight": "Aktuelles Gewicht"
 }
