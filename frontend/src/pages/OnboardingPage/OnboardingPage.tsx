@@ -25,7 +25,7 @@ function calcCalories(bmr: number, goal: GoalType): number {
 
 export function OnboardingPage() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const [step, setStep] = useState<Step>('info');
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState('');
@@ -67,7 +67,7 @@ export function OnboardingPage() {
     setSaving(true);
     try {
       const dailyCalories = calcCalories(bmr, goal);
-      await authApi.updateProfile({
+      const updated = await authApi.updateProfile({
         age: parseInt(age),
         heightCm: parseFloat(height),
         targetWeightKg:
@@ -79,11 +79,14 @@ export function OnboardingPage() {
         dailyCalorieGoal: dailyCalories,
       });
 
+      const token = localStorage.getItem('auth_token');
+      if (token) login(token, updated);
+
       navigate('/calorie-tracking', { replace: true });
     } catch {
       setSaving(false);
     }
-  }, [goal, bmr, age, height, weight, navigate]);
+  }, [goal, bmr, age, height, weight, navigate, login]);
 
   return (
     <div className={styles.page}>
