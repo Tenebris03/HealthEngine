@@ -24,31 +24,11 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppRoutes() {
-  const { isAuthenticated } = useAuth();
-
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          isAuthenticated ? (
-            <Navigate to="/calorie-tracking" replace />
-          ) : (
-            <HomePage />
-          )
-        }
-      />
+      <Route path="/" element={<HomePage />} />
       <Route path="/auth/callback" element={<AuthCallbackPage />} />
-      <Route
-        path="/login"
-        element={
-          isAuthenticated ? (
-            <Navigate to="/calorie-tracking" replace />
-          ) : (
-            <LoginPage />
-          )
-        }
-      />
+      <Route path="/login" element={<LoginPage />} />
       <Route
         path="/onboarding"
         element={
