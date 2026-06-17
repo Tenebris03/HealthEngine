@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth/useAuth';
-import { authApi } from '@/services/api';
 import styles from './OnboardingPage.module.css';
 
 type Step = 'info' | 'bmr' | 'goal' | 'summary';
@@ -101,7 +100,8 @@ export function OnboardingPage() {
     if (!goal) return;
     setSaving(true);
     try {
-      const updated = await authApi.updateProfile({
+      const token = localStorage.getItem('auth_token');
+      const body = JSON.stringify({
         age: parseInt(age),
         heightCm: parseFloat(height),
         targetWeightKg:
@@ -113,9 +113,26 @@ export function OnboardingPage() {
         dailyCalorieGoal: dailyCalories,
       });
 
-      const token = localStorage.getItem('auth_token');
-      if (token) login(token, updated);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/api/auth/profile`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body,
+        },
+      );
 
+      if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        console.error('Onboarding save response:', res.status, text);
+        throw new Error(`Save failed (${res.status}): ${text}`);
+      }
+
+      const updated = await res.json();
+      if (token) login(token, updated);
       navigate('/calorie-tracking', { replace: true });
     } catch (err) {
       console.error('Onboarding save failed:', err);
