@@ -1,8 +1,9 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
+import { PrismaService } from '../prisma/prisma.service';
 import type { Request, Response } from 'express';
 
 const FRONTEND_URL = 'http://localhost:5173';
@@ -10,7 +11,27 @@ const FRONTEND_URL = 'http://localhost:5173';
 @ApiTags('Auth')
 @Controller('api/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly prisma: PrismaService,
+  ) {}
+
+  @Post('dev-login')
+  async devLogin(@Body() body: { email: string }) {
+    let user = await this.prisma.db.user.findUnique({ where: { email: body.email } });
+    if (!user) {
+      user = await this.prisma.db.user.create({
+        data: {
+          email: body.email,
+          provider: 'dev',
+          providerId: body.email,
+          name: body.email.split('@')[0],
+        },
+      });
+    }
+    const token = this.authService.createToken(user.id, user.email);
+    return { token, user: { id: user.id, email: user.email } };
+  }
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
