@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/features/auth/useAuth';
 import { LanguageSwitcher } from '@/components/language-switcher/LanguageSwitcher';
 import styles from './Header.module.css';
 
@@ -17,6 +18,7 @@ export function Header() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -52,6 +54,18 @@ export function Header() {
             {t(link.key)}
           </motion.button>
         ))}
+        {isAuthenticated && user ? (
+          <div className={styles.userSection}>
+            <span className={styles.userEmail}>{user.email}</span>
+            <button className={styles.logoutButton} onClick={logout}>
+              {t('common.logout')}
+            </button>
+          </div>
+        ) : (
+          <button className={styles.navItem} onClick={() => handleNavigate('/login')}>
+            {t('common.login')}
+          </button>
+        )}
         <LanguageSwitcher />
       </nav>
     </motion.header>

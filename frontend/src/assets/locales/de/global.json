@@ -39,7 +39,9 @@
     "deleteEntry": "{{name}} löschen",
     "closeModal": "Modal schließen",
     "editMacroTargets": "Makroziele bearbeiten",
-    "editWeightTarget": "Gewichtsziel bearbeiten"
+    "editWeightTarget": "Gewichtsziel bearbeiten",
+    "login": "Anmelden",
+    "logout": "Abmelden"
   },
   "mealTypes": {
     "breakfast": "Frühstück",

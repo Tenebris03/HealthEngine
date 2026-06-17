@@ -44,7 +44,9 @@
     "deleteEntry": "Delete {{name}}",
     "closeModal": "Close modal",
     "editMacroTargets": "Edit macro targets",
-    "editWeightTarget": "Edit weight target"
+    "editWeightTarget": "Edit weight target",
+    "login": "Login",
+    "logout": "Logout"
   },
   "mealTypes": {
     "breakfast": "Breakfast",
