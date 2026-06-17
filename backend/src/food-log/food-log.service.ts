@@ -18,4 +18,10 @@ export class FoodLogService {
       orderBy: { createdAt: 'desc' },
     });
   }
+
+  remove(id: number, userId: number) {
+    return this.prisma.db.foodEntry.deleteMany({
+      where: { id, userId },
+    });
+  }
 }

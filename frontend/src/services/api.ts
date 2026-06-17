@@ -73,6 +73,8 @@ export const foodLogApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+  remove: (id: number) =>
+    request<void>(`/api/food-log/${id}`, { method: 'DELETE' }),
 };
 
 export const weightLogApi = {
@@ -82,4 +84,6 @@ export const weightLogApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+  remove: (id: number) =>
+    request<void>(`/api/weight-log/${id}`, { method: 'DELETE' }),
 };

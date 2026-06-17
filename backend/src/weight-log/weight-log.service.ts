@@ -18,4 +18,10 @@ export class WeightLogService {
       orderBy: { timestamp: 'desc' },
     });
   }
+
+  remove(id: number, userId: number) {
+    return this.prisma.db.weightLog.deleteMany({
+      where: { id, userId },
+    });
+  }
 }

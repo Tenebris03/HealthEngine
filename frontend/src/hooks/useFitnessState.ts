@@ -134,6 +134,7 @@ export function useFitnessState(): FitnessState {
   }, []);
 
   const deleteEntry = useCallback(async (id: string) => {
+    await foodLogApi.remove(Number(id));
     setEntries((prev) => prev.filter((entry) => entry.id !== id));
   }, []);
 

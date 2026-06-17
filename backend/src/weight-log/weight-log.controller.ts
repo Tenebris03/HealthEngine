@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
@@ -20,5 +20,10 @@ export class WeightLogController {
   @Get()
   findAll(@CurrentUser() user: JwtPayload) {
     return this.weightLogService.findAll(user.sub);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.weightLogService.remove(Number(id), user.sub);
   }
 }
