@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/features/auth/useAuth';
 import { authApi } from '@/services/api';
 import styles from './OnboardingPage.module.css';
 
@@ -24,6 +25,7 @@ function calcCalories(bmr: number, goal: GoalType): number {
 
 export function OnboardingPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [step, setStep] = useState<Step>('info');
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState('');
@@ -33,10 +35,8 @@ export function OnboardingPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    authApi.me().then((u) => {
-      if (u.age) navigate('/calorie-tracking', { replace: true });
-    });
-  }, [navigate]);
+    if (user?.age) navigate('/calorie-tracking', { replace: true });
+  }, [navigate, user?.age]);
 
   const canContinue =
     age &&
