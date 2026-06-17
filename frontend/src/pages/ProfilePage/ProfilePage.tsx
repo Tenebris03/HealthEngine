@@ -1,10 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/features/auth/useAuth';
 import { authApi, type UserProfile } from '@/services/api';
 import styles from './ProfilePage.module.css';
 
 export function ProfilePage() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [heightCm, setHeightCm] = useState('');
   const [targetWeightKg, setTargetWeightKg] = useState('');
@@ -20,6 +25,7 @@ export function ProfilePage() {
       .me()
       .then((u) => {
         setProfile(u);
+        setName(u.name ?? '');
         setAvatar(u.avatar);
         setAge(u.age?.toString() ?? '');
         setHeightCm(u.heightCm?.toString() ?? '');
@@ -49,16 +55,35 @@ export function ProfilePage() {
     setSaving(true);
     setError(null);
     try {
-      const updated = await authApi.updateProfile({
-        avatar: avatar ?? undefined,
-        age: age ? parseInt(age, 10) : undefined,
-        heightCm: heightCm ? parseFloat(heightCm) : undefined,
-        targetWeightKg: targetWeightKg ? parseFloat(targetWeightKg) : undefined,
-        dailyCalorieGoal: dailyCalorieGoal
+      const payload: Record<string, unknown> = {};
+      if (avatar !== profile?.avatar) payload.avatar = avatar ?? null;
+      if (name !== (profile?.name ?? '')) payload.name = name || null;
+      if (age !== (profile?.age?.toString() ?? ''))
+        payload.age = age ? parseInt(age, 10) : null;
+      if (heightCm !== (profile?.heightCm?.toString() ?? ''))
+        payload.heightCm = heightCm ? parseFloat(heightCm) : null;
+      if (targetWeightKg !== (profile?.targetWeightKg?.toString() ?? ''))
+        payload.targetWeightKg = targetWeightKg
+          ? parseFloat(targetWeightKg)
+          : null;
+      if (dailyCalorieGoal !== (profile?.dailyCalorieGoal?.toString() ?? ''))
+        payload.dailyCalorieGoal = dailyCalorieGoal
           ? parseInt(dailyCalorieGoal, 10)
-          : undefined,
-      });
+          : null;
+
+      if (Object.keys(payload).length === 0) {
+        setSaving(false);
+        return;
+      }
+
+      const updated = await authApi.updateProfile(payload);
       setProfile(updated);
+      setName(updated.name ?? '');
+      setAvatar(updated.avatar);
+      setAge(updated.age?.toString() ?? '');
+      setHeightCm(updated.heightCm?.toString() ?? '');
+      setTargetWeightKg(updated.targetWeightKg?.toString() ?? '');
+      setDailyCalorieGoal(updated.dailyCalorieGoal?.toString() ?? '');
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (err) {
@@ -67,6 +92,11 @@ export function ProfilePage() {
       setSaving(false);
     }
   };
+
+  const handleLogout = useCallback(() => {
+    logout();
+    navigate('/');
+  }, [logout, navigate]);
 
   const initials = profile
     ? (profile.name ?? profile.email).slice(0, 2).toUpperCase()
@@ -105,65 +135,96 @@ export function ProfilePage() {
         />
       </div>
 
-      <form onSubmit={handleSave} className={styles.card}>
-        <div className={styles.emailRow}>
-          <span className={styles.label}>Email</span>
-          <span className={styles.email}>{profile?.email}</span>
+      <form onSubmit={handleSave}>
+        <div className={styles.card}>
+          <h2 className={styles.sectionTitle}>Edit Profile</h2>
+
+          <label className={styles.field}>
+            <span className={styles.label}>Name</span>
+            <input
+              type="text"
+              className={styles.input}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your name"
+            />
+          </label>
+
+          <div className={styles.emailRow}>
+            <span className={styles.label}>Email</span>
+            <span className={styles.email}>{profile?.email}</span>
+          </div>
+
+          <label className={styles.field}>
+            <span className={styles.label}>Age</span>
+            <input
+              type="number"
+              className={styles.input}
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              min={1}
+              max={150}
+            />
+          </label>
+
+          <label className={styles.field}>
+            <span className={styles.label}>Height (cm)</span>
+            <input
+              type="number"
+              className={styles.input}
+              value={heightCm}
+              onChange={(e) => setHeightCm(e.target.value)}
+              min={50}
+              max={300}
+              step={0.1}
+            />
+          </label>
         </div>
 
-        <h2 className={styles.sectionTitle}>Body Stats</h2>
+        <div className={styles.card}>
+          <h2 className={styles.sectionTitle}>Edit Goals</h2>
 
-        <label className={styles.field}>
-          <span className={styles.label}>Age</span>
-          <input
-            type="number"
-            className={styles.input}
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            min={1}
-            max={150}
-          />
-        </label>
+          <label className={styles.field}>
+            <span className={styles.label}>Target Weight (kg)</span>
+            <input
+              type="number"
+              className={styles.input}
+              value={targetWeightKg}
+              onChange={(e) => setTargetWeightKg(e.target.value)}
+              min={20}
+              max={500}
+              step={0.1}
+            />
+          </label>
 
-        <label className={styles.field}>
-          <span className={styles.label}>Height (cm)</span>
-          <input
-            type="number"
-            className={styles.input}
-            value={heightCm}
-            onChange={(e) => setHeightCm(e.target.value)}
-            min={50}
-            max={300}
-            step={0.1}
-          />
-        </label>
+          <label className={styles.field}>
+            <span className={styles.label}>Daily Calorie Goal</span>
+            <input
+              type="number"
+              className={styles.input}
+              value={dailyCalorieGoal}
+              onChange={(e) => setDailyCalorieGoal(e.target.value)}
+              min={500}
+              max={10000}
+            />
+          </label>
+        </div>
 
-        <h2 className={styles.sectionTitle}>Goals</h2>
-
-        <label className={styles.field}>
-          <span className={styles.label}>Target Weight (kg)</span>
-          <input
-            type="number"
-            className={styles.input}
-            value={targetWeightKg}
-            onChange={(e) => setTargetWeightKg(e.target.value)}
-            min={20}
-            max={500}
-            step={0.1}
-          />
-        </label>
-
-        <label className={styles.field}>
-          <span className={styles.label}>Daily Calorie Goal</span>
-          <input
-            type="number"
-            className={styles.input}
-            value={dailyCalorieGoal}
-            onChange={(e) => setDailyCalorieGoal(e.target.value)}
-            min={500}
-            max={10000}
-          />
-        </label>
+        <div className={styles.card}>
+          <h2 className={styles.sectionTitle}>Account</h2>
+          <p className={styles.accountInfo}>
+            Signed in as <strong>{profile?.email}</strong>
+          </p>
+          <motion.button
+            type="button"
+            className={styles.logoutButton}
+            onClick={handleLogout}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Logout
+          </motion.button>
+        </div>
 
         {error && <p className={styles.error}>{error}</p>}
 

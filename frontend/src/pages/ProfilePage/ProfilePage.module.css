@@ -140,3 +140,21 @@
   text-align: center;
   margin: 0.5rem 0;
 }
+
+.accountInfo {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem;
+}
+
+.logoutButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-error, #e53e3e);
+  background: transparent;
+  color: var(--color-error, #e53e3e);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}

@@ -8,19 +8,9 @@
     "profile": "Profil"
   },
   "footer": {
-    "product": "Produkt",
-    "company": "Unternehmen",
-    "support": "Support",
     "followUs": "Folgen Sie uns",
-    "features": "Funktionen",
-    "pricing": "Preise",
-    "api": "API",
-    "blog": "Blog",
-    "careers": "Karriere",
-    "helpCenter": "Hilfe-Center",
     "contact": "Kontakt",
     "privacy": "Datenschutz",
-    "about": "Über uns",
     "copyright": "© {{year}} HealthEngine. Alle Rechte vorbehalten."
   },
   "common": {

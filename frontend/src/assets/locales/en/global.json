@@ -12,19 +12,9 @@
     "goToDashboard": "Go to Dashboard"
   },
   "footer": {
-    "product": "Product",
-    "company": "Company",
-    "support": "Support",
     "followUs": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "api": "API",
-    "blog": "Blog",
-    "careers": "Careers",
-    "helpCenter": "Help Center",
     "contact": "Contact",
     "privacy": "Privacy",
-    "about": "About",
     "copyright": "© {{year}} HealthEngine. All rights reserved."
   },
   "common": {
