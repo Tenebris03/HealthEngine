@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { FoodLogModule } from './food-log/food-log.module';
 import { WeightLogModule } from './weight-log/weight-log.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [PrismaModule, FoodLogModule, WeightLogModule],
+  imports: [PrismaModule, FoodLogModule, WeightLogModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

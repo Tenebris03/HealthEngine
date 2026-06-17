@@ -7,6 +7,18 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String?
+  avatar    String?
+  provider  String
+  providerId String
+  createdAt DateTime   @default(now())
+  foodEntries FoodEntry[]
+  weightLogs  WeightLog[]
+}
+
 model FoodEntry {
   id          Int      @id @default(autoincrement())
   description String
@@ -17,10 +29,14 @@ model FoodEntry {
   mealType    String
   portion     Float    @default(1)
   createdAt   DateTime @default(now())
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id])
 }
 
 model WeightLog {
   id        Int      @id @default(autoincrement())
   weightKg  Float
   timestamp DateTime @default(now())
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
 }
