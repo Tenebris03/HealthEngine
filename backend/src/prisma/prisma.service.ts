@@ -4,7 +4,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import {
   PrismaClient as PrismaClientClass,
   type PrismaClient,
-} from '../../generated/prisma/client.js';
+} from '@prisma/client';
 
 const { Pool } = pg;
 

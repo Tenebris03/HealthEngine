@@ -8,6 +8,14 @@ import { GoogleStrategy } from './google.strategy';
 import { GithubStrategy } from './github.strategy';
 import { PrismaModule } from '../prisma/prisma.module';
 
+const googleStrategyProvider = process.env['GOOGLE_CLIENT_ID']
+  ? [GoogleStrategy]
+  : [];
+
+const githubStrategyProvider = process.env['GITHUB_CLIENT_ID']
+  ? [GithubStrategy]
+  : [];
+
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -18,7 +26,12 @@ import { PrismaModule } from '../prisma/prisma.module';
     PrismaModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, GoogleStrategy, GithubStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    ...googleStrategyProvider,
+    ...githubStrategyProvider,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}
