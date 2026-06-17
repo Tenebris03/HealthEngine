@@ -1,16 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-
-export interface FoodEntry {
-  id: string;
-  name: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  portion: string;
-  mealType: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snacks';
-  timestamp: Date;
-}
+import type { FoodEntry } from '@/types/food';
 
 export interface DailyTargets {
   calories: number;
