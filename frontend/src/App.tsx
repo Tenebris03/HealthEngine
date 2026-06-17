@@ -12,6 +12,7 @@ import { ProgressPage } from '@/pages/ProgressPage/ProgressPage';
 import { GoalsPage } from '@/pages/GoalsPage/GoalsPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
+import { AuthCallbackPage } from '@/pages/AuthCallbackPage/AuthCallbackPage';
 import { AuthProvider } from '@/features/auth/AuthContext';
 import { useAuth } from '@/features/auth/useAuth';
 
@@ -27,6 +28,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/auth/callback" element={<AuthCallbackPage />} />
       <Route
         path="/login"
         element={
