@@ -107,6 +107,19 @@ export const authApi = {
     }),
 };
 
+export interface LeaderboardUser {
+  rank: number;
+  id: number;
+  username: string;
+  avatar: string;
+  points: number;
+  isCurrentUser: boolean;
+}
+
+export const leaderboardApi = {
+  getAll: () => request<LeaderboardUser[]>('/api/leaderboard'),
+};
+
 export const weightLogApi = {
   getAll: () => request<ApiWeightLog[]>('/api/weight-log'),
   create: (data: CreateWeightLogPayload) =>

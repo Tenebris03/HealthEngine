@@ -18,6 +18,7 @@ model User {
   heightCm        Float?
   targetWeightKg  Float?
   dailyCalorieGoal Int?
+  points          Int        @default(0)
   createdAt       DateTime   @default(now())
   foodEntries     FoodEntry[]
   weightLogs      WeightLog[]
