@@ -101,6 +101,13 @@ export function OnboardingPage() {
     setSaving(true);
     try {
       const token = localStorage.getItem('auth_token');
+      try {
+        const parts = (token || '').split('.');
+        const payload = JSON.parse(atob(parts[1]));
+        console.log('JWT payload:', payload);
+      } catch {
+        console.log('Token is not a valid JWT, raw value:', token);
+      }
       const body = JSON.stringify({
         age: parseInt(age),
         heightCm: parseFloat(height),
