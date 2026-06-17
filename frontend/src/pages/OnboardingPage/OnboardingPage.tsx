@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth/useAuth';
 import { authApi } from '@/services/api';
 import styles from './OnboardingPage.module.css';
@@ -23,8 +24,30 @@ function calcCalories(bmr: number, goal: GoalType): number {
   }
 }
 
+const GOALS = [
+  {
+    type: 'lose' as GoalType,
+    labelKey: 'onboarding.goalLose' as const,
+    descKey: 'onboarding.goalLoseDesc' as const,
+    color: 'var(--color-error)',
+  },
+  {
+    type: 'maintain' as GoalType,
+    labelKey: 'onboarding.goalMaintain' as const,
+    descKey: 'onboarding.goalMaintainDesc' as const,
+    color: 'var(--color-primary)',
+  },
+  {
+    type: 'gain' as GoalType,
+    labelKey: 'onboarding.goalGain' as const,
+    descKey: 'onboarding.goalGainDesc' as const,
+    color: 'var(--color-green, #38a169)',
+  },
+] as const;
+
 export function OnboardingPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation('global');
   const { user, login } = useAuth();
   const [step, setStep] = useState<Step>('info');
   const [age, setAge] = useState('');
@@ -33,6 +56,10 @@ export function OnboardingPage() {
   const [goal, setGoal] = useState<GoalType | null>(null);
   const [bmr, setBmr] = useState(0);
   const [saving, setSaving] = useState(false);
+  const [dailyCalories, setDailyCalories] = useState(0);
+  const [proteinG, setProteinG] = useState(0);
+  const [carbsG, setCarbsG] = useState(0);
+  const [fatG, setFatG] = useState(0);
 
   useEffect(() => {
     if (user?.age) navigate('/calorie-tracking', { replace: true });
@@ -57,16 +84,23 @@ export function OnboardingPage() {
     setTimeout(() => setStep('goal'), 2200);
   }, [canContinue, weight, height, age]);
 
-  const handleGoalSelect = useCallback((g: GoalType) => {
-    setGoal(g);
-    setStep('summary');
-  }, []);
+  const handleGoalSelect = useCallback(
+    (g: GoalType) => {
+      setGoal(g);
+      const cals = calcCalories(bmr, g);
+      setDailyCalories(cals);
+      setProteinG(Math.round((cals * 0.3) / 4));
+      setCarbsG(Math.round((cals * 0.45) / 4));
+      setFatG(Math.round((cals * 0.25) / 9));
+      setStep('summary');
+    },
+    [bmr],
+  );
 
   const handleConfirm = useCallback(async () => {
     if (!goal) return;
     setSaving(true);
     try {
-      const dailyCalories = calcCalories(bmr, goal);
       const updated = await authApi.updateProfile({
         age: parseInt(age),
         heightCm: parseFloat(height),
@@ -83,10 +117,11 @@ export function OnboardingPage() {
       if (token) login(token, updated);
 
       navigate('/calorie-tracking', { replace: true });
-    } catch {
+    } catch (err) {
+      console.error('Onboarding save failed:', err);
       setSaving(false);
     }
-  }, [goal, bmr, age, height, weight, navigate, login]);
+  }, [goal, age, height, weight, dailyCalories, navigate, login]);
 
   return (
     <div className={styles.page}>
@@ -101,17 +136,17 @@ export function OnboardingPage() {
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.4 }}
             >
-              <h1 className={styles.title}>Let's get started!</h1>
-              <p className={styles.subtitle}>Tell us about yourself</p>
+              <h1 className={styles.title}>{t('onboarding.infoTitle')}</h1>
+              <p className={styles.subtitle}>{t('onboarding.infoSubtitle')}</p>
 
               <div className={styles.field}>
-                <label className={styles.label}>Your Age</label>
+                <label className={styles.label}>{t('onboarding.age')}</label>
                 <input
                   type="number"
                   className={styles.input}
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
-                  placeholder="e.g. 25"
+                  placeholder={t('onboarding.agePlaceholder')}
                   min={1}
                   max={150}
                 />
@@ -119,26 +154,30 @@ export function OnboardingPage() {
 
               <div className={styles.fieldRow}>
                 <div className={styles.field}>
-                  <label className={styles.label}>Weight (kg)</label>
+                  <label className={styles.label}>
+                    {t('onboarding.weight')}
+                  </label>
                   <input
                     type="number"
                     className={styles.input}
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    placeholder="e.g. 75"
+                    placeholder={t('onboarding.weightPlaceholder')}
                     min={20}
                     max={500}
                     step={0.1}
                   />
                 </div>
                 <div className={styles.field}>
-                  <label className={styles.label}>Height (cm)</label>
+                  <label className={styles.label}>
+                    {t('onboarding.height')}
+                  </label>
                   <input
                     type="number"
                     className={styles.input}
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    placeholder="e.g. 175"
+                    placeholder={t('onboarding.heightPlaceholder')}
                     min={50}
                     max={300}
                   />
@@ -152,7 +191,7 @@ export function OnboardingPage() {
                 whileHover={canContinue ? { scale: 1.02 } : {}}
                 whileTap={canContinue ? { scale: 0.97 } : {}}
               >
-                Continue
+                {t('onboarding.continue')}
               </motion.button>
             </motion.div>
           )}
@@ -190,7 +229,7 @@ export function OnboardingPage() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  Calculating your Basal Metabolic Rate...
+                  {t('onboarding.bmrCalculating')}
                 </motion.p>
 
                 <div className={styles.progressBar}>
@@ -209,7 +248,9 @@ export function OnboardingPage() {
                   transition={{ delay: 1.8, duration: 0.5 }}
                 >
                   <span className={styles.bmrValue}>{bmr}</span>
-                  <span className={styles.bmrUnit}>kcal/day</span>
+                  <span className={styles.bmrUnit}>
+                    {t('onboarding.bmrUnit')}
+                  </span>
                 </motion.div>
               </div>
             </motion.div>
@@ -224,33 +265,11 @@ export function OnboardingPage() {
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.4 }}
             >
-              <h1 className={styles.title}>What's your goal?</h1>
-              <p className={styles.subtitle}>Choose your fitness objective</p>
+              <h1 className={styles.title}>{t('onboarding.goalTitle')}</h1>
+              <p className={styles.subtitle}>{t('onboarding.goalSubtitle')}</p>
 
               <div className={styles.goalGrid}>
-                {[
-                  {
-                    type: 'lose' as GoalType,
-                    icon: '🔥',
-                    label: 'Lose Weight',
-                    desc: 'Create a calorie deficit to shed excess weight',
-                    color: 'var(--color-error)',
-                  },
-                  {
-                    type: 'maintain' as GoalType,
-                    icon: '⚖️',
-                    label: 'Maintain Weight',
-                    desc: 'Keep your current weight with balanced nutrition',
-                    color: 'var(--color-primary)',
-                  },
-                  {
-                    type: 'gain' as GoalType,
-                    icon: '💪',
-                    label: 'Gain Weight',
-                    desc: 'Build muscle with a calorie surplus',
-                    color: 'var(--color-green, #38a169)',
-                  },
-                ].map((g) => (
+                {GOALS.map((g) => (
                   <motion.button
                     key={g.type}
                     className={styles.goalCard}
@@ -259,9 +278,8 @@ export function OnboardingPage() {
                     whileTap={{ scale: 0.97 }}
                     style={{ '--goal-accent': g.color } as React.CSSProperties}
                   >
-                    <span className={styles.goalIcon}>{g.icon}</span>
-                    <span className={styles.goalLabel}>{g.label}</span>
-                    <span className={styles.goalDesc}>{g.desc}</span>
+                    <span className={styles.goalLabel}>{t(g.labelKey)}</span>
+                    <span className={styles.goalDesc}>{t(g.descKey)}</span>
                   </motion.button>
                 ))}
               </div>
@@ -277,64 +295,67 @@ export function OnboardingPage() {
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.4 }}
             >
-              <h1 className={styles.title}>Your Plan</h1>
+              <h1 className={styles.title}>{t('onboarding.summaryTitle')}</h1>
               <p className={styles.subtitle}>
-                Here's your personalized nutrition plan
+                {t('onboarding.summarySubtitle')}
               </p>
 
               <div className={styles.summaryGrid}>
                 <div className={styles.summaryItem}>
                   <span className={styles.summaryLabel}>
-                    Basal Metabolic Rate
+                    {t('onboarding.dailyCalories')}
                   </span>
-                  <span className={styles.summaryValue}>{bmr} kcal</span>
+                  <input
+                    type="number"
+                    className={styles.editableInput}
+                    value={dailyCalories}
+                    onChange={(e) => {
+                      const v = parseInt(e.target.value) || 0;
+                      setDailyCalories(v);
+                      setProteinG(Math.round((v * 0.3) / 4));
+                      setCarbsG(Math.round((v * 0.45) / 4));
+                      setFatG(Math.round((v * 0.25) / 9));
+                    }}
+                  />
+                  <span className={styles.summaryUnit}>kcal</span>
                 </div>
                 <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Daily Calories</span>
-                  <span
-                    className={styles.summaryValue}
-                    style={{ color: 'var(--color-primary)' }}
-                  >
-                    {calcCalories(bmr, goal)} kcal
+                  <span className={styles.summaryLabel}>
+                    {t('onboarding.protein')}
                   </span>
+                  <input
+                    type="number"
+                    className={styles.editableInput}
+                    value={proteinG}
+                    onChange={(e) => setProteinG(parseInt(e.target.value) || 0)}
+                  />
+                  <span className={styles.summaryUnit}>g</span>
                 </div>
                 <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Protein</span>
-                  <span className={styles.summaryValue}>
-                    {Math.round((calcCalories(bmr, goal) * 0.3) / 4)}g
+                  <span className={styles.summaryLabel}>
+                    {t('onboarding.carbs')}
                   </span>
+                  <input
+                    type="number"
+                    className={styles.editableInput}
+                    value={carbsG}
+                    onChange={(e) => setCarbsG(parseInt(e.target.value) || 0)}
+                  />
+                  <span className={styles.summaryUnit}>g</span>
                 </div>
                 <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Carbs</span>
-                  <span className={styles.summaryValue}>
-                    {Math.round((calcCalories(bmr, goal) * 0.45) / 4)}g
+                  <span className={styles.summaryLabel}>
+                    {t('onboarding.fat')}
                   </span>
-                </div>
-                <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Fat</span>
-                  <span className={styles.summaryValue}>
-                    {Math.round((calcCalories(bmr, goal) * 0.25) / 9)}g
-                  </span>
-                </div>
-                <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Goal</span>
-                  <span className={styles.summaryValue}>
-                    {goal === 'lose'
-                      ? '🔥 Lose Weight'
-                      : goal === 'gain'
-                        ? '💪 Gain Weight'
-                        : '⚖️ Maintain'}
-                  </span>
+                  <input
+                    type="number"
+                    className={styles.editableInput}
+                    value={fatG}
+                    onChange={(e) => setFatG(parseInt(e.target.value) || 0)}
+                  />
+                  <span className={styles.summaryUnit}>g</span>
                 </div>
               </div>
-
-              {goal !== 'maintain' && (
-                <p className={styles.summaryNote}>
-                  {goal === 'lose'
-                    ? 'Suggested target: 5 kg weight loss. You can adjust this in your profile.'
-                    : 'Suggested target: 5 kg weight gain. You can adjust this in your profile.'}
-                </p>
-              )}
 
               <motion.button
                 className={styles.primaryButton}
@@ -343,7 +364,7 @@ export function OnboardingPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {saving ? 'Saving...' : 'Sounds good!'}
+                {saving ? t('onboarding.saving') : t('onboarding.save')}
               </motion.button>
             </motion.div>
           )}

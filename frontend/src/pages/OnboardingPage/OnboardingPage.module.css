@@ -200,6 +200,10 @@
   border-radius: var(--radius-md);
   padding: 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
 }
 
 .summaryLabel {
@@ -217,6 +221,37 @@
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-text);
+}
+
+.editableInput {
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.25rem 0;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.editableInput::-webkit-outer-spin-button,
+.editableInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.editableInput:focus {
+  border-bottom-color: var(--color-primary);
+}
+
+.summaryUnit {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.15rem;
 }
 
 .summaryNote {
