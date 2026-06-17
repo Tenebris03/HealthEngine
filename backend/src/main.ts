@@ -8,6 +8,8 @@ import { AppModule } from './app.module';
 
 config({ path: resolve(__dirname, '../../.env') });
 
+console.log('[DEBUG] JWT_SECRET in use:', process.env['JWT_SECRET']);
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bodyParser: false });
   app.use(json({ limit: '2mb' }));
