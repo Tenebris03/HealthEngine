@@ -8,7 +8,7 @@ import './App.css';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage/HomePage';
 import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
-import { ProgressPage } from '@/pages/ProgressPage/ProgressPage';
+import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
 import { GoalsPage } from '@/pages/GoalsPage/GoalsPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
@@ -27,7 +27,12 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route
+        path="/"
+        element={
+          isAuthenticated ? <Navigate to="/dashboard" replace /> : <HomePage />
+        }
+      />
       <Route path="/auth/callback" element={<AuthCallbackPage />} />
       <Route
         path="/login"
@@ -44,10 +49,10 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/progress"
+        path="/profile"
         element={
           <ProtectedRoute>
-            <ProgressPage />
+            <ProfilePage />
           </ProtectedRoute>
         }
       />

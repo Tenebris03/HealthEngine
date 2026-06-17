@@ -7,16 +7,20 @@ datasource db {
 }
 
 model User {
-  id           Int        @id @default(autoincrement())
-  email        String     @unique
-  name         String?
-  avatar       String?
-  passwordHash String?
-  provider     String
-  providerId   String
-  createdAt    DateTime   @default(now())
-  foodEntries  FoodEntry[]
-  weightLogs   WeightLog[]
+  id              Int        @id @default(autoincrement())
+  email           String     @unique
+  name            String?
+  avatar          String?
+  passwordHash    String?
+  provider        String
+  providerId      String
+  age             Int?
+  heightCm        Float?
+  targetWeightKg  Float?
+  dailyCalorieGoal Int?
+  createdAt       DateTime   @default(now())
+  foodEntries     FoodEntry[]
+  weightLogs      WeightLog[]
 }
 
 model FoodEntry {

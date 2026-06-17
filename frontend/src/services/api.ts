@@ -77,6 +77,26 @@ export const foodLogApi = {
     request<void>(`/api/food-log/${id}`, { method: 'DELETE' }),
 };
 
+export interface UserProfile {
+  id: number;
+  email: string;
+  name: string | null;
+  avatar: string | null;
+  age: number | null;
+  heightCm: number | null;
+  targetWeightKg: number | null;
+  dailyCalorieGoal: number | null;
+}
+
+export const authApi = {
+  me: () => request<UserProfile>('/api/auth/me'),
+  updateProfile: (data: Partial<UserProfile>) =>
+    request<UserProfile>('/api/auth/profile', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+};
+
 export const weightLogApi = {
   getAll: () => request<ApiWeightLog[]>('/api/weight-log'),
   create: (data: CreateWeightLogPayload) =>

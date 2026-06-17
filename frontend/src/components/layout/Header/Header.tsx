@@ -10,7 +10,7 @@ const headerLinks = [
   { key: 'nav.dashboard' as const, path: '/dashboard' as const },
   { key: 'nav.goals' as const, path: '/goals' as const },
   { key: 'nav.leaderboard' as const, path: '/leaderboard' as const },
-  { key: 'nav.progress' as const, path: '/progress' as const },
+  { key: 'nav.profile' as const, path: '/profile' as const },
   { key: 'nav.about' as const, path: '/about' as const },
 ] as const;
 

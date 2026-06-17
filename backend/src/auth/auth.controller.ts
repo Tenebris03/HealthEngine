@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UnauthorizedException, ConflictException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, Res, UnauthorizedException, ConflictException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import bcrypt from 'bcrypt';
@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import type { Request, Response } from 'express';
 
 const FRONTEND_URL = 'http://localhost:5173';
@@ -91,11 +92,46 @@ export class AuthController {
     res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}&userId=${user.id}&email=${encodeURIComponent(user.email)}`);
   }
 
-  @ApiOperation({ summary: 'Get current user profile from JWT' })
+  @ApiOperation({ summary: 'Get current user profile' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getProfile(@Req() req: Request) {
-    return req.user;
+  async getProfile(@Req() req: Request) {
+    const payload = req.user as { sub: number };
+    return this.prisma.db.user.findUnique({
+      where: { id: payload.sub },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        avatar: true,
+        age: true,
+        heightCm: true,
+        targetWeightKg: true,
+        dailyCalorieGoal: true,
+      },
+    });
+  }
+
+  @ApiOperation({ summary: 'Update user profile settings' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Patch('profile')
+  async updateProfile(@Body() body: UpdateProfileDto, @Req() req: Request) {
+    const payload = req.user as { sub: number };
+    return this.prisma.db.user.update({
+      where: { id: payload.sub },
+      data: body,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        avatar: true,
+        age: true,
+        heightCm: true,
+        targetWeightKg: true,
+        dailyCalorieGoal: true,
+      },
+    });
   }
 }
