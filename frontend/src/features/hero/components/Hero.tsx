@@ -34,7 +34,7 @@ export function Hero() {
         </motion.p>
         <motion.button
           className={styles.cta}
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate('/calorie-tracking')}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' as const }}

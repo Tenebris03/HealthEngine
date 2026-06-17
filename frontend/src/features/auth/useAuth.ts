@@ -3,6 +3,8 @@ import { createContext, useContext } from 'react';
 export interface AuthUser {
   id: number;
   email: string;
+  name?: string | null;
+  avatar?: string | null;
 }
 
 export interface AuthContextType {

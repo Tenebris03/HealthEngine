@@ -4,11 +4,61 @@
   padding: 2rem 1rem;
 }
 
-.title {
-  font-size: 1.5rem;
+.avatarWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatarButton {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  transition: border-color 0.2s ease;
+}
+
+.avatarButton:hover {
+  border-color: var(--color-primary);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarInitials {
+  font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 1.5rem;
-  color: var(--color-text);
+  color: var(--color-primary);
+}
+
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.avatarButton:hover .avatarOverlay {
+  opacity: 1;
+}
+
+.fileInput {
+  display: none;
 }
 
 .card {
@@ -23,13 +73,15 @@
   font-size: 1rem;
   font-weight: 600;
   color: var(--color-text);
-  margin: 0 0 1rem;
+  margin: 1.5rem 0 1rem;
 }
 
 .emailRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .email {
@@ -80,4 +132,11 @@
 .saveButton:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+.error {
+  color: var(--color-error, #e53e3e);
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0.5rem 0;
 }

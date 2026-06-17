@@ -2,11 +2,10 @@
   "brand": "HealthEngine",
   "nav": {
     "home": "Startseite",
-    "goals": "Ziele",
+    "calorieTracking": "Kalorien-Tracking",
+    "weightTracking": "Gewichts-Tracking",
     "leaderboard": "Rangliste",
-    "progress": "Fortschritt",
-    "profile": "Profil",
-    "about": "Über uns"
+    "profile": "Profil"
   },
   "footer": {
     "product": "Produkt",
@@ -42,7 +41,8 @@
     "editMacroTargets": "Makroziele bearbeiten",
     "editWeightTarget": "Gewichtsziel bearbeiten",
     "login": "Anmelden",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "editProfile": "Profil bearbeiten"
   },
   "mealTypes": {
     "breakfast": "Frühstück",

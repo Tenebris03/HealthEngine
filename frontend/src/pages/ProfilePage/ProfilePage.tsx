@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { authApi, type UserProfile } from '@/services/api';
 import styles from './ProfilePage.module.css';
@@ -9,38 +9,68 @@ export function ProfilePage() {
   const [heightCm, setHeightCm] = useState('');
   const [targetWeightKg, setTargetWeightKg] = useState('');
   const [dailyCalorieGoal, setDailyCalorieGoal] = useState('');
+  const [avatar, setAvatar] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    authApi.me().then((u) => {
-      setProfile(u);
-      setAge(u.age?.toString() ?? '');
-      setHeightCm(u.heightCm?.toString() ?? '');
-      setTargetWeightKg(u.targetWeightKg?.toString() ?? '');
-      setDailyCalorieGoal(u.dailyCalorieGoal?.toString() ?? '');
-    });
+    authApi
+      .me()
+      .then((u) => {
+        setProfile(u);
+        setAvatar(u.avatar);
+        setAge(u.age?.toString() ?? '');
+        setHeightCm(u.heightCm?.toString() ?? '');
+        setTargetWeightKg(u.targetWeightKg?.toString() ?? '');
+        setDailyCalorieGoal(u.dailyCalorieGoal?.toString() ?? '');
+      })
+      .catch((err) =>
+        setError(err instanceof Error ? err.message : 'Failed to load profile'),
+      );
   }, []);
+
+  const handleAvatarClick = () => fileRef.current?.click();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      setAvatar(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
+    setError(null);
     try {
       const updated = await authApi.updateProfile({
+        avatar: avatar ?? undefined,
         age: age ? parseInt(age, 10) : undefined,
         heightCm: heightCm ? parseFloat(heightCm) : undefined,
         targetWeightKg: targetWeightKg ? parseFloat(targetWeightKg) : undefined,
-        dailyCalorieGoal: dailyCalorieGoal ? parseInt(dailyCalorieGoal, 10) : undefined,
+        dailyCalorieGoal: dailyCalorieGoal
+          ? parseInt(dailyCalorieGoal, 10)
+          : undefined,
       });
       setProfile(updated);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
-    } catch {
-      // ignore
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save');
     } finally {
       setSaving(false);
     }
   };
+
+  const initials = profile
+    ? (profile.name ?? profile.email).slice(0, 2).toUpperCase()
+    : '?';
 
   return (
     <motion.div
@@ -49,18 +79,38 @@ export function ProfilePage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <h1 className={styles.title}>Profile Settings</h1>
-
-      {profile && (
-        <div className={styles.card}>
-          <div className={styles.emailRow}>
-            <span className={styles.label}>Email</span>
-            <span className={styles.email}>{profile.email}</span>
+      <div className={styles.avatarWrap}>
+        <button
+          type="button"
+          className={styles.avatarButton}
+          onClick={handleAvatarClick}
+        >
+          {avatar ? (
+            <img src={avatar} alt="" className={styles.avatarImg} />
+          ) : (
+            <span className={styles.avatarInitials}>{initials}</span>
+          )}
+          <div className={styles.avatarOverlay}>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+              <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" />
+            </svg>
           </div>
-        </div>
-      )}
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/png,image/jpeg"
+          className={styles.fileInput}
+          onChange={handleFileChange}
+        />
+      </div>
 
       <form onSubmit={handleSave} className={styles.card}>
+        <div className={styles.emailRow}>
+          <span className={styles.label}>Email</span>
+          <span className={styles.email}>{profile?.email}</span>
+        </div>
+
         <h2 className={styles.sectionTitle}>Body Stats</h2>
 
         <label className={styles.field}>
@@ -114,6 +164,8 @@ export function ProfilePage() {
             max={10000}
           />
         </label>
+
+        {error && <p className={styles.error}>{error}</p>}
 
         <motion.button
           type="submit"

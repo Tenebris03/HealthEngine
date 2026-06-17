@@ -7,9 +7,9 @@ import {
 import './App.css';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage/HomePage';
-import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
+import { CalorieTrackingPage } from '@/pages/CalorieTrackingPage/CalorieTrackingPage';
+import { WeightTrackingPage } from '@/pages/WeightTrackingPage/WeightTrackingPage';
 import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
-import { GoalsPage } from '@/pages/GoalsPage/GoalsPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { AuthCallbackPage } from '@/pages/AuthCallbackPage/AuthCallbackPage';
@@ -30,21 +30,37 @@ function AppRoutes() {
       <Route
         path="/"
         element={
-          isAuthenticated ? <Navigate to="/dashboard" replace /> : <HomePage />
+          isAuthenticated ? (
+            <Navigate to="/calorie-tracking" replace />
+          ) : (
+            <HomePage />
+          )
         }
       />
       <Route path="/auth/callback" element={<AuthCallbackPage />} />
       <Route
         path="/login"
         element={
-          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+          isAuthenticated ? (
+            <Navigate to="/calorie-tracking" replace />
+          ) : (
+            <LoginPage />
+          )
         }
       />
       <Route
-        path="/dashboard"
+        path="/calorie-tracking"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <CalorieTrackingPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/weight-tracking"
+        element={
+          <ProtectedRoute>
+            <WeightTrackingPage />
           </ProtectedRoute>
         }
       />
@@ -53,14 +69,6 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <ProfilePage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/goals"
-        element={
-          <ProtectedRoute>
-            <GoalsPage />
           </ProtectedRoute>
         }
       />

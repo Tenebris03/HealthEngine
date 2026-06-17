@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -6,19 +7,77 @@ import { LanguageSwitcher } from '@/components/language-switcher/LanguageSwitche
 import styles from './Header.module.css';
 
 const headerLinks = [
-  { key: 'nav.home' as const, path: '/' as const },
-  { key: 'nav.dashboard' as const, path: '/dashboard' as const },
-  { key: 'nav.goals' as const, path: '/goals' as const },
+  { key: 'nav.calorieTracking' as const, path: '/calorie-tracking' as const },
+  { key: 'nav.weightTracking' as const, path: '/weight-tracking' as const },
   { key: 'nav.leaderboard' as const, path: '/leaderboard' as const },
-  { key: 'nav.profile' as const, path: '/profile' as const },
-  { key: 'nav.about' as const, path: '/about' as const },
 ] as const;
+
+function AvatarMenu() {
+  const { t } = useTranslation();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  if (!user) return null;
+
+  const initials = (user.name ?? user.email).slice(0, 2).toUpperCase();
+
+  return (
+    <div className={styles.avatarWrapper} ref={ref}>
+      <button className={styles.avatarButton} onClick={() => setOpen(!open)}>
+        {user.avatar ? (
+          <img src={user.avatar} alt="" className={styles.avatarImg} />
+        ) : (
+          <span className={styles.avatarInitials}>{initials}</span>
+        )}
+      </button>
+      {open && (
+        <motion.div
+          className={styles.dropdown}
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.15 }}
+        >
+          <div className={styles.dropdownEmail}>{user.email}</div>
+          <button
+            className={styles.dropdownItem}
+            onClick={() => {
+              navigate('/profile');
+              setOpen(false);
+            }}
+          >
+            {t('common.editProfile')}
+          </button>
+          <button
+            className={`${styles.dropdownItem} ${styles.dropdownDanger}`}
+            onClick={() => {
+              logout();
+              setOpen(false);
+            }}
+          >
+            {t('common.logout')}
+          </button>
+        </motion.div>
+      )}
+    </div>
+  );
+}
 
 export function Header() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -54,15 +113,13 @@ export function Header() {
             {t(link.key)}
           </motion.button>
         ))}
-        {isAuthenticated && user ? (
-          <div className={styles.userSection}>
-            <span className={styles.userEmail}>{user.email}</span>
-            <button className={styles.logoutButton} onClick={logout}>
-              {t('common.logout')}
-            </button>
-          </div>
+        {isAuthenticated ? (
+          <AvatarMenu />
         ) : (
-          <button className={styles.navItem} onClick={() => handleNavigate('/login')}>
+          <button
+            className={styles.navItem}
+            onClick={() => handleNavigate('/login')}
+          >
             {t('common.login')}
           </button>
         )}

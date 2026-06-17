@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Patch, Post, Req, Res, UnauthorizedException, ConflictException, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Req,
+  Res,
+  UnauthorizedException,
+  ConflictException,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import bcrypt from 'bcrypt';
@@ -22,7 +33,9 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() body: SignupDto) {
-    const existing = await this.prisma.db.user.findUnique({ where: { email: body.email } });
+    const existing = await this.prisma.db.user.findUnique({
+      where: { email: body.email },
+    });
     if (existing) throw new ConflictException('Email already registered');
 
     const passwordHash = await bcrypt.hash(body.password, 10);
@@ -36,24 +49,45 @@ export class AuthController {
       },
     });
     const token = this.authService.createToken(user.id, user.email);
-    return { token, user: { id: user.id, email: user.email, name: user.name } };
+    return {
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      },
+    };
   }
 
   @Post('login')
   async login(@Body() body: LoginDto) {
-    const user = await this.prisma.db.user.findUnique({ where: { email: body.email } });
-    if (!user || !user.passwordHash) throw new UnauthorizedException('Invalid credentials');
+    const user = await this.prisma.db.user.findUnique({
+      where: { email: body.email },
+    });
+    if (!user || !user.passwordHash)
+      throw new UnauthorizedException('Invalid credentials');
 
     const valid = await bcrypt.compare(body.password, user.passwordHash);
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 
     const token = this.authService.createToken(user.id, user.email);
-    return { token, user: { id: user.id, email: user.email, name: user.name } };
+    return {
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      },
+    };
   }
 
   @Post('dev-login')
   async devLogin(@Body() body: { email: string }) {
-    let user = await this.prisma.db.user.findUnique({ where: { email: body.email } });
+    let user = await this.prisma.db.user.findUnique({
+      where: { email: body.email },
+    });
     if (!user) {
       user = await this.prisma.db.user.create({
         data: {
@@ -65,7 +99,15 @@ export class AuthController {
       });
     }
     const token = this.authService.createToken(user.id, user.email);
-    return { token, user: { id: user.id, email: user.email } };
+    return {
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      },
+    };
   }
 
   @Get('google')
@@ -75,9 +117,21 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   googleCallback(@Req() req: Request, @Res() res: Response): void {
-    const user = req.user as { id: number; email: string };
+    const user = req.user as {
+      id: number;
+      email: string;
+      name?: string;
+      avatar?: string;
+    };
     const token = this.authService.createToken(user.id, user.email);
-    res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}&userId=${user.id}&email=${encodeURIComponent(user.email)}`);
+    const params = new URLSearchParams({
+      token,
+      userId: String(user.id),
+      email: user.email,
+    });
+    if (user.name) params.set('name', user.name);
+    if (user.avatar) params.set('avatar', user.avatar);
+    res.redirect(`${FRONTEND_URL}/auth/callback?${params}`);
   }
 
   @Get('github')
@@ -87,9 +141,21 @@ export class AuthController {
   @Get('github/callback')
   @UseGuards(AuthGuard('github'))
   githubCallback(@Req() req: Request, @Res() res: Response): void {
-    const user = req.user as { id: number; email: string };
+    const user = req.user as {
+      id: number;
+      email: string;
+      name?: string;
+      avatar?: string;
+    };
     const token = this.authService.createToken(user.id, user.email);
-    res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}&userId=${user.id}&email=${encodeURIComponent(user.email)}`);
+    const params = new URLSearchParams({
+      token,
+      userId: String(user.id),
+      email: user.email,
+    });
+    if (user.name) params.set('name', user.name);
+    if (user.avatar) params.set('avatar', user.avatar);
+    res.redirect(`${FRONTEND_URL}/auth/callback?${params}`);
   }
 
   @ApiOperation({ summary: 'Get current user profile' })

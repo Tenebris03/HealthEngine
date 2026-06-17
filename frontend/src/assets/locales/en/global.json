@@ -2,12 +2,10 @@
   "brand": "HealthEngine",
   "nav": {
     "home": "Home",
-    "dashboard": "Dashboard",
-    "goals": "Goals",
+    "calorieTracking": "Calorie Tracking",
+    "weightTracking": "Weight Tracking",
     "leaderboard": "Leaderboard",
-    "progress": "Progress",
-    "profile": "Profile",
-    "about": "About"
+    "profile": "Profile"
   },
   "cta": {
     "getStarted": "Get Started",
@@ -47,7 +45,8 @@
     "editMacroTargets": "Edit macro targets",
     "editWeightTarget": "Edit weight target",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "editProfile": "Edit Profile"
   },
   "mealTypes": {
     "breakfast": "Breakfast",
