@@ -8,10 +8,16 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 
+  app.enableCors({
+    origin: ['http://localhost:5173', 'http://localhost:4173'],
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('HealthEngine API')
     .setDescription('HealthEngine backend REST API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
