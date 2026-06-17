@@ -1,20 +1,34 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import type { ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  type ExecutionContext,
+} from '@nestjs/common';
+import type { Observable } from 'rxjs';
+import type { Request } from 'express';
+import jwt from 'jsonwebtoken';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
-  handleRequest<TUser = any>(
-    err: any,
-    user: TUser,
-    info: any,
+export class JwtAuthGuard {
+  canActivate(
     context: ExecutionContext,
-    status?: any,
-  ): TUser {
-    if (err || !user) {
-      console.error('[JwtAuthGuard] Auth failed:', err?.message, info?.message);
-      throw err || new UnauthorizedException();
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const request = context.switchToHttp().getRequest<Request>();
+    const auth = request.headers.authorization;
+    if (!auth) throw new UnauthorizedException('No Authorization header');
+
+    const parts = auth.split(' ');
+    if (parts.length !== 2 || parts[0].toLowerCase() !== 'bearer')
+      throw new UnauthorizedException('Malformed Authorization header');
+
+    const token = parts[1];
+    const secret = process.env['JWT_SECRET'] ?? 'fallback-dev-secret';
+
+    try {
+      const decoded = jwt.verify(token, secret);
+      (request as unknown as Record<string, unknown>).user = decoded;
+      return true;
+    } catch {
+      throw new UnauthorizedException('Invalid token');
     }
-    return user;
   }
 }
