@@ -33,12 +33,9 @@ export function OnboardingPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    authApi
-      .me()
-      .then((u) => {
-        if (u.age) navigate('/calorie-tracking', { replace: true });
-      })
-      .catch(() => navigate('/login', { replace: true }));
+    authApi.me().then((u) => {
+      if (u.age) navigate('/calorie-tracking', { replace: true });
+    });
   }, [navigate]);
 
   const canContinue =
