@@ -108,11 +108,11 @@ export function OnboardingPage() {
       } catch {
         console.log('Token is not a valid JWT, raw value:', token);
       }
-      const meRes = await fetch(
-        `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/api/auth/me`,
+      const debugRes = await fetch(
+        `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/api/debug/verify-token`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
-      console.log('GET /api/auth/me status:', meRes.status);
+      console.log('Token verification debug:', await debugRes.json());
       const body = JSON.stringify({
         age: parseInt(age),
         heightCm: parseFloat(height),
