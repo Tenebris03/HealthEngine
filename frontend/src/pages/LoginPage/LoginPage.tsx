@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/features/auth/useAuth';
+import { authApi } from '@/services/api';
 import styles from './LoginPage.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
@@ -10,12 +11,24 @@ const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 export function LoginPage() {
   const navigate = useNavigate();
   const { t } = useTranslation('global');
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    authApi
+      .me()
+      .then((u) =>
+        navigate(u.age ? '/calorie-tracking' : '/onboarding', {
+          replace: true,
+        }),
+      )
+      .catch(() => navigate('/calorie-tracking', { replace: true }));
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,9 +50,6 @@ export function LoginPage() {
       }
       const data = await res.json();
       login(data.token, data.user);
-      navigate(data.user.age ? '/calorie-tracking' : '/onboarding', {
-        replace: true,
-      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
     }
