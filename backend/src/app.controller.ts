@@ -42,12 +42,27 @@ export class AppController {
       }
     })();
 
+    const fallbackResult = (() => {
+      try {
+        const decoded = jwt.verify(token, 'fallback-dev-secret');
+        return { success: true, decoded };
+      } catch (e: unknown) {
+        return {
+          success: false,
+          error: e instanceof Error ? e.message : 'Unknown error',
+        };
+      }
+    })();
+
     return {
+      tokenPreview: token.substring(0, 40) + '...',
+      tokenParts: token
+        .split('.')
+        .map((p: string) => (p.length > 50 ? p.substring(0, 50) + '...' : p)),
+      secret: secret.substring(0, 3) + '...' + secret.slice(-3),
       secretLength: secret.length,
-      secretEnd: secret.slice(-5),
-      secretFirst: secret[0],
-      lastCharCode: secret.charCodeAt(secret.length - 1),
       manualVerify: manualResult,
+      fallbackVerify: fallbackResult,
     };
   }
 }

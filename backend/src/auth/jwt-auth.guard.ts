@@ -27,7 +27,11 @@ export class JwtAuthGuard {
       const decoded = jwt.verify(token, secret);
       (request as unknown as Record<string, unknown>).user = decoded;
       return true;
-    } catch {
+    } catch (e) {
+      console.error(
+        '[JwtAuthGuard] jwt.verify failed:',
+        e instanceof Error ? e.message : e,
+      );
       throw new UnauthorizedException('Invalid token');
     }
   }
