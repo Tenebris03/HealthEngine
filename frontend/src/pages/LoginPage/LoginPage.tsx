@@ -10,7 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 export function LoginPage() {
   const navigate = useNavigate();
   const { t } = useTranslation('global');
-  const { login, user, isAuthenticated } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -18,9 +18,8 @@ export function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!isAuthenticated || !user) return;
-    navigate(user.age ? '/calorie-tracking' : '/onboarding', { replace: true });
-  }, [isAuthenticated, user, navigate]);
+    if (isAuthenticated) navigate('/onboarding', { replace: true });
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
