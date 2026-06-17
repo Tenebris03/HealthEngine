@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string;
   name?: string | null;
   avatar?: string | null;
+  age?: number | null;
 }
 
 export interface AuthContextType {

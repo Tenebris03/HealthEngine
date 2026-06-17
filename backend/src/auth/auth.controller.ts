@@ -56,6 +56,7 @@ export class AuthController {
         email: user.email,
         name: user.name,
         avatar: user.avatar,
+        age: user.age,
       },
     };
   }
@@ -79,6 +80,7 @@ export class AuthController {
         email: user.email,
         name: user.name,
         avatar: user.avatar,
+        age: user.age,
       },
     };
   }
@@ -106,6 +108,7 @@ export class AuthController {
         email: user.email,
         name: user.name,
         avatar: user.avatar,
+        age: user.age,
       },
     };
   }
