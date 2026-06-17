@@ -12,6 +12,7 @@ import { WeightTrackingPage } from '@/pages/WeightTrackingPage/WeightTrackingPag
 import { ProfilePage } from '@/pages/ProfilePage/ProfilePage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
+import { OnboardingPage } from '@/pages/OnboardingPage/OnboardingPage';
 import { AuthCallbackPage } from '@/pages/AuthCallbackPage/AuthCallbackPage';
 import { AuthProvider } from '@/features/auth/AuthContext';
 import { useAuth } from '@/features/auth/useAuth';
@@ -46,6 +47,14 @@ function AppRoutes() {
           ) : (
             <LoginPage />
           )
+        }
+      />
+      <Route
+        path="/onboarding"
+        element={
+          <ProtectedRoute>
+            <OnboardingPage />
+          </ProtectedRoute>
         }
       />
       <Route

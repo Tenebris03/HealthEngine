@@ -122,6 +122,7 @@ export class AuthController {
       email: string;
       name?: string;
       avatar?: string;
+      age?: number | null;
     };
     const token = this.authService.createToken(user.id, user.email);
     const params = new URLSearchParams({
@@ -131,6 +132,7 @@ export class AuthController {
     });
     if (user.name) params.set('name', user.name);
     if (user.avatar) params.set('avatar', user.avatar);
+    if (user.age) params.set('age', String(user.age));
     res.redirect(`${FRONTEND_URL}/auth/callback?${params}`);
   }
 
@@ -146,6 +148,7 @@ export class AuthController {
       email: string;
       name?: string;
       avatar?: string;
+      age?: number | null;
     };
     const token = this.authService.createToken(user.id, user.email);
     const params = new URLSearchParams({
@@ -155,6 +158,7 @@ export class AuthController {
     });
     if (user.name) params.set('name', user.name);
     if (user.avatar) params.set('avatar', user.avatar);
+    if (user.age) params.set('age', String(user.age));
     res.redirect(`${FRONTEND_URL}/auth/callback?${params}`);
   }
 

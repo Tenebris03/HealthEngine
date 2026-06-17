@@ -13,10 +13,11 @@ export function AuthCallbackPage() {
     const email = searchParams.get('email');
     const name = searchParams.get('name');
     const avatar = searchParams.get('avatar');
+    const age = searchParams.get('age');
 
     if (token && userId && email) {
       login(token, { id: Number(userId), email, name, avatar });
-      navigate('/calorie-tracking', { replace: true });
+      navigate(age ? '/calorie-tracking' : '/onboarding', { replace: true });
     } else {
       navigate('/login', { replace: true });
     }
