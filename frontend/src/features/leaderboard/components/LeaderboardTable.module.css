@@ -1,0 +1,118 @@
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 100px;
+  padding: 0.75rem 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 0.25rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 100px;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.row:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.rowCurrentUser {
+  border-color: var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-surface),
+    color-mix(in srgb, var(--color-primary) 8%, var(--color-surface))
+  );
+}
+
+.rank {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.rankTop3 {
+  color: var(--color-accent);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.username {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+}
+
+.youBadge {
+  font-size: 0.6875rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-left: 0.375rem;
+}
+
+.points {
+  font-weight: 600;
+  color: var(--color-accent);
+  font-size: 0.9375rem;
+}
+
+.streak {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.streakIcon {
+  color: var(--color-accent);
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-text-muted);
+}

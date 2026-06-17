@@ -14,6 +14,8 @@ import progressEn from '@/features/progress/locales/en/progress.json';
 import progressDe from '@/features/progress/locales/de/progress.json';
 import dashboardEn from '@/assets/locales/en/dashboard.json';
 import dashboardDe from '@/assets/locales/de/dashboard.json';
+import leaderboardEn from '@/features/leaderboard/locales/en/leaderboard.json';
+import leaderboardDe from '@/features/leaderboard/locales/de/leaderboard.json';
 
 i18n
   .use(LanguageDetector)
@@ -35,6 +37,7 @@ i18n
         goals: goalsEn,
         progress: progressEn,
         dashboard: dashboardEn,
+        leaderboard: leaderboardEn,
       },
       de: {
         global: globalDe,
@@ -43,6 +46,7 @@ i18n
         goals: goalsDe,
         progress: progressDe,
         dashboard: dashboardDe,
+        leaderboard: leaderboardDe,
       },
     },
   });

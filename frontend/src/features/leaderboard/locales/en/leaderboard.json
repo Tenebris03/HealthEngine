@@ -1,0 +1,15 @@
+{
+  "pageTitle": "Leaderboard",
+  "pageSubtitle": "See how you stack up against the competition",
+  "filter": {
+    "weekly": "Weekly",
+    "allTime": "All-Time"
+  },
+  "table": {
+    "rank": "Rank",
+    "user": "User",
+    "points": "Points",
+    "streak": "Streak",
+    "noData": "No leaderboard data available yet."
+  }
+}

@@ -5,6 +5,7 @@ import { HomePage } from '@/pages/HomePage/HomePage';
 import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
 import { ProgressPage } from '@/pages/ProgressPage/ProgressPage';
 import { GoalsPage } from '@/pages/GoalsPage/GoalsPage';
+import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/goals" element={<GoalsPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
         </Routes>
       </Layout>
     </Router>
