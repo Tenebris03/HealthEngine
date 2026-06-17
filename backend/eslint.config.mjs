@@ -43,7 +43,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/auth/jwt-auth.guard.ts', '**/jwt-auth.guard.ts'],
+    files: ['src/auth/jwt-auth.guard.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',

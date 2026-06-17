@@ -30,14 +30,24 @@ export class AppController {
     const token = parts[1];
     const secret = process.env['JWT_SECRET'] ?? 'fallback-dev-secret';
 
-    try {
-      const decoded = jwt.verify(token, secret);
-      return { success: true, decoded };
-    } catch (e: unknown) {
-      return {
-        success: false,
-        error: e instanceof Error ? e.message : 'Unknown error',
-      };
-    }
+    const manualResult = (() => {
+      try {
+        const decoded = jwt.verify(token, secret);
+        return { success: true, decoded };
+      } catch (e: unknown) {
+        return {
+          success: false,
+          error: e instanceof Error ? e.message : 'Unknown error',
+        };
+      }
+    })();
+
+    return {
+      secretLength: secret.length,
+      secretEnd: secret.slice(-5),
+      secretFirst: secret[0],
+      lastCharCode: secret.charCodeAt(secret.length - 1),
+      manualVerify: manualResult,
+    };
   }
 }
