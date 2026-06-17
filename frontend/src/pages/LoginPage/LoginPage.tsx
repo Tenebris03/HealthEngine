@@ -72,10 +72,11 @@ export function LoginPage() {
           {isSignup && (
             <input
               type="text"
-              placeholder="Name (optional)"
+              placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
+              required
             />
           )}
           <input
