@@ -1,0 +1,15 @@
+{
+  "pageTitle": "Rangliste",
+  "pageSubtitle": "Sehen Sie, wie Sie im Vergleich abschneiden",
+  "filter": {
+    "weekly": "Wöchentlich",
+    "allTime": "Gesamt"
+  },
+  "table": {
+    "rank": "Rang",
+    "user": "Benutzer",
+    "points": "Punkte",
+    "streak": "Serie",
+    "noData": "Noch keine Ranglistendaten verfügbar."
+  }
+}
