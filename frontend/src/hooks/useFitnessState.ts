@@ -1,5 +1,7 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import type { FoodEntry } from '@/types/food';
+import { foodLogApi } from '@/services/api';
+import type { CreateFoodEntryPayload } from '@/services/api';
 
 export interface DailyTargets {
   calories: number;
@@ -25,11 +27,12 @@ export interface FitnessState {
     carbs: number;
     fat: number;
   };
-  addEntry: (entry: Omit<FoodEntry, 'id' | 'timestamp'>) => void;
+  addEntry: (entry: Omit<FoodEntry, 'id' | 'timestamp'>) => Promise<void>;
   updateEntry: (id: string, entry: Partial<FoodEntry>) => void;
-  deleteEntry: (id: string) => void;
+  deleteEntry: (id: string) => Promise<void>;
   setTargets: (targets: DailyTargets) => void;
   remaining: DailyTotals;
+  loading: boolean;
 }
 
 const DEFAULT_TARGETS: DailyTargets = {
@@ -39,45 +42,52 @@ const DEFAULT_TARGETS: DailyTargets = {
   fat: 65,
 };
 
-const SAMPLE_ENTRIES: FoodEntry[] = [
-  {
-    id: '1',
-    name: 'Oatmeal with Berries',
-    calories: 320,
-    protein: 12,
-    carbs: 54,
-    fat: 6,
-    portion: '80g',
-    mealType: 'Breakfast',
-    timestamp: new Date(),
-  },
-  {
-    id: '2',
-    name: 'Grilled Chicken Salad',
-    calories: 450,
-    protein: 45,
-    carbs: 20,
-    fat: 18,
-    portion: '1 bowl',
-    mealType: 'Lunch',
-    timestamp: new Date(),
-  },
-  {
-    id: '3',
-    name: 'Greek Yogurt',
-    calories: 150,
-    protein: 15,
-    carbs: 12,
-    fat: 4,
-    portion: '200g',
-    mealType: 'Snacks',
-    timestamp: new Date(),
-  },
-];
+function mapApiEntry(entry: { id: number; description: string; calories: number; protein: number; carbs: number; fat: number; mealType: string; portion: number; createdAt: string }): FoodEntry {
+  return {
+    id: String(entry.id),
+    name: entry.description,
+    calories: entry.calories,
+    protein: entry.protein,
+    carbs: entry.carbs,
+    fat: entry.fat,
+    portion: String(entry.portion),
+    mealType: entry.mealType as FoodEntry['mealType'],
+    timestamp: new Date(entry.createdAt),
+  };
+}
 
-export function useFitnessState() {
-  const [entries, setEntries] = useState<FoodEntry[]>(SAMPLE_ENTRIES);
+function mapToPayload(entry: Omit<FoodEntry, 'id' | 'timestamp'>): CreateFoodEntryPayload {
+  return {
+    description: entry.name,
+    calories: entry.calories,
+    protein: entry.protein,
+    carbs: entry.carbs,
+    fat: entry.fat,
+    mealType: entry.mealType,
+    portion: Number(entry.portion) || 1,
+  };
+}
+
+export function useFitnessState(): FitnessState {
+  const [entries, setEntries] = useState<FoodEntry[]>([]);
   const [targets, setTargets] = useState<DailyTargets>(DEFAULT_TARGETS);
+  const [loading, setLoading] = useState(true);
+
+  const fetchEntries = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await foodLogApi.getAll();
+      setEntries(data.map(mapApiEntry));
+    } catch {
+      setEntries([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
 
   const totals = useMemo<DailyTotals>(() => {
     return entries.reduce(
@@ -111,13 +121,10 @@ export function useFitnessState() {
     [totals, targets],
   );
 
-  const addEntry = useCallback((entry: Omit<FoodEntry, 'id' | 'timestamp'>) => {
-    const newEntry: FoodEntry = {
-      ...entry,
-      id: Date.now().toString(),
-      timestamp: new Date(),
-    };
-    setEntries((prev) => [...prev, newEntry]);
+  const addEntry = useCallback(async (entry: Omit<FoodEntry, 'id' | 'timestamp'>) => {
+    const payload = mapToPayload(entry);
+    const created = await foodLogApi.create(payload);
+    setEntries((prev) => [mapApiEntry(created), ...prev]);
   }, []);
 
   const updateEntry = useCallback((id: string, updates: Partial<FoodEntry>) => {
@@ -126,7 +133,8 @@ export function useFitnessState() {
     );
   }, []);
 
-  const deleteEntry = useCallback((id: string) => {
+  const deleteEntry = useCallback(async (id: string) => {
+    await foodLogApi.remove(Number(id));
     setEntries((prev) => prev.filter((entry) => entry.id !== id));
   }, []);
 
@@ -140,5 +148,6 @@ export function useFitnessState() {
     deleteEntry,
     setTargets,
     remaining,
+    loading,
   };
 }

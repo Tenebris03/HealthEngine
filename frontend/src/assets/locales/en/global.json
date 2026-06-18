@@ -2,30 +2,19 @@
   "brand": "HealthEngine",
   "nav": {
     "home": "Home",
-    "dashboard": "Dashboard",
-    "goals": "Goals",
+    "calorieTracking": "Calorie Tracking",
+    "weightTracking": "Weight Tracking",
     "leaderboard": "Leaderboard",
-    "progress": "Progress",
-    "about": "About"
+    "profile": "Profile"
   },
   "cta": {
     "getStarted": "Get Started",
     "goToDashboard": "Go to Dashboard"
   },
   "footer": {
-    "product": "Product",
-    "company": "Company",
-    "support": "Support",
     "followUs": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "api": "API",
-    "blog": "Blog",
-    "careers": "Careers",
-    "helpCenter": "Help Center",
     "contact": "Contact",
     "privacy": "Privacy",
-    "about": "About",
     "copyright": "© {{year}} HealthEngine. All rights reserved."
   },
   "common": {
@@ -44,7 +33,10 @@
     "deleteEntry": "Delete {{name}}",
     "closeModal": "Close modal",
     "editMacroTargets": "Edit macro targets",
-    "editWeightTarget": "Edit weight target"
+    "editWeightTarget": "Edit weight target",
+    "login": "Login",
+    "logout": "Logout",
+    "editProfile": "Edit Profile"
   },
   "mealTypes": {
     "breakfast": "Breakfast",
@@ -62,5 +54,34 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "tomorrow": "Tomorrow"
+  },
+  "onboarding": {
+    "infoTitle": "Let's get started!",
+    "infoSubtitle": "Tell us about yourself",
+    "age": "Your Age",
+    "weight": "Weight (kg)",
+    "height": "Height (cm)",
+    "agePlaceholder": "e.g. 25",
+    "weightPlaceholder": "e.g. 75",
+    "heightPlaceholder": "e.g. 175",
+    "continue": "Continue",
+    "bmrCalculating": "Calculating your Basal Metabolic Rate...",
+    "bmrUnit": "kcal/day",
+    "goalTitle": "What's your goal?",
+    "goalSubtitle": "Choose your fitness objective",
+    "goalLose": "Lose Weight",
+    "goalLoseDesc": "Create a calorie deficit to shed excess weight",
+    "goalMaintain": "Maintain Weight",
+    "goalMaintainDesc": "Keep your current weight with balanced nutrition",
+    "goalGain": "Gain Weight",
+    "goalGainDesc": "Build muscle with a calorie surplus",
+    "summaryTitle": "Your Plan",
+    "summarySubtitle": "Customize your daily targets",
+    "dailyCalories": "Daily Calories",
+    "protein": "Protein",
+    "carbs": "Carbs",
+    "fat": "Fat",
+    "save": "Sounds good!",
+    "saving": "Saving..."
   }
 }

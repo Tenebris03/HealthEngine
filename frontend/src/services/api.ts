@@ -28,7 +28,17 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   });
 
   if (!res.ok) {
-    throw new ApiError(res.status, `API error: ${res.statusText}`);
+    let detail = res.statusText;
+    try {
+      const body = await res.json();
+      if (body.message)
+        detail = Array.isArray(body.message)
+          ? body.message.join(', ')
+          : body.message;
+    } catch {
+      /* ignore parse failure */
+    }
+    throw new ApiError(res.status, detail);
   }
 
   return res.json() as Promise<T>;
@@ -73,6 +83,41 @@ export const foodLogApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+  remove: (id: number) =>
+    request<void>(`/api/food-log/${id}`, { method: 'DELETE' }),
+};
+
+export interface UserProfile {
+  id: number;
+  email: string;
+  name: string | null;
+  avatar: string | null;
+  age: number | null;
+  heightCm: number | null;
+  targetWeightKg: number | null;
+  dailyCalorieGoal: number | null;
+}
+
+export const authApi = {
+  me: () => request<UserProfile>('/api/auth/me'),
+  updateProfile: (data: Partial<UserProfile>) =>
+    request<UserProfile>('/api/auth/profile', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+};
+
+export interface LeaderboardUser {
+  rank: number;
+  id: number;
+  username: string;
+  avatar: string;
+  points: number;
+  isCurrentUser: boolean;
+}
+
+export const leaderboardApi = {
+  getAll: () => request<LeaderboardUser[]>('/api/leaderboard'),
 };
 
 export const weightLogApi = {
@@ -82,4 +127,6 @@ export const weightLogApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+  remove: (id: number) =>
+    request<void>(`/api/weight-log/${id}`, { method: 'DELETE' }),
 };

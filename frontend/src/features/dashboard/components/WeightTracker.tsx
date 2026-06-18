@@ -1,17 +1,79 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import {
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-  CartesianGrid,
-} from 'recharts';
 import { useWeightState } from '@/hooks/useWeightState';
 import styles from './WeightTracker.module.css';
+
+const WIDTH = 600;
+const HEIGHT = 200;
+const PAD = { top: 10, right: 10, bottom: 24, left: 40 };
+
+function Sparkline({ data }: { data: { date: string; weight: number }[] }) {
+  const path = useMemo(() => {
+    if (data.length < 2) return null;
+    const xScale = (i: number) =>
+      PAD.left + (i / (data.length - 1)) * (WIDTH - PAD.left - PAD.right);
+    const weights = data.map((d) => d.weight);
+    const min = Math.min(...weights);
+    const max = Math.max(...weights);
+    const range = max - min || 10;
+    const yScale = (w: number) =>
+      PAD.top + (1 - (w - min) / range) * (HEIGHT - PAD.top - PAD.bottom);
+
+    const xs = data.map((_, i) => xScale(i));
+    const ys = weights.map(yScale);
+
+    const line = data.map((_, i) => `${i === 0 ? 'M' : 'L'}${xs[i]},${ys[i]}`).join(' ');
+    const fill = `${line} L${xs[xs.length - 1]},${HEIGHT - PAD.bottom} L${xs[0]},${HEIGHT - PAD.bottom} Z`;
+
+    return { line, fill, xs, ys, min, max };
+  }, [data]);
+
+  if (!path) {
+    return (
+      <svg width="100%" height={HEIGHT} viewBox={`0 0 ${WIDTH} ${HEIGHT}`}>
+        <text x="50%" y="50%" textAnchor="middle" fill="var(--color-text-muted)" fontSize={13}>
+          Not enough data
+        </text>
+      </svg>
+    );
+  }
+
+  const gridLines = [0, 1, 2].map((i) => {
+    const y = PAD.top + (i / 2) * (HEIGHT - PAD.top - PAD.bottom);
+    const v = Math.round(path.min + (i / 2) * (path.max - path.min));
+    return (
+      <g key={i}>
+        <line x1={PAD.left} y1={y} x2={WIDTH - PAD.right} y2={y} stroke="var(--color-border-light)" strokeDasharray="3 3" />
+        <text x={PAD.left - 6} y={y + 4} textAnchor="end" fontSize={10} fill="var(--color-text-muted)">
+          {v}
+        </text>
+      </g>
+    );
+  });
+
+  return (
+    <svg width="100%" height={HEIGHT} viewBox={`0 0 ${WIDTH} ${HEIGHT}`}>
+      <defs>
+        <linearGradient id="weightFillSvg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="var(--color-primary)" stopOpacity={0.3} />
+          <stop offset="100%" stopColor="var(--color-primary)" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      {gridLines}
+      <path d={path.fill} fill="url(#weightFillSvg)" />
+      <path d={path.line} fill="none" stroke="var(--color-primary)" strokeWidth={2} />
+      {path.xs.map((x, i) => (
+        <g key={i}>
+          <circle cx={x} cy={path.ys[i]} r={3} fill="var(--color-primary)" />
+          <text x={x} y={HEIGHT - 6} textAnchor="middle" fontSize={10} fill="var(--color-text-muted)">
+            {data[i].date}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
 
 export function WeightTracker() {
   const { t } = useTranslation(['dashboard', 'global']);
@@ -77,59 +139,7 @@ export function WeightTracker() {
       </form>
 
       <div className={styles.chart}>
-        <ResponsiveContainer width="100%" height={200}>
-          <AreaChart
-            data={chartData}
-            margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="weightFill" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="0%"
-                  stopColor="var(--color-primary)"
-                  stopOpacity={0.3}
-                />
-                <stop
-                  offset="100%"
-                  stopColor="var(--color-primary)"
-                  stopOpacity={0}
-                />
-              </linearGradient>
-            </defs>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="var(--color-border-light)"
-            />
-            <XAxis
-              dataKey="date"
-              tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <YAxis
-              domain={['dataMin - 2', 'dataMax + 2']}
-              tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <Tooltip
-              contentStyle={{
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 8,
-                fontSize: 13,
-              }}
-              labelStyle={{ color: 'var(--color-text-secondary)' }}
-            />
-            <Area
-              type="monotone"
-              dataKey="weight"
-              stroke="var(--color-primary)"
-              strokeWidth={2}
-              fill="url(#weightFill)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <Sparkline data={chartData} />
       </div>
 
       <div className={styles.current}>

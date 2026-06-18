@@ -2,25 +2,15 @@
   "brand": "HealthEngine",
   "nav": {
     "home": "Startseite",
-    "goals": "Ziele",
+    "calorieTracking": "Kalorien-Tracking",
+    "weightTracking": "Gewichts-Tracking",
     "leaderboard": "Rangliste",
-    "progress": "Fortschritt",
-    "about": "Über uns"
+    "profile": "Profil"
   },
   "footer": {
-    "product": "Produkt",
-    "company": "Unternehmen",
-    "support": "Support",
     "followUs": "Folgen Sie uns",
-    "features": "Funktionen",
-    "pricing": "Preise",
-    "api": "API",
-    "blog": "Blog",
-    "careers": "Karriere",
-    "helpCenter": "Hilfe-Center",
     "contact": "Kontakt",
     "privacy": "Datenschutz",
-    "about": "Über uns",
     "copyright": "© {{year}} HealthEngine. Alle Rechte vorbehalten."
   },
   "common": {
@@ -39,7 +29,10 @@
     "deleteEntry": "{{name}} löschen",
     "closeModal": "Modal schließen",
     "editMacroTargets": "Makroziele bearbeiten",
-    "editWeightTarget": "Gewichtsziel bearbeiten"
+    "editWeightTarget": "Gewichtsziel bearbeiten",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "editProfile": "Profil bearbeiten"
   },
   "mealTypes": {
     "breakfast": "Frühstück",
@@ -57,5 +50,34 @@
     "today": "Heute",
     "yesterday": "Gestern",
     "tomorrow": "Morgen"
+  },
+  "onboarding": {
+    "infoTitle": "Los geht's!",
+    "infoSubtitle": "Erzähl uns von dir",
+    "age": "Dein Alter",
+    "weight": "Gewicht (kg)",
+    "height": "Größe (cm)",
+    "agePlaceholder": "z.B. 25",
+    "weightPlaceholder": "z.B. 75",
+    "heightPlaceholder": "z.B. 175",
+    "continue": "Weiter",
+    "bmrCalculating": "Berechne deinen Grundumsatz...",
+    "bmrUnit": "kcal/Tag",
+    "goalTitle": "Was ist dein Ziel?",
+    "goalSubtitle": "Wähle dein Fitnessziel",
+    "goalLose": "Abnehmen",
+    "goalLoseDesc": "Erzeuge ein Kaloriendefizit, um überschüssiges Gewicht zu verlieren",
+    "goalMaintain": "Gewicht halten",
+    "goalMaintainDesc": "Behalte dein aktuelles Gewicht mit ausgewogener Ernährung",
+    "goalGain": "Zunehmen",
+    "goalGainDesc": "Baue Muskeln mit einem Kalorienüberschuss auf",
+    "summaryTitle": "Dein Plan",
+    "summarySubtitle": "Passe deine täglichen Ziele an",
+    "dailyCalories": "Tägliche Kalorien",
+    "protein": "Protein",
+    "carbs": "Kohlenhydrate",
+    "fat": "Fett",
+    "save": "Klingt gut!",
+    "saving": "Speichern..."
   }
 }

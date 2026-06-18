@@ -1,10 +1,22 @@
+import { config } from 'dotenv';
+import { resolve } from 'path';
+import { json } from 'express';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
+config({ path: resolve(__dirname, '../../.env') });
+
+console.log('[main] JWT_SECRET present:', !!process.env['JWT_SECRET']);
+console.log(
+  '[main] Signing secret:',
+  (process.env['JWT_SECRET'] ?? 'fallback-dev-secret').substring(0, 5) + '...',
+);
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bodyParser: false });
+  app.use(json({ limit: '2mb' }));
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 

@@ -1,186 +1,120 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { LeaderboardFilter } from '@/features/leaderboard/components/LeaderboardFilter';
-import { LeaderboardTable } from '@/features/leaderboard/components/LeaderboardTable';
+import { leaderboardApi, type LeaderboardUser } from '@/services/api';
 import styles from './LeaderboardPage.module.css';
-import type {
-  LeaderboardFilter as FilterType,
-  LeaderboardData,
-  LeaderboardUser,
-} from '@/features/leaderboard/types/leaderboard.types';
 
-const MOCK_DATA: LeaderboardData = {
-  weekly: [
-    {
-      rank: 1,
-      username: 'FitFalcon',
-      avatar: '',
-      points: 4850,
-      streakDays: 12,
-      isCurrentUser: false,
-    },
-    {
-      rank: 2,
-      username: 'IronWill',
-      avatar: '',
-      points: 4320,
-      streakDays: 8,
-      isCurrentUser: false,
-    },
-    {
-      rank: 3,
-      username: 'PulseMaster',
-      avatar: '',
-      points: 3980,
-      streakDays: 15,
-      isCurrentUser: false,
-    },
-    {
-      rank: 4,
-      username: 'you',
-      avatar: '',
-      points: 3560,
-      streakDays: 5,
-      isCurrentUser: true,
-    },
-    {
-      rank: 5,
-      username: 'ZenAthlete',
-      avatar: '',
-      points: 3210,
-      streakDays: 7,
-      isCurrentUser: false,
-    },
-    {
-      rank: 6,
-      username: 'CardioQueen',
-      avatar: '',
-      points: 2890,
-      streakDays: 4,
-      isCurrentUser: false,
-    },
-    {
-      rank: 7,
-      username: 'SweatEquity',
-      avatar: '',
-      points: 2540,
-      streakDays: 6,
-      isCurrentUser: false,
-    },
-    {
-      rank: 8,
-      username: 'EnduroKing',
-      avatar: '',
-      points: 2120,
-      streakDays: 3,
-      isCurrentUser: false,
-    },
-  ],
-  allTime: [
-    {
-      rank: 1,
-      username: 'IronWill',
-      avatar: '',
-      points: 45200,
-      streakDays: 89,
-      isCurrentUser: false,
-    },
-    {
-      rank: 2,
-      username: 'FitFalcon',
-      avatar: '',
-      points: 38900,
-      streakDays: 67,
-      isCurrentUser: false,
-    },
-    {
-      rank: 3,
-      username: 'PulseMaster',
-      avatar: '',
-      points: 34100,
-      streakDays: 102,
-      isCurrentUser: false,
-    },
-    {
-      rank: 4,
-      username: 'EnduroKing',
-      avatar: '',
-      points: 29800,
-      streakDays: 45,
-      isCurrentUser: false,
-    },
-    {
-      rank: 5,
-      username: 'CardioQueen',
-      avatar: '',
-      points: 26500,
-      streakDays: 38,
-      isCurrentUser: false,
-    },
-    {
-      rank: 6,
-      username: 'you',
-      avatar: '',
-      points: 22100,
-      streakDays: 52,
-      isCurrentUser: true,
-    },
-    {
-      rank: 7,
-      username: 'ZenAthlete',
-      avatar: '',
-      points: 18900,
-      streakDays: 31,
-      isCurrentUser: false,
-    },
-    {
-      rank: 8,
-      username: 'SweatEquity',
-      avatar: '',
-      points: 15400,
-      streakDays: 27,
-      isCurrentUser: false,
-    },
-  ],
-};
+function getAvatarUrl(name: string) {
+  return `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(name)}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+}
 
-function getFilteredData(
-  data: LeaderboardData,
-  filter: FilterType,
-): LeaderboardUser[] {
-  return filter === 'weekly' ? data.weekly : data.allTime;
+function Podium({ users }: { users: LeaderboardUser[] }) {
+  const top3 = users.slice(0, 3);
+  const order = [top3[1], top3[0], top3[2]];
+
+  return (
+    <div className={styles.podium}>
+      {order.map((user, i) => {
+        if (!user) return null;
+        const isFirst = i === 1;
+        const medal = i === 1 ? '🥇' : i === 0 ? '🥈' : '🥉';
+        const height = isFirst ? 180 : 130;
+
+        return (
+          <motion.div
+            key={user.rank}
+            className={styles.podiumItem}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 + i * 0.15 }}
+          >
+            <div className={styles.podiumAvatar}>
+              <img
+                src={user.avatar || getAvatarUrl(user.username)}
+                alt={user.username}
+                className={styles.podiumImg}
+              />
+              <span className={styles.podiumMedal}>{medal}</span>
+            </div>
+            <span className={styles.podiumName}>{user.username}</span>
+            <span className={styles.podiumPoints}>
+              {user.points.toLocaleString()}
+            </span>
+            <div className={styles.podiumBar} style={{ height }} />
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
+function RankedList({ users }: { users: LeaderboardUser[] }) {
+  if (users.length === 0) {
+    return <p className={styles.emptyState}>No leaderboard data yet.</p>;
+  }
+
+  return (
+    <div className={styles.list}>
+      {users.map((user, i) => (
+        <motion.div
+          key={user.rank}
+          className={`${styles.listRow} ${user.isCurrentUser ? styles.listRowCurrent : ''}`}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3, delay: i * 0.03 }}
+        >
+          <span className={styles.listRank}>#{user.rank}</span>
+          <img
+            src={user.avatar || getAvatarUrl(user.username)}
+            alt={user.username}
+            className={styles.listAvatar}
+          />
+          <span className={styles.listName}>
+            {user.username}
+            {user.isCurrentUser && <span className={styles.youBadge}>you</span>}
+          </span>
+          <span className={styles.listPoints}>
+            {user.points.toLocaleString()}
+          </span>
+        </motion.div>
+      ))}
+    </div>
+  );
 }
 
 export function LeaderboardPage() {
-  const { t } = useTranslation('leaderboard');
-  const [activeFilter, setActiveFilter] = useState<FilterType>('weekly');
+  const [users, setUsers] = useState<LeaderboardUser[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const users = getFilteredData(MOCK_DATA, activeFilter);
+  useEffect(() => {
+    leaderboardApi
+      .getAll()
+      .then(setUsers)
+      .catch(() => setUsers([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <motion.div
-          className={styles.header}
+        <motion.h1
+          className={styles.pageTitle}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className={styles.headerContent}>
-            <h1 className={styles.pageTitle}>{t('pageTitle')}</h1>
-            <p className={styles.pageSubtitle}>{t('pageSubtitle')}</p>
-          </div>
-          <LeaderboardFilter active={activeFilter} onChange={setActiveFilter} />
-        </motion.div>
+          Leaderboard
+        </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <LeaderboardTable users={users} />
-        </motion.div>
+        {loading ? (
+          <p className={styles.emptyState}>Loading...</p>
+        ) : users.length === 0 ? (
+          <p className={styles.emptyState}>No leaderboard data yet.</p>
+        ) : (
+          <>
+            <Podium users={users} />
+            {users.length > 3 && <RankedList users={users.slice(3)} />}
+          </>
+        )}
       </div>
     </div>
   );
