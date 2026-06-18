@@ -8,8 +8,6 @@ import heroEn from '@/features/hero/locales/en/hero.json';
 import heroDe from '@/features/hero/locales/de/hero.json';
 import keyFeaturesEn from '@/features/key-features/locales/en/key-features.json';
 import keyFeaturesDe from '@/features/key-features/locales/de/key-features.json';
-import goalsEn from '@/features/goals/locales/en/goals.json';
-import goalsDe from '@/features/goals/locales/de/goals.json';
 import progressEn from '@/features/progress/locales/en/progress.json';
 import progressDe from '@/features/progress/locales/de/progress.json';
 import dashboardEn from '@/assets/locales/en/dashboard.json';
@@ -34,7 +32,6 @@ i18n
         global: globalEn,
         hero: heroEn,
         'key-features': keyFeaturesEn,
-        goals: goalsEn,
         progress: progressEn,
         dashboard: dashboardEn,
         leaderboard: leaderboardEn,
@@ -43,7 +40,6 @@ i18n
         global: globalDe,
         hero: heroDe,
         'key-features': keyFeaturesDe,
-        goals: goalsDe,
         progress: progressDe,
         dashboard: dashboardDe,
         leaderboard: leaderboardDe,
