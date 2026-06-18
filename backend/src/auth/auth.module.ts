@@ -8,6 +8,15 @@ import { GoogleStrategy } from './google.strategy';
 import { GithubStrategy } from './github.strategy';
 import { PrismaModule } from '../prisma/prisma.module';
 
+console.log(
+  '[AuthModule] Module eval - JWT_SECRET present:',
+  !!process.env['JWT_SECRET'],
+);
+console.log(
+  '[AuthModule] Module eval - signing secret:',
+  (process.env['JWT_SECRET'] ?? 'fallback-dev-secret').substring(0, 5) + '...',
+);
+
 const googleStrategyProvider = process.env['GOOGLE_CLIENT_ID']
   ? [GoogleStrategy]
   : [];

@@ -21,18 +21,20 @@ export class JwtAuthGuard {
       throw new UnauthorizedException('Malformed Authorization header');
 
     const token = parts[1];
-    const secret = process.env['JWT_SECRET'] ?? 'fallback-dev-secret';
+    const candidates = [
+      process.env['JWT_SECRET'],
+      'fallback-dev-secret',
+    ].filter(Boolean) as string[];
 
-    try {
-      const decoded = jwt.verify(token, secret);
-      (request as unknown as Record<string, unknown>).user = decoded;
-      return true;
-    } catch (e) {
-      console.error(
-        '[JwtAuthGuard] jwt.verify failed:',
-        e instanceof Error ? e.message : e,
-      );
-      throw new UnauthorizedException('Invalid token');
+    for (const secret of candidates) {
+      try {
+        const decoded = jwt.verify(token, secret);
+        (request as unknown as Record<string, unknown>).user = decoded;
+        return true;
+      } catch {
+        // try next secret
+      }
     }
+    throw new UnauthorizedException('Invalid token');
   }
 }
