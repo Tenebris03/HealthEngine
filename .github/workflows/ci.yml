@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Turborepo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules/.cache/turbo
           key: ${{ runner.os }}-turbo-${{ github.sha }}
@@ -51,7 +51,7 @@ jobs:
         run: npm ci
 
       - name: Turborepo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules/.cache/turbo
           key: ${{ runner.os }}-turbo-${{ github.sha }}
@@ -75,7 +75,7 @@ jobs:
         run: npm ci
 
       - name: Turborepo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules/.cache/turbo
           key: ${{ runner.os }}-turbo-${{ github.sha }}
